@@ -120,7 +120,7 @@ _gen_triangle_indices(const struct parametric_interval* pi) {
 			index = vertex + x + pi->divisions.x;
 			ds_array_add(indices, &index);
 		}
-		vertex += pi->divisions.y;
+		vertex += pi->divisions.x;
 	}
 
 	return indices;
