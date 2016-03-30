@@ -1,25 +1,25 @@
 // Copy from https://github.com/prideout/iphone-3d-programming
 
 #include "m3_parametric_surface.h"
-#include "m3_math.h"
 #include "m3_typedef.h"
 #include "m3_mesh.h"
 
 #include <ds_array.h>
+#include <sm.h>
 
 #include <string.h>
 #include <stdbool.h>
 
 struct parametric_interval {
-//	struct m3_ivec2 slices;
-	struct m3_ivec2 divisions;
-	struct m3_vec2 upper_bound;
-	struct m3_vec2 texture_count;
+//	struct sm_ivec2 slices;
+	struct sm_ivec2 divisions;
+	struct sm_vec2 upper_bound;
+	struct sm_vec2 texture_count;
 };
 
-static inline struct m3_vec2
+static inline struct sm_vec2
 _compute_domain(const struct parametric_interval* pi, float x, float y) {
-	struct m3_vec2 ret;
+	struct sm_vec2 ret;
 	ret.x = x * pi->upper_bound.x / (pi->divisions.x - 1);
 	ret.y = y * pi->upper_bound.y / (pi->divisions.y - 1);
 	return ret;
@@ -27,8 +27,8 @@ _compute_domain(const struct parametric_interval* pi, float x, float y) {
 
 static struct ds_array*
 _gen_vertices(const struct parametric_interval* pi, unsigned char flags, 
-			  struct m3_vec3 (*evaluate)(struct m3_vec2* domain, const void* ud), const void* ud,
-			  bool (*invert_normal)(struct m3_vec2* domain)) {
+			  struct sm_vec3 (*evaluate)(struct sm_vec2* domain, const void* ud), const void* ud,
+			  bool (*invert_normal)(struct sm_vec2* domain)) {
 	int floats_per_vertex = 3;
 	if (flags & M3_VERTEX_FLAG_NORMALS) {
 		floats_per_vertex += 3;
@@ -45,8 +45,8 @@ _gen_vertices(const struct parametric_interval* pi, unsigned char flags,
 	for (int y = 0; y < pi->divisions.y; ++y) {
 		for (int x = 0; x < pi->divisions.x; ++x) {
 			// Compute Position
-			struct m3_vec2 domain = _compute_domain(pi, x, y);
-			struct m3_vec3 range = evaluate(&domain, ud);
+			struct sm_vec2 domain = _compute_domain(pi, x, y);
+			struct sm_vec3 range = evaluate(&domain, ud);
 			memcpy(vertex_ptr, &range, sizeof(range));
 			vertex_ptr += 3;
 			// Compute Normal
@@ -58,17 +58,17 @@ _gen_vertices(const struct parametric_interval* pi, unsigned char flags,
 				if (y == 0) t += 0.01f;
 				if (y == pi->divisions.y - 1) t -= 0.01f;
 				// Compute the tangents and their cross product.
-				struct m3_vec2 tmp = _compute_domain(pi, s, t);
-				struct m3_vec3 p = evaluate(&tmp, ud);
+				struct sm_vec2 tmp = _compute_domain(pi, s, t);
+				struct sm_vec3 p = evaluate(&tmp, ud);
 				tmp = _compute_domain(pi, s + 0.01f, t);
-				struct m3_vec3 u = evaluate(&tmp, ud);
-				m3_vec3_vector(&u, &u, &p);
+				struct sm_vec3 u = evaluate(&tmp, ud);
+				sm_vec3_vector(&u, &u, &p);
 				tmp = _compute_domain(pi, s, t + 0.01f);
-				struct m3_vec3 v = evaluate(&tmp, ud);
-				m3_vec3_vector(&v, &v, &p);
-				struct m3_vec3 normal;
-				m3_vec3_cross(&normal, &u, &v);
-				m3_vec3_normalize(&normal);
+				struct sm_vec3 v = evaluate(&tmp, ud);
+				sm_vec3_vector(&v, &v, &p);
+				struct sm_vec3 normal;
+				sm_vec3_cross(&normal, &u, &v);
+				sm_vec3_normalize(&normal);
 				if (invert_normal(&domain)) {
 					normal.x = -normal.x;
 					normal.y = -normal.y;
@@ -135,9 +135,9 @@ struct cone {
 	float radius;
 };
 
-static struct m3_vec3
-_cone_evaluate(struct m3_vec2* domain, const void* ud) {
-	struct m3_vec3 ret;
+static struct sm_vec3
+_cone_evaluate(struct sm_vec2* domain, const void* ud) {
+	struct sm_vec3 ret;
 	float u = domain->x, v = domain->y;
 	const struct cone* cone = (const struct cone*)ud;
 	ret.x = cone->radius * (1 - v) * cos(u);
@@ -147,7 +147,7 @@ _cone_evaluate(struct m3_vec2* domain, const void* ud) {
 }
 
 static bool 
-_cone_invert_normal(struct m3_vec2* domain) {
+_cone_invert_normal(struct sm_vec2* domain) {
 	return false;
 }
 
@@ -156,7 +156,7 @@ m3_create_cone(float height, float radius, struct m3_mesh* mesh) {
 	struct parametric_interval pi;
 	pi.divisions.x = 20;
 	pi.divisions.y = 20;
-	pi.upper_bound.x = M3_PI * 2;
+	pi.upper_bound.x = SM_PI * 2;
 	pi.upper_bound.y = 1;
 	pi.texture_count.x = 30;
 	pi.texture_count.y = 20;
@@ -178,9 +178,9 @@ struct sphere {
 	float radius;
 };
 
-static struct m3_vec3
-_sphere_evaluate(struct m3_vec2* domain, const void* ud) {
-	struct m3_vec3 ret;
+static struct sm_vec3
+_sphere_evaluate(struct sm_vec2* domain, const void* ud) {
+	struct sm_vec3 ret;
 	float u = domain->x, v = domain->y;
 	const struct sphere* sphere = (const struct sphere*)ud;
 	ret.x = sphere->radius * sin(u) * cos(v);
@@ -190,7 +190,7 @@ _sphere_evaluate(struct m3_vec2* domain, const void* ud) {
 }
 
 static bool 
-_sphere_invert_normal(struct m3_vec2* domain) {
+_sphere_invert_normal(struct sm_vec2* domain) {
 	return false;
 }
 
@@ -199,8 +199,8 @@ m3_create_sphere(float radius, struct m3_mesh* mesh) {
 	struct parametric_interval pi;
 	pi.divisions.x = 20;
 	pi.divisions.y = 20;
-	pi.upper_bound.x = M3_PI;
-	pi.upper_bound.y = M3_PI * 2;
+	pi.upper_bound.x = SM_PI;
+	pi.upper_bound.y = SM_PI * 2;
 	pi.texture_count.x = 20;
 	pi.texture_count.y = 35;
 
@@ -222,9 +222,9 @@ struct torus {
 	float minor_radius;
 };
 
-static struct m3_vec3
-_torus_evaluate(struct m3_vec2* domain, const void* ud) {
-	struct m3_vec3 ret;
+static struct sm_vec3
+_torus_evaluate(struct sm_vec2* domain, const void* ud) {
+	struct sm_vec3 ret;
 	float u = domain->x, v = domain->y;
 	const struct torus* torus = (const struct torus*)ud;
 	const float major = torus->major_radius;
@@ -236,7 +236,7 @@ _torus_evaluate(struct m3_vec2* domain, const void* ud) {
 }
 
 static bool 
-_torus_invert_normal(struct m3_vec2* domain) {
+_torus_invert_normal(struct sm_vec2* domain) {
 	return false;
 }
 
@@ -245,8 +245,8 @@ m3_create_torus(float major_radius, float minor_radius, struct m3_mesh* mesh) {
 	struct parametric_interval pi;
 	pi.divisions.x = 20;
 	pi.divisions.y = 20;
-	pi.upper_bound.x = M3_PI * 2;
-	pi.upper_bound.y = M3_PI * 2;
+	pi.upper_bound.x = SM_PI * 2;
+	pi.upper_bound.y = SM_PI * 2;
 	pi.texture_count.x = 40;
 	pi.texture_count.y = 10;
 
@@ -267,15 +267,15 @@ struct trefoil_knot {
 	float scale;
 };
 
-static struct m3_vec3
-_trefoil_knot_evaluate(struct m3_vec2* domain, const void* ud) {
-	struct m3_vec3 ret;
+static struct sm_vec3
+_trefoil_knot_evaluate(struct sm_vec2* domain, const void* ud) {
+	struct sm_vec3 ret;
 
 	const float a = 0.5f;
 	const float b = 0.3f;
 	const float c = 0.5f;
 	const float d = 0.1f;
-	float u = (M3_PI * 2 - domain->x) * 2;
+	float u = (SM_PI * 2 - domain->x) * 2;
 	float v = domain->y;
 
 	float r = a + b * cos(1.5f * u);
@@ -283,17 +283,17 @@ _trefoil_knot_evaluate(struct m3_vec2* domain, const void* ud) {
 	float y = r * sin(u);
 	float z = c * sin(1.5f * u);
 
-	struct m3_vec3 dv;
+	struct sm_vec3 dv;
 	dv.x = -1.5f * b * sin(1.5f * u) * cos(u) - (a + b * cos(1.5f * u)) * sin(u);
 	dv.y = -1.5f * b * sin(1.5f * u) * sin(u) + (a + b * cos(1.5f * u)) * cos(u);
 	dv.z =  1.5f * c * cos(1.5f * u);
 
-	struct m3_vec3 q = dv;
-	m3_vec3_normalize(&q);
-	struct m3_vec3 qvn = {q.y, -q.x, 0};
-	m3_vec3_normalize(&qvn);
-	struct m3_vec3 ww;
-	m3_vec3_cross(&ww, &q, &qvn);
+	struct sm_vec3 q = dv;
+	sm_vec3_normalize(&q);
+	struct sm_vec3 qvn = {q.y, -q.x, 0};
+	sm_vec3_normalize(&qvn);
+	struct sm_vec3 ww;
+	sm_vec3_cross(&ww, &q, &qvn);
 
 	ret.x = x + d * (qvn.x * cos(v) + ww.x * sin(v));
 	ret.y = y + d * (qvn.y * cos(v) + ww.y * sin(v));
@@ -308,7 +308,7 @@ _trefoil_knot_evaluate(struct m3_vec2* domain, const void* ud) {
 }
 
 static bool 
-_trefoil_knot_invert_normal(struct m3_vec2* domain) {
+_trefoil_knot_invert_normal(struct sm_vec2* domain) {
 	return false;
 }
 
@@ -317,8 +317,8 @@ m3_create_trefoil_knot(float scale, struct m3_mesh* mesh) {
 	struct parametric_interval pi;
 	pi.divisions.x = 60;
 	pi.divisions.y = 15;
-	pi.upper_bound.x = M3_PI * 2;
-	pi.upper_bound.y = M3_PI * 2;
+	pi.upper_bound.x = SM_PI * 2;
+	pi.upper_bound.y = SM_PI * 2;
 	pi.texture_count.x = 100;
 	pi.texture_count.y = 8;
 
@@ -339,9 +339,9 @@ struct mobius_strip {
 	float scale;
 };
 
-static struct m3_vec3
-_mobius_strip_evaluate(struct m3_vec2* domain, const void* ud) {
-	struct m3_vec3 ret;
+static struct sm_vec3
+_mobius_strip_evaluate(struct sm_vec2* domain, const void* ud) {
+	struct sm_vec3 ret;
 
 	float u = domain->x;
 	float t = domain->y;
@@ -369,7 +369,7 @@ _mobius_strip_evaluate(struct m3_vec2* domain, const void* ud) {
 }
 
 static bool 
-_mobius_strip_invert_normal(struct m3_vec2* domain) {
+_mobius_strip_invert_normal(struct sm_vec2* domain) {
 	return false;
 }
 
@@ -378,8 +378,8 @@ m3_create_mobius_strip(float scale, struct m3_mesh* mesh) {
 	struct parametric_interval pi;
 	pi.divisions.x = 40;
 	pi.divisions.y = 20;
-	pi.upper_bound.x = M3_PI * 2;
-	pi.upper_bound.y = M3_PI * 2;
+	pi.upper_bound.x = SM_PI * 2;
+	pi.upper_bound.y = SM_PI * 2;
 	pi.texture_count.x = 40;
 	pi.texture_count.y = 15;
 
@@ -400,9 +400,9 @@ struct klein_bottle {
 	float scale;
 };
 
-static struct m3_vec3
-_klein_bottle_evaluate(struct m3_vec2* domain, const void* ud) {
-	struct m3_vec3 ret;
+static struct sm_vec3
+_klein_bottle_evaluate(struct sm_vec2* domain, const void* ud) {
+	struct sm_vec3 ret;
 
 	float v = 1 - domain->x;
 	float u = domain->y;
@@ -410,11 +410,11 @@ _klein_bottle_evaluate(struct m3_vec2* domain, const void* ud) {
 	float x0 = 3 * cos(u) * (1 + sin(u)) + (2 * (1 - cos(u) / 2)) * cos(u) * cos(v);
 	float y0 = 8 * sin(u) + (2 * (1 - cos(u) / 2)) * sin(u) * cos(v);
 
-	float x1 = 3 * cos(u) * (1 + sin(u)) + (2 * (1 - cos(u) / 2)) * cos(v + M3_PI);
+	float x1 = 3 * cos(u) * (1 + sin(u)) + (2 * (1 - cos(u) / 2)) * cos(v + SM_PI);
 	float y1 = 8 * sin(u);
 
-	ret.x = u < M3_PI ? x0 : x1;
-	ret.y = u < M3_PI ? -y0 : -y1;
+	ret.x = u < SM_PI ? x0 : x1;
+	ret.y = u < SM_PI ? -y0 : -y1;
 	ret.z = (-2 * (1 - cos(u) / 2)) * sin(v);
 
 	const struct klein_bottle* kb = (const struct klein_bottle*)ud;
@@ -426,8 +426,8 @@ _klein_bottle_evaluate(struct m3_vec2* domain, const void* ud) {
 }
 
 static bool 
-_klein_bottle_invert_normal(struct m3_vec2* domain) {
-	return domain->y > 3 * M3_PI / 2;
+_klein_bottle_invert_normal(struct sm_vec2* domain) {
+	return domain->y > 3 * SM_PI / 2;
 }
 
 void 
@@ -435,8 +435,8 @@ m3_create_klein_bottle(float scale, struct m3_mesh* mesh) {
 	struct parametric_interval pi;
 	pi.divisions.x = 20;
 	pi.divisions.y = 20;
-	pi.upper_bound.x = M3_PI * 2;
-	pi.upper_bound.y = M3_PI * 2;
+	pi.upper_bound.x = SM_PI * 2;
+	pi.upper_bound.y = SM_PI * 2;
 	pi.texture_count.x = 15;
 	pi.texture_count.y = 50;
 
