@@ -2,7 +2,7 @@
 
 #include "m3_parametric_surface.h"
 #include "m3_typedef.h"
-#include "m3_mesh.h"
+#include "m3_model.h"
 
 #include <ds_array.h>
 #include <sm.h>

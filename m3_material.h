@@ -6,12 +6,13 @@ extern "C"
 #ifndef model3_material_h
 #define model3_material_h
 
-#include "sm_math.h"
+#include "sm_vector.h"
 
 struct m3_material {
-	sm_vec3 ambient;
-	sm_vec3 diffuse;
-	sm_vec3 specular;
+	struct sm_vec3 ambient;
+	struct sm_vec3 diffuse;
+	struct sm_vec3 specular;
+	float shininess;
 };
 
 #endif // model3_material_h
