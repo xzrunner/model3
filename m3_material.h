@@ -13,6 +13,7 @@ struct m3_material {
 	struct sm_vec3 diffuse;
 	struct sm_vec3 specular;
 	float shininess;
+	int tex;
 };
 
 #endif // model3_material_h
