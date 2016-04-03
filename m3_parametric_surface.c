@@ -165,6 +165,8 @@ m3_create_cone(float height, float radius, struct m3_mesh* mesh) {
 
 	struct cone cone = { height, radius };
 
+	mesh->vertex_type = flags;
+
 	mesh->vertices = _gen_vertices(&pi, flags, _cone_evaluate, &cone, _cone_invert_normal);
 
 	mesh->indices = _gen_triangle_indices(&pi);
@@ -207,6 +209,8 @@ m3_create_sphere(float radius, struct m3_mesh* mesh) {
 	unsigned char flags = M3_VERTEX_FLAG_NORMALS;
 
 	struct sphere sphere = { radius };
+
+	mesh->vertex_type = flags;
 
 	mesh->vertices = _gen_vertices(&pi, flags, _sphere_evaluate, &sphere, _sphere_invert_normal);
 
@@ -253,6 +257,8 @@ m3_create_torus(float major_radius, float minor_radius, struct m3_mesh* mesh) {
 	unsigned char flags = M3_VERTEX_FLAG_NORMALS;
 
 	struct torus torus = { major_radius, minor_radius };
+
+	mesh->vertex_type = flags;
 
 	mesh->vertices = _gen_vertices(&pi, flags, _torus_evaluate, &torus, _torus_invert_normal);
 
@@ -326,6 +332,8 @@ m3_create_trefoil_knot(float scale, struct m3_mesh* mesh) {
 
 	struct trefoil_knot tk = { scale };
 
+	mesh->vertex_type = flags;
+
 	mesh->vertices = _gen_vertices(&pi, flags, _trefoil_knot_evaluate, &tk, _trefoil_knot_invert_normal);
 
 	mesh->indices = _gen_triangle_indices(&pi);
@@ -387,6 +395,8 @@ m3_create_mobius_strip(float scale, struct m3_mesh* mesh) {
 
 	struct mobius_strip ms = { scale };
 
+	mesh->vertex_type = flags;
+
 	mesh->vertices = _gen_vertices(&pi, flags, _mobius_strip_evaluate, &ms, _mobius_strip_invert_normal);
 
 	mesh->indices = _gen_triangle_indices(&pi);
@@ -443,6 +453,8 @@ m3_create_klein_bottle(float scale, struct m3_mesh* mesh) {
 	unsigned char flags = M3_VERTEX_FLAG_NORMALS;
 
 	struct klein_bottle ms = { scale };
+
+	mesh->vertex_type = flags;
 
 	mesh->vertices = _gen_vertices(&pi, flags, _klein_bottle_evaluate, &ms, _klein_bottle_invert_normal);
 

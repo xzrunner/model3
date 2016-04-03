@@ -11,6 +11,8 @@ extern "C"
 struct ds_array;
 
 struct m3_mesh {
+	int vertex_type;
+
 	struct ds_array* vertices;
 	struct ds_array* indices;
 
