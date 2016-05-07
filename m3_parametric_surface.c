@@ -5,10 +5,11 @@
 #include "m3_model.h"
 
 #include <ds_array.h>
-#include <sm.h>
+#include <sm_const.h>
 
 #include <string.h>
 #include <stdbool.h>
+#include <math.h>
 
 struct parametric_interval {
 //	struct sm_ivec2 slices;

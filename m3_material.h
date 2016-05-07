@@ -6,7 +6,7 @@ extern "C"
 #ifndef model3_material_h
 #define model3_material_h
 
-#include "sm_vector.h"
+#include <sm_c_vector.h>
 
 struct m3_material {
 	struct sm_vec3 ambient;
