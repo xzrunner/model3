@@ -7,21 +7,30 @@
 
 #include <stdint.h>
 
+namespace sl { class RenderBuffer; class RenderLayout; }
+
 namespace m3
 {
 
 class Mesh
 {
 public:
-	int vertex_type;
+	Mesh();
+	virtual ~Mesh();
 
-	std::vector<sm::vec3> vertices;
-	std::vector<sm::vec2> texcoords;
-	std::vector<sm::vec3> normals;
+	void SetRenderBuffer(sl::RenderBuffer* vb, sl::RenderBuffer* ib);
 
-	std::vector<uint16_t> indices;
+	void SetIndexCount(int count) { m_index_count = count; }
 
-	Material material;
+	void SetMaterial(const sm::vec3& ambient, const sm::vec3& diffuse, const sm::vec3& specular);
+
+private:
+	sl::RenderBuffer *m_vb, *m_ib;
+	sl::RenderLayout* m_layout;
+
+	int m_index_count;
+
+	Material m_material;
 
 }; // Mesh
 
