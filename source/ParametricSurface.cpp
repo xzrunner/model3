@@ -1,4 +1,5 @@
 #include "ParametricSurface.h"
+#include "m3_typedef.h"
 
 namespace m3 
 {
@@ -13,14 +14,13 @@ int ParametricSurface::GetTriangleIndexCount() const
 	return 6 * m_slices.x * m_slices.y;
 }
 
-void ParametricSurface::GenerateVertices(std::vector<float>& vertices,
-										 unsigned char flags) const
+void ParametricSurface::GenerateVertices(int vertex_type, std::vector<float>& vertices) const
 {
 	int stride = 3;
-	if (flags & VertexFlagsNormals) {
+	if (vertex_type & VERTEX_FLAG_NORMALS) {
 		stride += 3;
 	}
-	if (flags & VertexFlagsTexCoords) {
+	if (vertex_type & VERTEX_FLAG_TEXCOORDS) {
 		stride += 2;
 	}
 
@@ -39,7 +39,7 @@ void ParametricSurface::GenerateVertices(std::vector<float>& vertices,
 			ptr += 3;
 
 			// Compute Normal
-			if (flags & VertexFlagsNormals) 
+			if (vertex_type & VERTEX_FLAG_NORMALS) 
 			{
 				float s = static_cast<float>(i), t = static_cast<float>(j);
 
@@ -62,7 +62,7 @@ void ParametricSurface::GenerateVertices(std::vector<float>& vertices,
 			}
 
 			// Compute Texture Coordinates
-			if (flags & VertexFlagsTexCoords) 
+			if (vertex_type & VERTEX_FLAG_TEXCOORDS) 
 			{
 				float s = m_texture_count.x * i / m_slices.x;
 				float t = m_texture_count.y * j / m_slices.y;

@@ -4,8 +4,8 @@
 namespace m3
 {
 
-static const char M3_VERTEX_FLAG_NORMALS	= 1;
-static const char M3_VERTEX_FLAG_TEXCOORDS	= 2;
+static const char VERTEX_FLAG_NORMALS	= 1;
+static const char VERTEX_FLAG_TEXCOORDS	= 2;
 	
 }
 

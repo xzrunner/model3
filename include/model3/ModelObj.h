@@ -3,6 +3,8 @@
 
 #include "Model.h"
 
+#include <SM_Vector.h>
+
 #include <map>
 
 namespace m3 
@@ -12,10 +14,6 @@ class ModelObj : public Model
 {
 public:
 	ModelObj(const std::string& filepath, float scale = 1.0f);
-
-	virtual const std::vector<Mesh>& GetAllMeshes() const {
-		return m_meshes;
-	}
 
 private:
 	void Import(const std::string& filepath);
@@ -100,8 +98,6 @@ private:
 
 	ObjectInfo m_curr_object;
 	MeshInfo   m_curr_mesh;
-
-	std::vector<Mesh> m_meshes;
 
 }; // ModelObj
 

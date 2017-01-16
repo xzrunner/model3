@@ -1,10 +1,7 @@
 #include "ModelObj.h"
 #include "Surface.h"
-
-#include <unirender/RenderContext.h>
-#include <shaderlab/ShaderMgr.h>
-#include <shaderlab/Buffer.h>
-#include <shaderlab/RenderBuffer.h>
+#include "Mesh.h"
+#include "m3_typedef.h"
 
 #include <fstream>
 #include <sstream>
@@ -127,35 +124,29 @@ void ModelObj::InitAllMeshes()
 			const MeshInfo& mesh_data = m_objects[i].meshes[j];
 			const MaterialInfo& material_data = m_materials[mesh_data.material_id];
 
-			Mesh mesh;
+			Mesh* mesh = new Mesh;
 
-			mesh.SetMaterial(material_data.ambient, material_data.diffuse, material_data.specular);
+			Material material;
+			material.ambient  = material_data.ambient;
+			material.diffuse  = material_data.diffuse;
+			material.specular = material_data.specular;
+			mesh->SetMaterial(material);
 
+			int vertex_type = VERTEX_FLAG_NORMALS;
 			int stride = 3 + 3;
-
-			ur::RenderContext* rc = sl::ShaderMgr::Instance()->GetContext();
 
 			// Create the VBO for the vertices.
 			std::vector<float> vertices;
-			mesh_data.GenerateVertices(vertices, VertexFlagsNormals);
+			mesh_data.GenerateVertices(vertices, vertex_type);
 			int vertex_count = mesh_data.GetVertexCount();
-			sl::Buffer* vertices_buf = new sl::Buffer(stride, vertex_count);
-			vertices_buf->Add(&vertices[0], vertex_count);
-			sl::RenderBuffer* vb = new sl::RenderBuffer(rc, ur::VERTEXBUFFER, stride, vertex_count, vertices_buf);
 
 			// Create a new VBO for the indices if needed.
 			int index_count = mesh_data.GetTriangleIndexCount();
 			std::vector<unsigned short> indices(index_count);
 			mesh_data.GenerateTriangleIndices(indices);
-			sl::Buffer* indices_buf = new sl::Buffer(sizeof(uint16_t), index_count);
-			indices_buf->Add(&indices[0], index_count);
-			sl::RenderBuffer* ib = new sl::RenderBuffer(rc, ur::INDEXBUFFER, sizeof(uint16_t), index_count, indices_buf);
 
-			mesh.SetRenderBuffer(vb, ib);
-			vb->RemoveReference();
-			ib->RemoveReference();
-
-			mesh.SetIndexCount(mesh_data.GetTriangleIndexCount());
+			mesh->SetRenderBuffer(vertex_type, vertices, indices);
+			mesh->SetIndexCount(mesh_data.GetTriangleIndexCount());
 
 			m_meshes.push_back(mesh);
 		}

@@ -1,20 +1,28 @@
 #ifndef _MODEL3_MODEL_H_
 #define _MODEL3_MODEL_H_
 
-#include "Mesh.h"
-
 #include <CU_RefCountObj.h>
+#include <CU_Uncopyable.h>
 
 #include <vector>
 
 namespace m3
 {
 
-class Model : public cu::RefCountObj
+class Mesh;
+
+class Model : public cu::RefCountObj, private cu::Uncopyable
 {
 public:
-	virtual const std::vector<Mesh>& GetAllMeshes() const = 0;
-	virtual ~Model() {}
+	virtual ~Model();
+
+	const std::vector<Mesh*>& GetAllMeshes() const { return m_meshes; }
+
+	void AddMesh(Mesh* mesh);
+
+protected:
+	std::vector<Mesh*> m_meshes;
+	
 }; // Model
 
 }

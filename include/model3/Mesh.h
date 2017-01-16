@@ -1,32 +1,41 @@
 #ifndef _MODEL3_MESH_H_
 #define _MODEL3_MESH_H_
 
+#include <CU_RefCountObj.h>
+#include <CU_Uncopyable.h>
+
 #include "Material.h"
 
 #include <vector>
 
 #include <stdint.h>
 
-namespace sl { class RenderBuffer; class RenderLayout; }
-
 namespace m3
 {
 
-class Mesh
+class Mesh : public cu::RefCountObj, private cu::Uncopyable
 {
 public:
 	Mesh();
 	virtual ~Mesh();
 
-	void SetRenderBuffer(sl::RenderBuffer* vb, sl::RenderBuffer* ib);
+	void SetRenderBuffer(int vertex_type, const std::vector<float>& vertices,
+		const std::vector<uint16_t>& indices);
 
 	void SetIndexCount(int count) { m_index_count = count; }
 
-	void SetMaterial(const sm::vec3& ambient, const sm::vec3& diffuse, const sm::vec3& specular);
+	void SetMaterial(const Material& material) { m_material = material; }
+
+	int GetVertexType() const { return m_vertex_type; }
+	const std::vector<float>& GetVertices() const { return m_vertices; }
+
+	const std::vector<uint16_t>& GetIndices() const { return m_indices; }
 
 private:
-	sl::RenderBuffer *m_vb, *m_ib;
-	sl::RenderLayout* m_layout;
+	int m_vertex_type;
+	std::vector<float> m_vertices;
+
+	std::vector<uint16_t> m_indices; 
 
 	int m_index_count;
 

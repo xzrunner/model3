@@ -21,7 +21,7 @@ public:
 	int  GetVertexCount() const;
 	int  GetTriangleIndexCount() const;
 
-	void GenerateVertices(std::vector<float>& vertices, unsigned char flags) const;
+	void GenerateVertices(int vertex_type, std::vector<float>& vertices) const;
 	void GenerateTriangleIndices(std::vector<unsigned short>& indices) const;
 
 protected:
