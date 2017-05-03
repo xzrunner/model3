@@ -1,9 +1,9 @@
-#include "AssimpHelper.h"
-#include "Model.h"
-#include "Mesh.h"
-#include "Material.h"
-#include "m3_typedef.h"
-//#include "Texture.h"
+#include "model3/AssimpHelper.h"
+#include "model3/Model.h"
+#include "model3/Mesh.h"
+#include "model3/Material.h"
+#include "model3/m3_typedef.h"
+//#include "model3/Texture.h"
 
 #include <assimp/Importer.hpp>      // C++ importer interface
 #include <assimp/scene.h>           // Output data structure

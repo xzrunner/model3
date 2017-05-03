@@ -1,4 +1,4 @@
-#include "Mesh.h"
+#include "model3/Mesh.h"
 
 namespace m3
 {

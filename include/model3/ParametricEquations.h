@@ -3,7 +3,8 @@
 
 #include "ParametricSurface.h"
 
-#include <ee/Math2D.h>
+#include <SM_Vector.h>
+#include <sm_const.h>
 
 namespace m3 
 {

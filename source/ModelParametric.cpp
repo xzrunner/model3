@@ -1,8 +1,8 @@
-#include "ModelParametric.h"
-#include "ParametricSurface.h"
-#include "AABB.h"
-#include "Mesh.h"
-#include "m3_typedef.h"
+#include "model3/ModelParametric.h"
+#include "model3/ParametricSurface.h"
+#include "model3/AABB.h"
+#include "model3/Mesh.h"
+#include "model3/m3_typedef.h"
 
 namespace m3
 {
@@ -28,7 +28,7 @@ ModelParametric::ModelParametric(const Surface* surface, AABB& aabb)
 
 	// Create the VBO for the vertices.
 	std::vector<float> vertices;
-	surface->GenerateVertices(vertices, vertex_type);
+	surface->GenerateVertices(vertex_type, vertices);
 	int vertex_count = surface->GetVertexCount();
 	
 	// Create a new VBO for the indices if needed.

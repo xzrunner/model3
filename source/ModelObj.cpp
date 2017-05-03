@@ -1,7 +1,7 @@
-#include "ModelObj.h"
-#include "Surface.h"
-#include "Mesh.h"
-#include "m3_typedef.h"
+#include "model3/ModelObj.h"
+#include "model3/Surface.h"
+#include "model3/Mesh.h"
+#include "model3/m3_typedef.h"
 
 #include <fstream>
 #include <sstream>
