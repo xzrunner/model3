@@ -25,6 +25,7 @@ public:
 	void SetIndexCount(int count) { m_index_count = count; }
 
 	void SetMaterial(const Material& material) { m_material = material; }
+	const Material& GetMaterial() const { return m_material; }
 
 	int GetVertexType() const { return m_vertex_type; }
 	const std::vector<float>& GetVertices() const { return m_vertices; }
