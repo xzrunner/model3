@@ -1,35 +1,35 @@
-#include "model3/Camera.h"
+#include "model3/CameraUVN.h"
 
 namespace m3
 {
 
-const float Camera::CAM_NEAR = 1;
-const float Camera::CAM_FAR = 3;
+const float CameraUVN::CAM_NEAR = 1;
+const float CameraUVN::CAM_FAR = 3;
 static const float DEFAULT_Z = 2;
 
-// const float Camera::CAM_NEAR = 4;
-// const float Camera::CAM_FAR = 10;
+// const float CameraUVN::CAM_NEAR = 4;
+// const float CameraUVN::CAM_FAR = 10;
 // static const float DEFAULT_Z = -6;
 
-// const float Camera::CAM_NEAR = 1004;
-// const float Camera::CAM_FAR = 1010;
+// const float CameraUVN::CAM_NEAR = 1004;
+// const float CameraUVN::CAM_FAR = 1010;
 // static const float DEFAULT_Z = -1008;
 
 static const float ZOOM_STEP = 0.05f;
 
-Camera::Camera()
+CameraUVN::CameraUVN()
 	: m_pos(0, 0, DEFAULT_Z)
 	, m_rot_heading(0)
 	, m_rot_elevation(-90)
 {
 }
 
-void Camera::Translate(const sm::vec3& offset)
+void CameraUVN::Translate(const sm::vec3& offset)
 {
 	m_pos += offset;
 }
 
-void Camera::Zoom(bool zoomin)
+void CameraUVN::Zoom(bool zoomin)
 {
 	if (zoomin) {
 		m_pos.z *= (1 - ZOOM_STEP);
@@ -38,13 +38,13 @@ void Camera::Zoom(bool zoomin)
 	}
 }
 
-void Camera::Rotate(float dheading, float delevation)
+void CameraUVN::Rotate(float dheading, float delevation)
 {
 	m_rot_heading += dheading;
 	m_rot_elevation += delevation;
 }
 
-sm::vec3 Camera::GetLeft() const
+sm::vec3 CameraUVN::GetLeft() const
 {
 	// Step 1: n = <target position - view reference point>
 	sm::vec3 n = GetToward();
@@ -56,7 +56,7 @@ sm::vec3 Camera::GetLeft() const
 	return u;
 }
 
-sm::vec3 Camera::GetUp() const
+sm::vec3 CameraUVN::GetUp() const
 {
 	// Step 1: n = <target position - view reference point>
 	sm::vec3 n = GetToward();
@@ -70,7 +70,7 @@ sm::vec3 Camera::GetUp() const
 	return v;
 }
 
-sm::vec3 Camera::GetToward() const
+sm::vec3 CameraUVN::GetToward() const
 {
 	// reset rot matrix
 	// compute trig functions once
@@ -91,20 +91,20 @@ sm::vec3 Camera::GetToward() const
 	return target;
 }
 
-sm::mat4 Camera::GetModelViewMat() const
+sm::mat4 CameraUVN::GetModelViewMat() const
 {
 	sm::mat4 trans = sm::mat4::Translated(-m_pos.x, -m_pos.y, -m_pos.z);
 	sm::mat4 rot = GetModelViewRotMat();
 	return trans * rot;
 }
 
-void Camera::SetScreenSize(int width, int height)
+void CameraUVN::SetScreenSize(int width, int height)
 {
 	m_width = width;
 	m_height = height;
 }
 
-sm::vec3 Camera::MapToSphere(sm::ivec2 touchpoint) const
+sm::vec3 CameraUVN::MapToSphere(sm::ivec2 touchpoint) const
 {
 // 	int viewport[4];
 // 	glGetIntegerv(GL_VIEWPORT, viewport);
@@ -133,7 +133,7 @@ sm::vec3 Camera::MapToSphere(sm::ivec2 touchpoint) const
 	return mapped / radius;
 }
 
-void Camera::Reset()
+void CameraUVN::Reset()
 {
 	m_pos.x = m_pos.y = 0;
 	m_pos.z = DEFAULT_Z;
@@ -142,7 +142,7 @@ void Camera::Reset()
 	m_rot_elevation = 90;
 }
 
-sm::mat4 Camera::GetModelViewRotMat() const
+sm::mat4 CameraUVN::GetModelViewRotMat() const
 {
 	// Step 1: n = <target position - view reference point>
 	sm::vec3 n = -GetToward();

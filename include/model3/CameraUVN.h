@@ -1,5 +1,5 @@
-#ifndef _MODEL3_CAMERA_H_
-#define _MODEL3_CAMERA_H_
+#ifndef _MODEL3_CAMERA_UVN_H_
+#define _MODEL3_CAMERA_UVN_H_
 
 #include <SM_Vector.h>
 #include <SM_Matrix.h>
@@ -7,10 +7,10 @@
 namespace m3
 {
 
-class Camera
+class CameraUVN
 {
 public:
-	Camera();
+	CameraUVN();
 
 	void Translate(const sm::vec3& offset);
 	void Zoom(bool zoomin);
@@ -54,8 +54,8 @@ private:
 
 	int m_width, m_height;
 
-}; // Camera
+}; // CameraUVN
 	
 }
 
-#endif // _MODEL3_CAMERA_H_
+#endif // _MODEL3_CAMERA_UVN_H_
