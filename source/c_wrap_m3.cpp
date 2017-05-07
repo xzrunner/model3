@@ -1,6 +1,9 @@
 #include "c_wrap_m3.h"
 #include "model3/ParametricEquations.h"
 #include "model3/CameraQuat.h"
+#include "model3/AssimpHelper.h"
+#include "model3/AABB.h"
+#include "model3/ModelParametric.h"
 
 #include <SM_Vector.h>
 #include <sm_c_vector.h>
@@ -12,40 +15,58 @@ namespace m3
 /* Surface                                                              */
 /************************************************************************/
 
+static m3::Model*
+_create_model_from_surface(const m3::Surface* surface)
+{
+	m3::AABB aabb;
+	m3::Model* model = new m3::ModelParametric(surface, aabb);
+	return model;
+}
+
 extern "C"
 void* m3_create_cone(float height, float radius)
 {
-	return new Cone(height, radius);
+	return _create_model_from_surface(new Cone(height, radius));
 }
 
 extern "C"
 void* m3_create_sphere(float radius)
 {
-	return new Sphere(radius);
+	return _create_model_from_surface(new Sphere(radius));
 }
 
 extern "C"
 void* m3_create_torus(float major_radius, float minor_radius)
 {
-	return new Torus(major_radius, minor_radius);
+	return _create_model_from_surface(new Torus(major_radius, minor_radius));
 }
 
 extern "C"
 void* m3_create_trefoi_knot(float scale)
 {
-	return new TrefoilKnot(scale);
+	return _create_model_from_surface(new TrefoilKnot(scale));
 }
 
 extern "C"
 void* m3_create_mobius_strip(float scale)
 {
-	return new MobiusStrip(scale);
+	return _create_model_from_surface(new MobiusStrip(scale));
 }
 
 extern "C"
 void* m3_create_klein_bottle(float scale)
 {
-	return new KleinBottle(scale);
+	return _create_model_from_surface(new KleinBottle(scale));
+}
+
+/************************************************************************/
+/* Model                                                                */
+/************************************************************************/
+
+extern "C"
+void* m3_create_model(const char* filepath)
+{
+	return AssimpHelper::Load(filepath);
 }
 
 /************************************************************************/
