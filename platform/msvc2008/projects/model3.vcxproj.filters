@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="model">
+      <UniqueIdentifier>{5f4864e3-374d-4be1-8d14-29db09ca3292}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="model\parametric">
+      <UniqueIdentifier>{b3cba04f-cb90-4241-877a-f93248d94453}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="model\obj">
+      <UniqueIdentifier>{7c3f0edf-715f-4510-a6b8-f3b65e970f9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dataset">
+      <UniqueIdentifier>{0b2ddd2a-d865-487d-a2e8-8fa47e78dc07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility">
+      <UniqueIdentifier>{da3eeec6-0a86-4c4d-91b5-69824a1136d8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\source\Material.cpp">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Mesh.cpp">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Model.cpp">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\ModelParametric.cpp">
+      <Filter>model\parametric</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\ParametricSurface.cpp">
+      <Filter>model\parametric</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\ModelObj.cpp">
+      <Filter>model\obj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\AssimpHelper.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\model3\Material.h">
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\model3\Mesh.h">
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\model3\Model.h">
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\model3\ModelParametric.h">
+      <Filter>model\parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\model3\ParametricEquations.h">
+      <Filter>model\parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\model3\ParametricSurface.h">
+      <Filter>model\parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\model3\Surface.h">
+      <Filter>model\parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\model3\ModelObj.h">
+      <Filter>model\obj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\model3\AABB.h">
+      <Filter>dataset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\model3\AssimpHelper.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\model3\m3_typedef.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\include\model3\AABB.inl">
+      <Filter>dataset</Filter>
+    </None>
+  </ItemGroup>
+</Project>
