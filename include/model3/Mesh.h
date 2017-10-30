@@ -1,8 +1,8 @@
 #ifndef _MODEL3_MESH_H_
 #define _MODEL3_MESH_H_
 
-#include <CU_RefCountObj.h>
-#include <CU_Uncopyable.h>
+#include <cu/CU_RefCountObj.h>
+#include <cu/uncopyable.h>
 
 #include "Material.h"
 
