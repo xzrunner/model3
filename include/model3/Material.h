@@ -13,7 +13,7 @@ public:
 	sm::vec3 diffuse;
 	sm::vec3 specular;
 	float    shininess;
-	int      tex;
+	void*    texture;
 
 public:
 	Material() 
@@ -21,7 +21,7 @@ public:
 		, diffuse(1, 1, 1)
 		, specular(1, 1, 1)
 		, shininess(50)
-		, tex(-1)
+		, texture(nullptr)
 	{}
 
 }; // Material

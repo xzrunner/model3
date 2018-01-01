@@ -3,7 +3,7 @@
 #include "model3/Mesh.h"
 #include "model3/Material.h"
 #include "model3/m3_typedef.h"
-//#include "model3/Texture.h"
+#include "model3/ResourceAPI.h"
 
 #include <assimp/Importer.hpp>      // C++ importer interface
 #include <assimp/scene.h>           // Output data structure
@@ -11,8 +11,6 @@
 
 namespace m3
 {
-
-//std::map<std::string, Texture*> AssimpHelper::m_tex_cache;
 
 // default pp steps
 unsigned int ppsteps = aiProcess_CalcTangentSpace | // calculate tangents and bitangents if possible
@@ -107,7 +105,7 @@ Mesh* AssimpHelper::LoadMesh(const aiMesh* ai_mesh, const aiMaterial* ai_materia
 		vertex_type |= m3::VERTEX_FLAG_TEXCOORDS;
 	}
 
-	std::vector<float> vertices;
+	CU_VEC<float> vertices;
 	vertices.reserve(floats_per_vertex * ai_mesh->mNumVertices);
 	for (int i = 0; i < ai_mesh->mNumVertices; ++i) 
 	{
@@ -133,7 +131,7 @@ Mesh* AssimpHelper::LoadMesh(const aiMesh* ai_mesh, const aiMaterial* ai_materia
 		const aiFace& face = ai_mesh->mFaces[i];
 		count += face.mNumIndices;
 	}
-	std::vector<uint16_t> indices;
+	CU_VEC<uint16_t> indices;
 	indices.reserve(count);
 
 	for (int i = 0; i < ai_mesh->mNumFaces; ++i) {
@@ -179,23 +177,14 @@ void AssimpHelper::LoadMaterial(const aiMesh* ai_mesh, const aiMaterial* ai_mate
 	}
 	material.shininess = 50;
 
-	material.tex = -1;
+	material.texture = nullptr;
 	if (ai_mesh->mTextureCoords[0]) 
 	{
 		aiString path;
 		if (aiGetMaterialString(ai_material, AI_MATKEY_TEXTURE_DIFFUSE(0), &path) == AI_SUCCESS) 
 		{
-// 			std::string img_path = dir + '/' + path.data;
-// 			std::map<std::string, Texture*>::iterator itr = m_tex_cache.find(img_path);
-// 			Texture* tex = NULL;
-// 			if (itr == m_tex_cache.end()) {
-// 				tex = new Texture;
-// 				tex->Load(img_path);
-// 				m_tex_cache.insert(std::make_pair(img_path, tex));
-// 			} else {
-// 				tex = itr->second;
-// 			}
-// 			material.tex = tex->GetID();
+ 			std::string img_path = dir + '/' + path.data;
+			material.texture = ResourceAPI::CreateImg(img_path);
 		}
 	}
 

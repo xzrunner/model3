@@ -18,11 +18,11 @@ struct ParametricInterval
 class ParametricSurface : public Surface 
 {
 public:
-	virtual int  GetVertexCount() const;
-	virtual int  GetTriangleIndexCount() const;
+	virtual int  GetVertexCount() const override;
+	virtual int  GetTriangleIndexCount() const override;
 
-	virtual void GenerateVertices(int vertex_type, std::vector<float>& vertices) const;
-	virtual void GenerateTriangleIndices(std::vector<unsigned short>& indices) const;
+	virtual void GenerateVertices(int vertex_type, CU_VEC<float>& vertices) const override;
+	virtual void GenerateTriangleIndices(CU_VEC<unsigned short>& indices) const override;
 
 protected:
 	void SetInterval(const ParametricInterval& interval);

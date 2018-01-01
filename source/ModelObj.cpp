@@ -5,6 +5,8 @@
 
 #include <fstream>
 #include <sstream>
+#include <algorithm>
+#include <iterator>
 
 #include <assert.h>
 
@@ -136,13 +138,13 @@ void ModelObj::InitAllMeshes()
 			int stride = 3 + 3;
 
 			// Create the VBO for the vertices.
-			std::vector<float> vertices;
+			CU_VEC<float> vertices;
 			mesh_data.GenerateVertices(vertices, vertex_type);
 			int vertex_count = mesh_data.GetVertexCount();
 
 			// Create a new VBO for the indices if needed.
 			int index_count = mesh_data.GetTriangleIndexCount();
-			std::vector<unsigned short> indices(index_count);
+			CU_VEC<unsigned short> indices;
 			mesh_data.GenerateTriangleIndices(indices);
 
 			mesh->SetRenderBuffer(vertex_type, vertices, indices);
@@ -338,7 +340,7 @@ GetTriangleIndexCount() const
 }
 
 void ModelObj::MeshInfo::
-GenerateVertices(std::vector<float>& floats, unsigned char flags) const
+GenerateVertices(CU_VEC<float>& floats, unsigned char flags) const
 {
 	struct Vertex {
 		sm::vec3 Position;
@@ -356,7 +358,7 @@ GenerateVertices(std::vector<float>& floats, unsigned char flags) const
 }
 
 void ModelObj::MeshInfo::
-GenerateTriangleIndices(std::vector<unsigned short>& indices) const
+GenerateTriangleIndices(CU_VEC<unsigned short>& indices) const
 {
 	indices.resize(GetTriangleIndexCount());
 	std::vector<unsigned short>::iterator index = indices.begin();

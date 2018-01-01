@@ -15,8 +15,6 @@ class Model;
 class Mesh;
 class Material;
 
-//class Texture;
-
 class AssimpHelper
 {
 public:
@@ -28,9 +26,6 @@ private:
 	static Mesh* LoadMesh(const aiMesh* ai_mesh, const aiMaterial* ai_material, const std::string& dir);
 
 	static void LoadMaterial(const aiMesh* ai_mesh, const aiMaterial* ai_material, Mesh& mesh, const std::string& dir);
-
-private:
-//	static std::map<std::string, Texture*> m_tex_cache;
 
 }; // AssimpHelper
 

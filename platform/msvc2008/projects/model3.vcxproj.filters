@@ -16,6 +16,9 @@
     <Filter Include="utility">
       <UniqueIdentifier>{da3eeec6-0a86-4c4d-91b5-69824a1136d8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="render">
+      <UniqueIdentifier>{5cd09632-601f-42e8-884b-8214a7fc2bd1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Material.cpp">
@@ -37,6 +40,24 @@
       <Filter>model\obj</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\AssimpHelper.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Ray.cpp">
+      <Filter>dataset</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Math.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\RenderContext.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\RenderCtxStack.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\PrimitiveDraw.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\ResourceAPI.cpp">
       <Filter>utility</Filter>
     </ClCompile>
   </ItemGroup>
@@ -72,9 +93,30 @@
       <Filter>utility</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\model3\m3_typedef.h" />
+    <ClInclude Include="..\..\..\include\model3\Ray.h">
+      <Filter>dataset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\model3\Math.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\model3\RenderContext.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\model3\RenderCtxStack.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\model3\PrimitiveDraw.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\model3\ResourceAPI.h">
+      <Filter>utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\include\model3\AABB.inl">
+      <Filter>dataset</Filter>
+    </None>
+    <None Include="..\..\..\include\model3\Ray.inl">
       <Filter>dataset</Filter>
     </None>
   </ItemGroup>

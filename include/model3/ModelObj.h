@@ -4,6 +4,7 @@
 #include "Model.h"
 
 #include <SM_Vector.h>
+#include <cu/cu_stl.h>
 
 #include <map>
 
@@ -68,8 +69,8 @@ private:
 
 		int GetVertexCount() const;
 	 	int GetTriangleIndexCount() const;
-		void GenerateVertices(std::vector<float>& vertices, unsigned char flags) const;
-	 	void GenerateTriangleIndices(std::vector<unsigned short>& indices) const;
+		void GenerateVertices(CU_VEC<float>& vertices, unsigned char flags) const;
+	 	void GenerateTriangleIndices(CU_VEC<unsigned short>& indices) const;
 
 		void AddFace(ModelObj& obj, int i0, int i1, int i2);
 		int AddNode(ModelObj& obj, int index);

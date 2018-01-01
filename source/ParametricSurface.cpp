@@ -14,7 +14,7 @@ int ParametricSurface::GetTriangleIndexCount() const
 	return 6 * m_slices.x * m_slices.y;
 }
 
-void ParametricSurface::GenerateVertices(int vertex_type, std::vector<float>& vertices) const
+void ParametricSurface::GenerateVertices(int vertex_type, CU_VEC<float>& vertices) const
 {
 	int stride = 3;
 	if (vertex_type & VERTEX_FLAG_NORMALS) {
@@ -74,7 +74,7 @@ void ParametricSurface::GenerateVertices(int vertex_type, std::vector<float>& ve
 }
 
 void
-ParametricSurface::GenerateTriangleIndices(std::vector<unsigned short>& indices) const
+ParametricSurface::GenerateTriangleIndices(CU_VEC<unsigned short>& indices) const
 {
 	indices.resize(GetTriangleIndexCount());
 	std::vector<unsigned short>::iterator index = indices.begin();

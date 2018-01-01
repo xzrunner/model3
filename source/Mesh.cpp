@@ -13,8 +13,8 @@ Mesh::~Mesh()
 {
 }
 
-void Mesh::SetRenderBuffer(int vertex_type, const std::vector<float>& vertices,
-						   const std::vector<uint16_t>& indices)
+void Mesh::SetRenderBuffer(int vertex_type, const CU_VEC<float>& vertices,
+						   const CU_VEC<uint16_t>& indices)
 {
 	m_vertex_type = vertex_type;
 	m_vertices = vertices;

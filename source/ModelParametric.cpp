@@ -27,13 +27,13 @@ ModelParametric::ModelParametric(const Surface* surface, AABB& aabb)
 	}
 
 	// Create the VBO for the vertices.
-	std::vector<float> vertices;
+	CU_VEC<float> vertices;
 	surface->GenerateVertices(vertex_type, vertices);
 	int vertex_count = surface->GetVertexCount();
 	
 	// Create a new VBO for the indices if needed.
 	int index_count = surface->GetTriangleIndexCount();
-	std::vector<unsigned short> indices(index_count);
+	CU_VEC<unsigned short> indices;
 	surface->GenerateTriangleIndices(indices);
 
 	mesh->SetRenderBuffer(vertex_type, vertices, indices);
