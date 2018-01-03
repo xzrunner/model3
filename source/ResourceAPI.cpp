@@ -1,6 +1,6 @@
-#include "model3/ResourceAPI.h"
+#include "node3/ResourceAPI.h"
 
-namespace m3
+namespace n3
 {
 
 static ResourceAPI::Callback CB;

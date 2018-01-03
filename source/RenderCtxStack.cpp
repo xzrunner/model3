@@ -1,6 +1,6 @@
-#include "model3/RenderCtxStack.h"
+#include "node3/RenderCtxStack.h"
 
-namespace m3
+namespace n3
 {
 
 CU_SINGLETON_DEFINITION(RenderCtxStack)

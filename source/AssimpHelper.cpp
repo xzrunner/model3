@@ -1,15 +1,16 @@
-#include "model3/AssimpHelper.h"
-#include "model3/Model.h"
-#include "model3/Mesh.h"
-#include "model3/Material.h"
-#include "model3/m3_typedef.h"
-#include "model3/ResourceAPI.h"
+#include "node3/AssimpHelper.h"
+#include "node3/Model.h"
+#include "node3/Mesh.h"
+#include "node3/Material.h"
+#include "node3/n3_typedef.h"
+#include "node3/ResourceAPI.h"
 
 #include <assimp/Importer.hpp>      // C++ importer interface
 #include <assimp/scene.h>           // Output data structure
 #include <assimp/postprocess.h>     // Post processing flags
+#include <boost/filesystem.hpp>
 
-namespace m3
+namespace n3
 {
 
 // default pp steps
@@ -44,14 +45,7 @@ Model* AssimpHelper::Load(const std::string& filepath)
 		return NULL;
 	}
 
-	std::string dir = filepath;
-	int pos = dir.find_last_of('/');
-	if (pos != std::string::npos) {
-		dir = dir.substr(0, pos);
-	} else {
-		dir = "";
-	}
-
+	auto dir = boost::filesystem::path(filepath).parent_path().string();
 	Model* model = new Model;
 	LoadNode(scene, scene->mRootNode, *model, dir);
 
@@ -65,7 +59,7 @@ void AssimpHelper::LoadNode(const aiScene* ai_scene, const aiNode* ai_node,
 {
 	if (ai_node->mNumChildren) 
 	{
-		for (int i = 0; i < ai_node->mNumChildren; ++i) {
+		for (size_t i = 0; i < ai_node->mNumChildren; ++i) {
 			LoadNode(ai_scene, ai_node->mChildren[i], model, dir);
 		}
 	} 
@@ -73,14 +67,14 @@ void AssimpHelper::LoadNode(const aiScene* ai_scene, const aiNode* ai_node,
 	{
 		if (ai_node->mNumMeshes) 
 		{
-			for (int i = 0; i < ai_node->mNumMeshes; ++i) 
+			for (size_t i = 0; i < ai_node->mNumMeshes; ++i)
 			{
 				const aiMesh* mesh = ai_scene->mMeshes[ai_node->mMeshes[i]];
 				const aiMaterial* material = ai_scene->mMaterials[mesh->mMaterialIndex];
 
-				m3::Mesh* m3_mesh = LoadMesh(mesh, material, dir);
-				model.AddMesh(m3_mesh);
-				m3_mesh->RemoveReference();
+				n3::Mesh* n3_mesh = LoadMesh(mesh, material, dir);
+				model.AddMesh(n3_mesh);
+				n3_mesh->RemoveReference();
 			}
 		}
 	}
@@ -97,17 +91,17 @@ Mesh* AssimpHelper::LoadMesh(const aiMesh* ai_mesh, const aiMaterial* ai_materia
 	bool has_normal = ai_mesh->HasNormals();
 	if (has_normal) {
 		floats_per_vertex += 3;
-		vertex_type |= m3::VERTEX_FLAG_NORMALS;
+		vertex_type |= n3::VERTEX_FLAG_NORMALS;
 	}
 	bool has_texcoord = ai_mesh->HasTextureCoords(0);
 	if (has_texcoord) {
 		floats_per_vertex += 2;
-		vertex_type |= m3::VERTEX_FLAG_TEXCOORDS;
+		vertex_type |= n3::VERTEX_FLAG_TEXCOORDS;
 	}
 
 	CU_VEC<float> vertices;
 	vertices.reserve(floats_per_vertex * ai_mesh->mNumVertices);
-	for (int i = 0; i < ai_mesh->mNumVertices; ++i) 
+	for (size_t i = 0; i < ai_mesh->mNumVertices; ++i)
 	{
 		const aiVector3D& p = ai_mesh->mVertices[i];
 		vertices.push_back(p.x);
@@ -127,16 +121,16 @@ Mesh* AssimpHelper::LoadMesh(const aiMesh* ai_mesh, const aiMaterial* ai_materia
 	}
 
 	int count = 0;
-	for (int i = 0; i < ai_mesh->mNumFaces; ++i) {
+	for (size_t i = 0; i < ai_mesh->mNumFaces; ++i) {
 		const aiFace& face = ai_mesh->mFaces[i];
 		count += face.mNumIndices;
 	}
 	CU_VEC<uint16_t> indices;
 	indices.reserve(count);
 
-	for (int i = 0; i < ai_mesh->mNumFaces; ++i) {
+	for (size_t i = 0; i < ai_mesh->mNumFaces; ++i) {
 		const aiFace& face = ai_mesh->mFaces[i];
-		for (int j = 0; j < face.mNumIndices; ++j) {
+		for (size_t j = 0; j < face.mNumIndices; ++j) {
 			indices.push_back(face.mIndices[j]);
 		}
 	}
@@ -148,7 +142,7 @@ Mesh* AssimpHelper::LoadMesh(const aiMesh* ai_mesh, const aiMaterial* ai_materia
 
 void AssimpHelper::LoadMaterial(const aiMesh* ai_mesh, const aiMaterial* ai_material, Mesh& mesh, const std::string& dir)
 {
-	m3::Material material;
+	n3::Material material;
 
 	aiColor4D col;
 
@@ -183,7 +177,7 @@ void AssimpHelper::LoadMaterial(const aiMesh* ai_mesh, const aiMaterial* ai_mate
 		aiString path;
 		if (aiGetMaterialString(ai_material, AI_MATKEY_TEXTURE_DIFFUSE(0), &path) == AI_SUCCESS) 
 		{
- 			std::string img_path = dir + '/' + path.data;
+ 			std::string img_path = dir + '\\' + path.data;
 			material.texture = ResourceAPI::CreateImg(img_path);
 		}
 	}

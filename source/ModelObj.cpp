@@ -1,7 +1,7 @@
-#include "model3/ModelObj.h"
-#include "model3/Surface.h"
-#include "model3/Mesh.h"
-#include "model3/m3_typedef.h"
+#include "node3/ModelObj.h"
+#include "node3/Surface.h"
+#include "node3/Mesh.h"
+#include "node3/n3_typedef.h"
 
 #include <fstream>
 #include <sstream>
@@ -10,7 +10,7 @@
 
 #include <assert.h>
 
-namespace m3 
+namespace n3 
 {
 
 ModelObj::ModelObj(const std::string& filepath, float scale /*= 1.0f*/)

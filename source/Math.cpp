@@ -1,8 +1,8 @@
-#include "model3/Math.h"
-#include "model3/Ray.h"
-#include "model3/AABB.h"
+#include "node3/Math.h"
+#include "node3/Ray.h"
+#include "node3/AABB.h"
 
-namespace m3
+namespace n3
 {
 
 #define NUMDIM	3

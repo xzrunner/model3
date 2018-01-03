@@ -1,7 +1,7 @@
-#include "model3/ParametricSurface.h"
-#include "model3/m3_typedef.h"
+#include "node3/ParametricSurface.h"
+#include "node3/n3_typedef.h"
 
-namespace m3 
+namespace n3 
 {
 
 int ParametricSurface::GetVertexCount() const

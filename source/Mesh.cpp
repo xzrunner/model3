@@ -1,6 +1,6 @@
-#include "model3/Mesh.h"
+#include "node3/Mesh.h"
 
-namespace m3
+namespace n3
 {
 
 Mesh::Mesh()

@@ -1,8 +1,8 @@
-#include "model3/Ray.h"
+#include "node3/Ray.h"
 
 #include <SM_Matrix.h>
 
-namespace m3
+namespace n3
 {
 
 void Ray::ChangeCoordSystem(const sm::Quaternion& rot)

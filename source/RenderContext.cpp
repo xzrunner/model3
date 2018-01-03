@@ -1,10 +1,10 @@
-#include "model3/RenderContext.h"
+#include "node3/RenderContext.h"
 
 #include <shaderlab/SubjectMVP3.h>
 #include <shaderlab/ShaderMgr.h>
 #include <unirender/RenderContext.h>
 
-namespace m3
+namespace n3
 {
 
 RenderContext::RenderContext()

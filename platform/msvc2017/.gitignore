@@ -1,0 +1,5 @@
+node3/
+projects/*
+
+!projects/node3.vcxproj
+!projects/node3.vcxproj.filters

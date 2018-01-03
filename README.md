@@ -1,3 +1,5 @@
-# Model3
+# Node3
 
-3d model library.
+Scene graph for 3D.
+
+Model and Node layers.

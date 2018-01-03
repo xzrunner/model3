@@ -1,11 +1,11 @@
-#include "model3/PrimitiveDraw.h"
-#include "model3/AABB.h"
+#include "node3/PrimitiveDraw.h"
+#include "node3/AABB.h"
 
 #include <rvg.h>
 #include <shaderlab/ShaderMgr.h>
 #include <shaderlab/Shape3Shader.h>
 
-namespace m3
+namespace n3
 {
 
 void PrimitiveDraw::Init()
@@ -295,9 +295,9 @@ void PrimitiveDraw::Cross(const sm::vec3& center, const sm::vec3& size)
 void PrimitiveDraw::Grids(const sm::vec3& min, const sm::vec3& max, const sm::vec3& size)
 {
 	std::vector<sm::vec3> lines;
-	int cx = size.x ? ceil(max.x - min.x) / size.x : 1;
-	int cy = size.y ? ceil(max.y - min.y) / size.y : 1;
-	int cz = size.z ? ceil(max.z - min.z) / size.z : 1;
+	int cx = size.x ? static_cast<int>(ceil(max.x - min.x) / size.x) : 1;
+	int cy = size.y ? static_cast<int>(ceil(max.y - min.y) / size.y) : 1;
+	int cz = size.z ? static_cast<int>(ceil(max.z - min.z) / size.z) : 1;
 	lines.reserve(cx * cy * cz * 2);
 
 	for (float z = min.z; z <= max.z; z += size.z) {

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>3.node3</ProjectName>
+    <ProjectGuid>{6030CF6B-1A8B-421B-92CE-4EB965751636}</ProjectGuid>
+    <RootNamespace>node3</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26730.12</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\node3\x86\Debug\</OutDir>
+    <IntDir>..\node3\x86\Debug\obj\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\node3\x86\Release\</OutDir>
+    <IntDir>..\node3\x86\Release\obj\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\sm\src\sm;..\..\..\..\cu\src;..\..\..\..\rapidvg\src\rapidvg;..\..\..\..\memmgr\include;..\..\..\..\unirender\include;..\..\..\..\shaderlab\include;..\..\..\..\editor-external\assimp\include;..\..\..\..\editor-external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;EASY_EDITOR;__STDC_LIMIT_MACROS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\sm\src\sm;..\..\..\..\cu\src;..\..\..\..\rapidvg\src\rapidvg;..\..\..\..\memmgr\include;..\..\..\..\unirender\include;..\..\..\..\shaderlab\include;..\..\..\..\editor-external\assimp\include;..\..\..\..\editor-external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;EASY_EDITOR;__STDC_LIMIT_MACROS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\source\AssimpHelper.cpp" />
+    <ClCompile Include="..\..\..\source\ComplexModel.cpp" />
+    <ClCompile Include="..\..\..\source\ComplexNode.cpp" />
+    <ClCompile Include="..\..\..\source\DrawNode.cpp" />
+    <ClCompile Include="..\..\..\source\IModel.cpp" />
+    <ClCompile Include="..\..\..\source\INode.cpp" />
+    <ClCompile Include="..\..\..\source\Material.cpp" />
+    <ClCompile Include="..\..\..\source\Math.cpp" />
+    <ClCompile Include="..\..\..\source\Mesh.cpp" />
+    <ClCompile Include="..\..\..\source\Model.cpp" />
+    <ClCompile Include="..\..\..\source\ModelObj.cpp" />
+    <ClCompile Include="..\..\..\source\ModelParametric.cpp" />
+    <ClCompile Include="..\..\..\source\ObjectModel.cpp" />
+    <ClCompile Include="..\..\..\source\ObjectNode.cpp" />
+    <ClCompile Include="..\..\..\source\ParametricSurface.cpp" />
+    <ClCompile Include="..\..\..\source\PrimitiveDraw.cpp" />
+    <ClCompile Include="..\..\..\source\Ray.cpp" />
+    <ClCompile Include="..\..\..\source\RenderContext.cpp" />
+    <ClCompile Include="..\..\..\source\RenderCtxStack.cpp" />
+    <ClCompile Include="..\..\..\source\ResourceAPI.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\c_wrap_n3.h" />
+    <ClInclude Include="..\..\..\include\node3\AABB.h" />
+    <ClInclude Include="..\..\..\include\node3\AssimpHelper.h" />
+    <ClInclude Include="..\..\..\include\node3\ComplexModel.h" />
+    <ClInclude Include="..\..\..\include\node3\ComplexNode.h" />
+    <ClInclude Include="..\..\..\include\node3\DrawNode.h" />
+    <ClInclude Include="..\..\..\include\node3\IModel.h" />
+    <ClInclude Include="..\..\..\include\node3\INode.h" />
+    <ClInclude Include="..\..\..\include\node3\Material.h" />
+    <ClInclude Include="..\..\..\include\node3\Math.h" />
+    <ClInclude Include="..\..\..\include\node3\Mesh.h" />
+    <ClInclude Include="..\..\..\include\node3\Model.h" />
+    <ClInclude Include="..\..\..\include\node3\ModelObj.h" />
+    <ClInclude Include="..\..\..\include\node3\ModelParametric.h" />
+    <ClInclude Include="..\..\..\include\node3\ModelType.h" />
+    <ClInclude Include="..\..\..\include\node3\n3_typedef.h" />
+    <ClInclude Include="..\..\..\include\node3\ObjectModel.h" />
+    <ClInclude Include="..\..\..\include\node3\ObjectNode.h" />
+    <ClInclude Include="..\..\..\include\node3\ParametricEquations.h" />
+    <ClInclude Include="..\..\..\include\node3\ParametricSurface.h" />
+    <ClInclude Include="..\..\..\include\node3\PrimitiveDraw.h" />
+    <ClInclude Include="..\..\..\include\node3\Ray.h" />
+    <ClInclude Include="..\..\..\include\node3\RenderContext.h" />
+    <ClInclude Include="..\..\..\include\node3\RenderCtxStack.h" />
+    <ClInclude Include="..\..\..\include\node3\RenderParams.h" />
+    <ClInclude Include="..\..\..\include\node3\ResourceAPI.h" />
+    <ClInclude Include="..\..\..\include\node3\Surface.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\include\node3\AABB.inl" />
+    <None Include="..\..\..\include\node3\Ray.inl" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

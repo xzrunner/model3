@@ -1,9 +1,9 @@
-#include "model3/Model.h"
-#include "model3/Mesh.h"
+#include "node3/Model.h"
+#include "node3/Mesh.h"
 
 #include <algorithm>
 
-namespace m3
+namespace n3
 {
 
 Model::~Model()
