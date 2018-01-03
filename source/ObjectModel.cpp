@@ -27,8 +27,8 @@ void ObjectModel::Draw(const RenderParams& rp) const
 	{
 		const n3::Material& material = mesh->GetMaterial();
 		int tex_id = n3::ResourceAPI::GetTexID(material.texture);
-		shader->SetMaterial(material.ambient, material.diffuse, material.specular,
-			material.shininess, tex_id);
+		shader->SetMaterial(sl::Model3Shader::Material(material.ambient, 
+			material.diffuse, material.specular, material.shininess, tex_id));
 		shader->SetLightPosition(sm::vec3(0.25f, 0.25f, 1));
 		shader->SetNormalMatrix(rp.mt);
 
