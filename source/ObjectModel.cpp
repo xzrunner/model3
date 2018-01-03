@@ -35,7 +35,9 @@ void ObjectModel::Draw(const RenderParams& rp) const
 		int vertex_type = mesh->GetVertexType();
 		bool normal = vertex_type & n3::VERTEX_FLAG_NORMALS;
 		bool texcoords = vertex_type & n3::VERTEX_FLAG_TEXCOORDS;
-		shader->Draw(mesh->GetVertices(), mesh->GetIndices(), normal, texcoords);
+		auto& vertices = mesh->GetVertices();
+		auto& indieces = mesh->GetIndices();
+		shader->Draw(&vertices[0], vertices.size(), &indieces[0], indieces.size(), normal, texcoords);
 	}
 }
 
