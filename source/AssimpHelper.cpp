@@ -5,6 +5,8 @@
 #include "node3/n3_typedef.h"
 #include "node3/ResourceAPI.h"
 
+#include <SM_Matrix.h>
+
 #include <assimp/Importer.hpp>      // C++ importer interface
 #include <assimp/scene.h>           // Output data structure
 #include <assimp/postprocess.h>     // Post processing flags
@@ -67,12 +69,38 @@ void AssimpHelper::LoadNode(const aiScene* ai_scene, const aiNode* ai_node,
 	{
 		if (ai_node->mNumMeshes) 
 		{
+			sm::mat4 trans_mat;
+			const aiNode* node = ai_node;
+			while (node) {
+				sm::mat4 node_mat;
+				node_mat.x[0] = node->mTransformation.a1;
+				node_mat.x[1] = node->mTransformation.b1;
+				node_mat.x[2] = node->mTransformation.c1;
+				node_mat.x[3] = node->mTransformation.d1;
+				node_mat.x[4] = node->mTransformation.a2;
+				node_mat.x[5] = node->mTransformation.b2;
+				node_mat.x[6] = node->mTransformation.c2;
+				node_mat.x[7] = node->mTransformation.d2;
+				node_mat.x[8] = node->mTransformation.a3;
+				node_mat.x[9] = node->mTransformation.b3;
+				node_mat.x[10] = node->mTransformation.c3;
+				node_mat.x[11] = node->mTransformation.d3;
+				node_mat.x[12] = node->mTransformation.a4;
+				node_mat.x[13] = node->mTransformation.b4;
+				node_mat.x[14] = node->mTransformation.c4;
+				node_mat.x[15] = node->mTransformation.d4;
+
+				trans_mat = node_mat * trans_mat;
+
+				node = node->mParent;
+			}
+
 			for (size_t i = 0; i < ai_node->mNumMeshes; ++i)
 			{
 				const aiMesh* mesh = ai_scene->mMeshes[ai_node->mMeshes[i]];
 				const aiMaterial* material = ai_scene->mMaterials[mesh->mMaterialIndex];
 
-				n3::Mesh* n3_mesh = LoadMesh(mesh, material, dir);
+				n3::Mesh* n3_mesh = LoadMesh(mesh, material, dir, trans_mat);
 				model.AddMesh(n3_mesh);
 				n3_mesh->RemoveReference();
 			}
@@ -80,7 +108,8 @@ void AssimpHelper::LoadNode(const aiScene* ai_scene, const aiNode* ai_node,
 	}
 }
 
-Mesh* AssimpHelper::LoadMesh(const aiMesh* ai_mesh, const aiMaterial* ai_material, const std::string& dir)
+Mesh* AssimpHelper::LoadMesh(const aiMesh* ai_mesh, const aiMaterial* ai_material, 
+	                         const std::string& dir, const sm::mat4& trans)
 {
 	Mesh* mesh = new Mesh;
 
@@ -104,9 +133,12 @@ Mesh* AssimpHelper::LoadMesh(const aiMesh* ai_mesh, const aiMaterial* ai_materia
 	for (size_t i = 0; i < ai_mesh->mNumVertices; ++i)
 	{
 		const aiVector3D& p = ai_mesh->mVertices[i];
-		vertices.push_back(p.x);
-		vertices.push_back(p.y);
-		vertices.push_back(p.z);
+	
+		sm::vec3 p_trans = trans * sm::vec3(p.x, p.y, p.z);
+
+		vertices.push_back(p_trans.x);
+		vertices.push_back(p_trans.y);
+		vertices.push_back(p_trans.z);
 		if (has_normal) {
 			const aiVector3D& n = ai_mesh->mNormals[i];
 			vertices.push_back(n.x);
