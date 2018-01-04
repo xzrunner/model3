@@ -6,8 +6,7 @@ namespace n3
 
 void DrawNode::Draw(const NodeConstPtr& node, const RenderParams& rp)
 {
-	RenderParams rp_child;
-	rp_child.mt = node->GetMat() * rp.mt;
+	RenderParams rp_child(node->GetMat() * rp.mt);
 	node->GetModel()->Draw(rp);
 }
 
