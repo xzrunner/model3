@@ -27,3 +27,5 @@ private:
 }; // Ray
 
 }
+
+#include "node3/Ray.inl"
