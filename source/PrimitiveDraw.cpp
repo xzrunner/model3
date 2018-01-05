@@ -40,122 +40,65 @@ void PrimitiveDraw::Cube(const AABB& aabb)
 
 void PrimitiveDraw::Cube(const sm::mat4& mat, const AABB& aabb)
 {
-	//const sm::vec3& min = aabb.Min();
-	//const sm::vec3& max = aabb.Max();
+	const sm::vec3& min = aabb.Min();
+	const sm::vec3& max = aabb.Max();
 
-	//sm::vec3 vertices[8];
-	//vertices[0] = mat * min; 
-	//vertices[1] = mat * sm::vec3(max.x, min.y, min.z);
-	//vertices[2] = mat * sm::vec3(max.x, max.y, min.z);
-	//vertices[3] = mat * sm::vec3(min.x, max.y, min.z);
-	//vertices[4] = mat * sm::vec3(min.x, min.y, max.z);
-	//vertices[5] = mat * sm::vec3(max.x, min.y, max.z);
-	//vertices[6] = mat * max;
-	//vertices[7] = mat * sm::vec3(min.x, max.y, max.z);
+	sm::vec3 vertices[] = {
+		mat * min,
+		mat * sm::vec3(max.x, min.y, min.z),
+		mat * sm::vec3(max.x, max.y, min.z),
+		mat * sm::vec3(min.x, max.y, min.z),
+		mat * sm::vec3(min.x, min.y, max.z),
+		mat * sm::vec3(max.x, min.y, max.z),
+		mat * max,
+		mat * sm::vec3(min.x, max.y, max.z)
+	};
 
-	//unsigned short indices[24];
-	//int idx = 0;
-	//indices[idx++] = 0;
-	//indices[idx++] = 1;
-	//indices[idx++] = 1;
-	//indices[idx++] = 2;
-	//indices[idx++] = 2;
-	//indices[idx++] = 3;
-	//indices[idx++] = 3;
-	//indices[idx++] = 0;
-
-	//indices[idx++] = 4;
-	//indices[idx++] = 5;
-	//indices[idx++] = 5;
-	//indices[idx++] = 6;
-	//indices[idx++] = 6;
-	//indices[idx++] = 7;
-	//indices[idx++] = 7;
-	//indices[idx++] = 4;
-
-	//indices[idx++] = 0;
-	//indices[idx++] = 4;
-	//indices[idx++] = 1;
-	//indices[idx++] = 5;
-	//indices[idx++] = 2;
-	//indices[idx++] = 6;
-	//indices[idx++] = 3;
-	//indices[idx++] = 7;
-
-	//ShaderMgr* mgr = ShaderMgr::Instance();
-	//mgr->Shape();
-	//mgr->DrawShape(GL_LINES, &vertices[0].x, 8, color, indices, 24);
+	// bottom
+	Line(vertices[0], vertices[1]);
+	Line(vertices[1], vertices[2]);
+	Line(vertices[2], vertices[3]);
+	Line(vertices[3], vertices[0]);
+	// top
+	Line(vertices[4], vertices[5]);
+	Line(vertices[5], vertices[6]);
+	Line(vertices[6], vertices[7]);
+	Line(vertices[7], vertices[4]);
+	// middle
+	Line(vertices[0], vertices[4]);
+	Line(vertices[1], vertices[5]);
+	Line(vertices[2], vertices[6]);
+	Line(vertices[3], vertices[7]);
 }
 
 void PrimitiveDraw::Cube(const sm::vec3& min, const sm::vec3& max)
 {
-	//float vertices[24];
-	//int idx = 0;
-	//
-	//vertices[idx++] = min.x;
-	//vertices[idx++] = min.y;
-	//vertices[idx++] = min.z;
+	sm::vec3 vertices[] = {
+		min,
+		sm::vec3(max.x, min.y, min.z),
+		sm::vec3(max.x, max.y, min.z),
+		sm::vec3(min.x, max.y, min.z),
+		sm::vec3(min.x, min.y, max.z),
+		sm::vec3(max.x, min.y, max.z),
+		max,
+		sm::vec3(min.x, max.y, max.z)
+	};
 
-	//vertices[idx++] = max.x;
-	//vertices[idx++] = min.y;
-	//vertices[idx++] = min.z;
-
-	//vertices[idx++] = max.x;
-	//vertices[idx++] = max.y;
-	//vertices[idx++] = min.z;
-
-	//vertices[idx++] = min.x;
-	//vertices[idx++] = max.y;
-	//vertices[idx++] = min.z;
-
-	//vertices[idx++] = min.x;
-	//vertices[idx++] = min.y;
-	//vertices[idx++] = max.z;
-
-	//vertices[idx++] = max.x;
-	//vertices[idx++] = min.y;
-	//vertices[idx++] = max.z;
-
-	//vertices[idx++] = max.x;
-	//vertices[idx++] = max.y;
-	//vertices[idx++] = max.z;
-
-	//vertices[idx++] = min.x;
-	//vertices[idx++] = max.y;
-	//vertices[idx++] = max.z;
-
-	//unsigned short indices[24];
-	//idx = 0;
-	//indices[idx++] = 0;
-	//indices[idx++] = 1;
-	//indices[idx++] = 1;
-	//indices[idx++] = 2;
-	//indices[idx++] = 2;
-	//indices[idx++] = 3;
-	//indices[idx++] = 3;
-	//indices[idx++] = 0;
-
-	//indices[idx++] = 4;
-	//indices[idx++] = 5;
-	//indices[idx++] = 5;
-	//indices[idx++] = 6;
-	//indices[idx++] = 6;
-	//indices[idx++] = 7;
-	//indices[idx++] = 7;
-	//indices[idx++] = 4;
-
-	//indices[idx++] = 0;
-	//indices[idx++] = 4;
-	//indices[idx++] = 1;
-	//indices[idx++] = 5;
-	//indices[idx++] = 2;
-	//indices[idx++] = 6;
-	//indices[idx++] = 3;
-	//indices[idx++] = 7;
-
-	//ShaderMgr* mgr = ShaderMgr::Instance();
-	//mgr->Shape();
-	//mgr->DrawShape(GL_LINES, vertices, 8, color, indices, 24);
+	// bottom
+	Line(vertices[0], vertices[1]);
+	Line(vertices[1], vertices[2]);
+	Line(vertices[2], vertices[3]);
+	Line(vertices[3], vertices[0]);
+	// top
+	Line(vertices[4], vertices[5]);
+	Line(vertices[5], vertices[6]);
+	Line(vertices[6], vertices[7]);
+	Line(vertices[7], vertices[4]);
+	// middle
+	Line(vertices[0], vertices[4]);
+	Line(vertices[1], vertices[5]);
+	Line(vertices[2], vertices[6]);
+	Line(vertices[3], vertices[7]);
 }
 
 void PrimitiveDraw::Cube(const sm::vec3& min, const sm::vec3& max, int texid)
