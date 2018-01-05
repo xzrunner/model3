@@ -16,19 +16,22 @@ namespace n3
 class Model;
 class Mesh;
 class Material;
+class AABB;
 
 class AssimpHelper
 {
 public:
-	static Model* Load(const std::string& filepath);
+	static Model* Load(const std::string& filepath, AABB& aabb);
 
 private:
-	static void LoadNode(const aiScene* scene, const aiNode* node, Model& model, const std::string& dir);
+	static void LoadNode(const aiScene* scene, const aiNode* node, Model& model, 
+		const std::string& dir, AABB& aabb);
 
 	static Mesh* LoadMesh(const aiMesh* ai_mesh, const aiMaterial* ai_material, 
-		const std::string& dir, const sm::mat4& trans);
+		const std::string& dir, const sm::mat4& trans, AABB& aabb);
 
-	static void LoadMaterial(const aiMesh* ai_mesh, const aiMaterial* ai_material, Mesh& mesh, const std::string& dir);
+	static void LoadMaterial(const aiMesh* ai_mesh, const aiMaterial* ai_material, 
+		Mesh& mesh, const std::string& dir);
 
 }; // AssimpHelper
 

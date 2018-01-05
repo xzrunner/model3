@@ -4,6 +4,7 @@
 #include "node3/Material.h"
 #include "node3/n3_typedef.h"
 #include "node3/ResourceAPI.h"
+#include "node3/AABB.h"
 
 #include <SM_Matrix.h>
 
@@ -31,7 +32,7 @@ unsigned int ppsteps = aiProcess_CalcTangentSpace | // calculate tangents and bi
 	aiProcess_SplitByBoneCount         | // split meshes with too many bones. Necessary for our (limited) hardware skinning shader
 	0;
 
-Model* AssimpHelper::Load(const std::string& filepath)
+Model* AssimpHelper::Load(const std::string& filepath, AABB& aabb)
 {
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(filepath.c_str(),
@@ -49,7 +50,7 @@ Model* AssimpHelper::Load(const std::string& filepath)
 
 	auto dir = boost::filesystem::path(filepath).parent_path().string();
 	Model* model = new Model;
-	LoadNode(scene, scene->mRootNode, *model, dir);
+	LoadNode(scene, scene->mRootNode, *model, dir, aabb);
 
 	// todo: load lights and cameras
 
@@ -57,12 +58,12 @@ Model* AssimpHelper::Load(const std::string& filepath)
 }
 
 void AssimpHelper::LoadNode(const aiScene* ai_scene, const aiNode* ai_node, 
-							Model& model, const std::string& dir)
+							Model& model, const std::string& dir, AABB& aabb)
 {
 	if (ai_node->mNumChildren) 
 	{
 		for (size_t i = 0; i < ai_node->mNumChildren; ++i) {
-			LoadNode(ai_scene, ai_node->mChildren[i], model, dir);
+			LoadNode(ai_scene, ai_node->mChildren[i], model, dir, aabb);
 		}
 	} 
 	else 
@@ -100,7 +101,7 @@ void AssimpHelper::LoadNode(const aiScene* ai_scene, const aiNode* ai_node,
 				const aiMesh* mesh = ai_scene->mMeshes[ai_node->mMeshes[i]];
 				const aiMaterial* material = ai_scene->mMaterials[mesh->mMaterialIndex];
 
-				n3::Mesh* n3_mesh = LoadMesh(mesh, material, dir, trans_mat);
+				n3::Mesh* n3_mesh = LoadMesh(mesh, material, dir, trans_mat, aabb);
 				model.AddMesh(n3_mesh);
 				n3_mesh->RemoveReference();
 			}
@@ -109,7 +110,7 @@ void AssimpHelper::LoadNode(const aiScene* ai_scene, const aiNode* ai_node,
 }
 
 Mesh* AssimpHelper::LoadMesh(const aiMesh* ai_mesh, const aiMaterial* ai_material, 
-	                         const std::string& dir, const sm::mat4& trans)
+	                         const std::string& dir, const sm::mat4& trans, AABB& aabb)
 {
 	Mesh* mesh = new Mesh;
 
@@ -139,6 +140,8 @@ Mesh* AssimpHelper::LoadMesh(const aiMesh* ai_mesh, const aiMaterial* ai_materia
 		vertices.push_back(p_trans.x);
 		vertices.push_back(p_trans.y);
 		vertices.push_back(p_trans.z);
+		aabb.Combine(p_trans);
+
 		if (has_normal) {
 			const aiVector3D& n = ai_mesh->mNormals[i];
 			vertices.push_back(n.x);
