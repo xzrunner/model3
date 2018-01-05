@@ -10,6 +10,7 @@ enum ModelType
 
 	MODEL_OBJECT = 10,
 	MODEL_COMPLEX,
+	MODEL_ANIMATION,
 };
 
 }
