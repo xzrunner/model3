@@ -105,6 +105,9 @@
     <ClCompile Include="..\..\..\source\DrawNode.cpp">
       <Filter>render</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\Camera.cpp">
+      <Filter>dataset</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\node3\Material.h">
@@ -184,6 +187,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\c_wrap_n3.h" />
     <ClInclude Include="..\..\..\include\node3\n3_typedef.h" />
+    <ClInclude Include="..\..\..\include\node3\Camera.h">
+      <Filter>dataset</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\include\node3\AABB.inl">

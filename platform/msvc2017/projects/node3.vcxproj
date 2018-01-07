@@ -78,6 +78,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\AssimpHelper.cpp" />
+    <ClCompile Include="..\..\..\source\Camera.cpp" />
     <ClCompile Include="..\..\..\source\ComplexModel.cpp" />
     <ClCompile Include="..\..\..\source\ComplexNode.cpp" />
     <ClCompile Include="..\..\..\source\DrawNode.cpp" />
@@ -102,6 +103,7 @@
     <ClInclude Include="..\..\..\include\c_wrap_n3.h" />
     <ClInclude Include="..\..\..\include\node3\AABB.h" />
     <ClInclude Include="..\..\..\include\node3\AssimpHelper.h" />
+    <ClInclude Include="..\..\..\include\node3\Camera.h" />
     <ClInclude Include="..\..\..\include\node3\ComplexModel.h" />
     <ClInclude Include="..\..\..\include\node3\ComplexNode.h" />
     <ClInclude Include="..\..\..\include\node3\DrawNode.h" />
