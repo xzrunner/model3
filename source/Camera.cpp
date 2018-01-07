@@ -89,6 +89,7 @@ void Camera::Translate(float dx, float dy)
 void Camera::MoveToward(float offset)
 {
 	m_pos += m_n * offset;
+	m_distance = (m_pos - m_target).Length();
 }
 
 void Camera::AimAtTarget()
