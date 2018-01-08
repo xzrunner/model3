@@ -5,7 +5,16 @@
 namespace n3
 {
 
+static const float ZNEAR  = 0.1f;
+static const float ZFAR   = 100;
+static const float ASPECT = 90;
+
 Camera::Camera()
+	: m_distance(0)
+	, m_znear(ZNEAR)
+	, m_zfar(ZFAR)
+	, m_aspect(1)
+	, m_angle_of_view(ASPECT)
 {
 }
 
@@ -13,6 +22,11 @@ Camera::Camera(const sm::vec3& pos, const sm::vec3& target, const sm::vec3& up)
 	: m_pos(pos)
 	, m_target(target)
 	, m_up(up)
+	, m_distance(0)
+	, m_znear(ZNEAR)
+	, m_zfar(ZFAR)
+	, m_aspect(1)
+	, m_angle_of_view(ASPECT)
 {
 	m_distance = (pos - target).Length();
 	InitUVN();
@@ -106,6 +120,15 @@ sm::mat4 Camera::GetModelViewMat() const
 	m[2] = m_n.x; m[6] = m_n.y; m[10]= m_n.z; m[14] = - m_pos.Dot(m_n);
 	m[3] = 0;     m[7] = 0;     m[11]= 0;     m[15] = 1.0;
 	return mat;
+}
+
+sm::mat4 Camera::GetProjectionMat() const
+{
+//	return sm::mat4::Perspective(m_angle_of_view, m_aspect, m_znear, m_zfar);
+
+	float scale = tan(m_angle_of_view * 0.5 * SM_DEG_TO_RAD) * m_znear;
+	auto mat_proj = sm::mat4::Perspective(-m_aspect * scale, m_aspect * scale, -scale, scale, m_znear, m_zfar);
+	return mat_proj;
 }
 
 void Camera::Reset(const sm::vec3& pos, const sm::vec3& target, const sm::vec3& up)
