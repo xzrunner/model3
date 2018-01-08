@@ -43,6 +43,9 @@
     <Filter Include="nodes\node">
       <UniqueIdentifier>{b2eb09b6-3f63-4d38-961b-2306378a18aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="dataset\camera">
+      <UniqueIdentifier>{ab9d472b-75e0-4655-aa2d-d69dd2d88c93}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Material.cpp">
@@ -106,7 +109,10 @@
       <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\Camera.cpp">
-      <Filter>dataset</Filter>
+      <Filter>dataset\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Viewport.cpp">
+      <Filter>dataset\camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -188,7 +194,10 @@
     <ClInclude Include="..\..\..\include\c_wrap_n3.h" />
     <ClInclude Include="..\..\..\include\node3\n3_typedef.h" />
     <ClInclude Include="..\..\..\include\node3\Camera.h">
-      <Filter>dataset</Filter>
+      <Filter>dataset\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\Viewport.h">
+      <Filter>dataset\camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

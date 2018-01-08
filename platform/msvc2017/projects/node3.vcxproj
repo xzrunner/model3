@@ -98,6 +98,7 @@
     <ClCompile Include="..\..\..\source\RenderContext.cpp" />
     <ClCompile Include="..\..\..\source\RenderCtxStack.cpp" />
     <ClCompile Include="..\..\..\source\ResourceAPI.cpp" />
+    <ClCompile Include="..\..\..\source\Viewport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\c_wrap_n3.h" />
@@ -128,6 +129,7 @@
     <ClInclude Include="..\..\..\include\node3\RenderParams.h" />
     <ClInclude Include="..\..\..\include\node3\ResourceAPI.h" />
     <ClInclude Include="..\..\..\include\node3\Surface.h" />
+    <ClInclude Include="..\..\..\include\node3\Viewport.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\include\node3\AABB.inl" />
