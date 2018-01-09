@@ -12,6 +12,7 @@ class AABB
 {
 public:
 	AABB();
+	AABB(const sm::vec3& min, const sm::vec3& max);
 
 	void MakeEmpty();
 

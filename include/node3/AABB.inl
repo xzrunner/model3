@@ -9,6 +9,12 @@ inline AABB::AABB()
 	MakeEmpty(); 
 }
 
+inline AABB::AABB(const sm::vec3& min, const sm::vec3& max)
+	: m_min(min)
+	, m_max(max)
+{
+}
+
 inline void AABB::MakeEmpty() 
 {
 	for (int i = 0; i < 3; ++i) {
