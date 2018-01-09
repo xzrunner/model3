@@ -5,6 +5,8 @@
 namespace n3
 {
 
+class Camera;
+
 class Viewport
 {
 public:
@@ -12,10 +14,8 @@ public:
 
 	void SetSize(float width, float height);
 
-	sm::vec2 TransPos3ProjectToScreen(const sm::vec3& proj, float cam_near, float cam_far) const;
-	sm::vec3 TransPos3ScreenToProject(const sm::vec2& scr, float proj_z, float cam_near, float cam_far) const;
-
-	sm::vec3 TransPos3ScreenToDir(const sm::vec2& screen, float cam_near) const;
+	sm::vec2 TransPos3ProjectToScreen(const sm::vec3& proj, const Camera& cam) const;
+	sm::vec3 TransPos3ScreenToDir(const sm::vec2& screen, const Camera& cam) const;
 
 	sm::vec3 MapToSphere(const sm::vec2& touchpoint) const;
 
