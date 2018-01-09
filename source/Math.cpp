@@ -10,6 +10,8 @@ namespace n3
 #define LEFT	1
 #define MIDDLE	2
 
+// This code from GraphicsGems's RayBox.c
+// https://github.com/erich666/GraphicsGems/blob/master/gems/RayBox.c
 bool Math::RayAABBIntersection(const AABB& aabb, const Ray& ray, sm::vec3* coord)
 {
 	sm::vec3 cross;

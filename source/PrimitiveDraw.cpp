@@ -199,7 +199,7 @@ void PrimitiveDraw::Cube(const sm::vec3& min, const sm::vec3& max, int texid)
 	//vertices[idx_vert++] = max.x; vertices[idx_vert++] = max.y; vertices[idx_vert++] = max.z;
 	//texcoords[idx_tex++] = 1; texcoords[idx_tex++] = 1;	
 
-	//e3d::ShaderMgr* mgr = e3d::ShaderMgr::Instance();
+	//enode3d::ShaderMgr* mgr = enode3d::ShaderMgr::Instance();
 	//mgr->Sprite();
 
 	//mgr->DrawTri(vertices, texcoords, 2 * 6 * 3, texid);
