@@ -30,6 +30,8 @@ public:
 
 	float GetNear() const { return m_znear; }
 	float GetFar() const { return m_zfar; }
+	float GetAspect() const { return m_aspect; }
+	float GetAngleOfView() const { return m_angle_of_view; }
 
 	void SetAspect(float aspect) { m_aspect = aspect; }
 
