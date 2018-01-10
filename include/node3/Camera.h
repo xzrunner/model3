@@ -27,6 +27,7 @@ public:
 
 	sm::mat4 GetModelViewMat() const;
 	sm::mat4 GetProjectionMat() const;
+	sm::mat4 GetRotateMat() const;
 
 	float GetNear() const { return m_znear; }
 	float GetFar() const { return m_zfar; }

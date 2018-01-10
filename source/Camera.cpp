@@ -131,6 +131,17 @@ sm::mat4 Camera::GetProjectionMat() const
 	return mat_proj;
 }
 
+sm::mat4 Camera::GetRotateMat() const
+{
+	sm::mat4 mat;
+	float* m = mat.x;
+	m[0] = m_u.x; m[4] = m_u.y; m[8] = m_u.z; m[12] = 0;
+	m[1] = m_v.x; m[5] = m_v.y; m[9] = m_v.z; m[13] = 0;
+	m[2] = m_n.x; m[6] = m_n.y; m[10] = m_n.z; m[14] = 0;
+	m[3] = 0;     m[7] = 0;     m[11] = 0;     m[15] = 1.0;
+	return mat;
+}
+
 void Camera::Reset(const sm::vec3& pos, const sm::vec3& target, const sm::vec3& up)
 {
 	m_pos    = pos;
