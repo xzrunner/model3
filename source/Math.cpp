@@ -84,13 +84,15 @@ bool Math::RayAABBIntersection(const AABB& aabb, const Ray& ray, sm::vec3* coord
 }
 
 bool Math::RayOBBIntersection(const AABB& aabb, const sm::vec3& pos, const sm::Quaternion& angle, 
-							   const Ray& ray, sm::vec3* coord)
+	                          const Ray& ray, sm::vec3* coord)
 {
-	Ray _ray(ray);
-	_ray.Translate(-pos);
-	_ray.ChangeCoordSystem(angle);
+	sm::mat4 rot_mat(-angle);
 
-	return RayAABBIntersection(aabb, _ray, coord);
+	sm::vec3 start = rot_mat * (ray.Start() - pos);
+	sm::vec3 dir = rot_mat * ray.Dir();
+	Ray ray_fix(start, dir);
+
+	return RayAABBIntersection(aabb, ray_fix, coord);
 }
 
 }

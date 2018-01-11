@@ -69,9 +69,6 @@
     <ClCompile Include="..\..\..\source\AssimpHelper.cpp">
       <Filter>utility</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\Ray.cpp">
-      <Filter>dataset</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\Math.cpp">
       <Filter>utility</Filter>
     </ClCompile>
@@ -202,9 +199,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\include\node3\AABB.inl">
-      <Filter>dataset</Filter>
-    </None>
-    <None Include="..\..\..\include\node3\Ray.inl">
       <Filter>dataset</Filter>
     </None>
   </ItemGroup>

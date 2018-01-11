@@ -1,7 +1,6 @@
 #pragma once
 
 #include <SM_Vector.h>
-#include <SM_Quaternion.h>
 
 namespace n3
 {
@@ -9,23 +8,16 @@ namespace n3
 class Ray
 {
 public:
-//	Ray();
-	Ray(const sm::vec3& start, const sm::vec3& dir);
+	Ray(const sm::vec3& start, const sm::vec3& dir)
+		: m_start(start), m_dir(dir.Normalized()) {}
 
-	void Translate(const sm::vec3& offset);
-//	void Rotate(const sm::mat4& mat);
-
-	void ChangeCoordSystem(const sm::Quaternion& rot);
-
-	const sm::vec3& Start() const;
-	sm::vec3 Dir() const;
+	const sm::vec3& Start() const { return m_start; }
+	const sm::vec3& Dir() const { return m_dir; }
 
 private:
-	sm::vec3 m_start, m_dir_vec;
-	sm::Quaternion m_dir;
+	sm::vec3 m_start;
+	sm::vec3 m_dir;
 
 }; // Ray
 
 }
-
-#include "node3/Ray.inl"

@@ -94,7 +94,6 @@
     <ClCompile Include="..\..\..\source\ObjectNode.cpp" />
     <ClCompile Include="..\..\..\source\ParametricSurface.cpp" />
     <ClCompile Include="..\..\..\source\PrimitiveDraw.cpp" />
-    <ClCompile Include="..\..\..\source\Ray.cpp" />
     <ClCompile Include="..\..\..\source\RenderContext.cpp" />
     <ClCompile Include="..\..\..\source\RenderCtxStack.cpp" />
     <ClCompile Include="..\..\..\source\ResourceAPI.cpp" />
@@ -133,7 +132,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\include\node3\AABB.inl" />
-    <None Include="..\..\..\include\node3\Ray.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
