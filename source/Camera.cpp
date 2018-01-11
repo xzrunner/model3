@@ -23,6 +23,9 @@ Camera::Camera(const sm::vec3& pos, const sm::vec3& target, const sm::vec3& up)
 	, m_target(target)
 	, m_up(up)
 	, m_distance(0)
+	, m_init_pos(pos)
+	, m_init_target(target)
+	, m_init_up(up)
 	, m_znear(ZNEAR)
 	, m_zfar(ZFAR)
 	, m_aspect(1)
@@ -126,7 +129,7 @@ sm::mat4 Camera::GetProjectionMat() const
 {
 //	return sm::mat4::Perspective(m_angle_of_view, m_aspect, m_znear, m_zfar);
 
-	float scale = tan(m_angle_of_view * 0.5 * SM_DEG_TO_RAD) * m_znear;
+	float scale = tan(m_angle_of_view * 0.5f * SM_DEG_TO_RAD) * m_znear;
 	auto mat_proj = sm::mat4::Perspective(-m_aspect * scale, m_aspect * scale, -scale, scale, m_znear, m_zfar);
 	return mat_proj;
 }
@@ -142,13 +145,13 @@ sm::mat4 Camera::GetRotateMat() const
 	return mat;
 }
 
-void Camera::Reset(const sm::vec3& pos, const sm::vec3& target, const sm::vec3& up)
+void Camera::Reset()
 {
-	m_pos    = pos;
-	m_target = target;
-	m_up     = up;
+	m_pos    = m_init_pos;
+	m_target = m_init_target;
+	m_up     = m_init_up;
 
-	m_distance = (pos - target).Length();
+	m_distance = (m_pos - m_target).Length();
 
 	InitUVN();
 }

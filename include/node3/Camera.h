@@ -34,9 +34,11 @@ public:
 	float GetAspect() const { return m_aspect; }
 	float GetAngleOfView() const { return m_angle_of_view; }
 
+	const sm::vec3 GetToward() const { return m_n; }
+	
 	void SetAspect(float aspect) { m_aspect = aspect; }
 
-	void Reset(const sm::vec3& pos, const sm::vec3& target, const sm::vec3& up);
+	void Reset();
 
 private:
 	void InitUVN();
@@ -48,6 +50,11 @@ private:
 
 	sm::vec3 m_up;
 	sm::vec3 m_u, m_v, m_n;
+
+	// store for reset
+	sm::vec3 m_init_pos;
+	sm::vec3 m_init_target;
+	sm::vec3 m_init_up;
 
 	// projection
 	float m_znear, m_zfar;
