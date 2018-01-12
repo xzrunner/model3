@@ -24,6 +24,7 @@ public:
 	void AimAtTarget();
 
 	const sm::vec3& GetPos() const { return m_pos; }
+	float GetDistance() const { return m_distance; }
 
 	sm::mat4 GetModelViewMat() const;
 	sm::mat4 GetProjectionMat() const;
