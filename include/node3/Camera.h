@@ -14,13 +14,15 @@ public:
 
 	void Slide(float du, float dv, float dn);
 
+	// rotate
 	void Roll(float angle);
 	void Yaw(float angle);
 	void Pitch(float angle);
 
+	// translate
 	void Translate(float dx, float dy);
 	void MoveToward(float offset);
-
+	void Move(const sm::vec3& dir, float offset);
 	void AimAtTarget();
 
 	const sm::vec3& GetPos() const { return m_pos; }
@@ -45,10 +47,11 @@ private:
 	void InitUVN();
 
 private:
-	// model view
+	// pos
 	sm::vec3 m_pos, m_target;
 	float m_distance;
 
+	// angle
 	sm::vec3 m_up;
 	sm::vec3 m_u, m_v, m_n;
 
