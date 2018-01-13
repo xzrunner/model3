@@ -21,6 +21,8 @@ public:
 
 	static void TriLine(const sm::vec3& p0, const sm::vec3& p1, const sm::vec3& p2);
 
+	static void Rect(const sm::vec3& p0, const sm::vec3& p1);
+
 	static void Cube(const AABB& aabb);
 	static void Cube(const sm::mat4& mat, const AABB& aabb);
 	static void Cube(const sm::vec3& min, const sm::vec3& max);

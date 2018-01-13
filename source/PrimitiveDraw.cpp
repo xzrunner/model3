@@ -33,6 +33,13 @@ void PrimitiveDraw::TriLine(const sm::vec3& p0, const sm::vec3& p1, const sm::ve
 	rvg_lines3(&vertices[0].x, 6);
 }
 
+void PrimitiveDraw::Rect(const sm::vec3& p0, const sm::vec3& p1)
+{
+	SetShader(sl::SHAPE3);
+	assert(p0.z == p1.z);
+	rvg_rect3(p0.x, p0.y, p1.x, p1.y, p0.z, true);
+}
+
 void PrimitiveDraw::Cube(const AABB& aabb)
 {
 	PrimitiveDraw::Cube(aabb.Min(), aabb.Max());
