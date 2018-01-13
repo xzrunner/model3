@@ -51,7 +51,8 @@ void ObjectModel::Draw(const RenderParams& rp) const
 			sm::vec3 pos = rp.mt * sm::vec3(vertices[i], vertices[i + 1], vertices[i + 2]);
 			memcpy(&vertices[i], &pos.xyz[0], sizeof(float) * 3);
 			if (has_normal) {
-				sm::vec3 normal = rp.mt * sm::vec3(vertices[i + 3], vertices[i + 4], vertices[i + 5]);
+				sm::vec3 normal = rp.mt_rot * sm::vec3(vertices[i + 3], vertices[i + 4], vertices[i + 5]);
+				normal.Normalize();
 				memcpy(&vertices[i + 3], &normal.xyz[0], sizeof(float) * 3);
 			}
 		}

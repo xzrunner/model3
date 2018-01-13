@@ -18,6 +18,7 @@ public:
 	const ModelPtr& GetModel() const { return m_model; }
 
 	const sm::mat4& GetMat() const { return m_mat; }
+	const sm::vec3& GetAngle() const { return m_srt.angle; }
 
 private:
 	struct SRT
