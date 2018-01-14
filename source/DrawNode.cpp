@@ -6,12 +6,12 @@ namespace n3
 
 void DrawNode::Draw(const NodeConstPtr& node, const RenderParams& rp)
 {
-	sm::mat4 mt = node->GetMat() * rp.mt;
-
-	auto& angle = node->GetAngle();
-	sm::mat4 mt_rot = sm::mat4::Rotated(angle.x, angle.y, angle.z) * rp.mt_rot;
-
-	node->GetModel()->Draw(RenderParams(mt, mt_rot));
+	auto& pos = node->GetPos();
+	auto mt_trans = sm::mat4::Translated(pos.x, pos.y, pos.z);
+	auto mt_rot = sm::mat4(node->GetAngle());
+	
+	RenderParams child_rp(mt_rot * mt_trans * rp.mt);
+	node->GetModel()->Draw(child_rp);
 }
 
 }

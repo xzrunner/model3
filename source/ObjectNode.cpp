@@ -3,4 +3,9 @@
 namespace n3
 {
 
+ObjectNode::ObjectNode(const ModelPtr& model)
+	: INode(model)
+{
+}
+
 }

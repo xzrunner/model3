@@ -46,6 +46,9 @@
     <Filter Include="dataset\camera">
       <UniqueIdentifier>{ab9d472b-75e0-4655-aa2d-d69dd2d88c93}</UniqueIdentifier>
     </Filter>
+    <Filter Include="nodes\05.sprite2">
+      <UniqueIdentifier>{3c5cefbf-2acd-4489-8d39-655610996227}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Material.cpp">
@@ -110,6 +113,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\Viewport.cpp">
       <Filter>dataset\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Sprite2Model.cpp">
+      <Filter>nodes\05.sprite2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Sprite2Node.cpp">
+      <Filter>nodes\05.sprite2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -195,6 +204,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\Viewport.h">
       <Filter>dataset\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\Sprite2Model.h">
+      <Filter>nodes\05.sprite2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\Sprite2Node.h">
+      <Filter>nodes\05.sprite2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

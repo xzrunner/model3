@@ -57,7 +57,7 @@ void RenderCtxStack::BindCtx(const RenderContext& ctx)
 	//ctx.UpdateMVP();
 	//ctx.UpdateViewport();
 
-	ctx.UpdateModelView();
+	//ctx.UpdateModelView();
 }
 
 }
