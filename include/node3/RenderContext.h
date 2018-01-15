@@ -19,6 +19,8 @@ public:
 	void UpdateProjection() const;
 	void UpdateViewport() const;
 
+	const sm::mat4& GetModelViewMat() const { return m_mv_mat; }
+
 private:
 	sm::mat4 m_mv_mat;
 	sm::mat4 m_proj_mat;
