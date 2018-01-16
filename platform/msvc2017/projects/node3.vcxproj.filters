@@ -4,9 +4,6 @@
     <Filter Include="model">
       <UniqueIdentifier>{5f4864e3-374d-4be1-8d14-29db09ca3292}</UniqueIdentifier>
     </Filter>
-    <Filter Include="model\parametric">
-      <UniqueIdentifier>{b3cba04f-cb90-4241-877a-f93248d94453}</UniqueIdentifier>
-    </Filter>
     <Filter Include="model\obj">
       <UniqueIdentifier>{7c3f0edf-715f-4510-a6b8-f3b65e970f9c}</UniqueIdentifier>
     </Filter>
@@ -49,6 +46,9 @@
     <Filter Include="nodes\05.sprite2">
       <UniqueIdentifier>{3c5cefbf-2acd-4489-8d39-655610996227}</UniqueIdentifier>
     </Filter>
+    <Filter Include="model\surface">
+      <UniqueIdentifier>{b3cba04f-cb90-4241-877a-f93248d94453}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Material.cpp">
@@ -61,10 +61,10 @@
       <Filter>model</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\ModelParametric.cpp">
-      <Filter>model\parametric</Filter>
+      <Filter>model\surface</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\ParametricSurface.cpp">
-      <Filter>model\parametric</Filter>
+      <Filter>model\surface</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\ModelObj.cpp">
       <Filter>model\obj</Filter>
@@ -120,6 +120,9 @@
     <ClCompile Include="..\..\..\source\Sprite2Node.cpp">
       <Filter>nodes\05.sprite2</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\SurfaceFactory.cpp">
+      <Filter>model\surface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\node3\Material.h">
@@ -132,16 +135,16 @@
       <Filter>model</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\ModelParametric.h">
-      <Filter>model\parametric</Filter>
+      <Filter>model\surface</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\ParametricEquations.h">
-      <Filter>model\parametric</Filter>
+      <Filter>model\surface</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\ParametricSurface.h">
-      <Filter>model\parametric</Filter>
+      <Filter>model\surface</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\Surface.h">
-      <Filter>model\parametric</Filter>
+      <Filter>model\surface</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\ModelObj.h">
       <Filter>model\obj</Filter>
@@ -210,6 +213,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\Sprite2Node.h">
       <Filter>nodes\05.sprite2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\SurfaceFactory.h">
+      <Filter>model\surface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

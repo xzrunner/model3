@@ -99,6 +99,7 @@
     <ClCompile Include="..\..\..\source\ResourceAPI.cpp" />
     <ClCompile Include="..\..\..\source\Sprite2Model.cpp" />
     <ClCompile Include="..\..\..\source\Sprite2Node.cpp" />
+    <ClCompile Include="..\..\..\source\SurfaceFactory.cpp" />
     <ClCompile Include="..\..\..\source\Viewport.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +133,7 @@
     <ClInclude Include="..\..\..\include\node3\Sprite2Model.h" />
     <ClInclude Include="..\..\..\include\node3\Sprite2Node.h" />
     <ClInclude Include="..\..\..\include\node3\Surface.h" />
+    <ClInclude Include="..\..\..\include\node3\SurfaceFactory.h" />
     <ClInclude Include="..\..\..\include\node3\Viewport.h" />
   </ItemGroup>
   <ItemGroup>
