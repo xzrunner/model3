@@ -59,6 +59,8 @@ void Camera::Roll(float angle)
 	m_v.x = sn * t.x + cs * s.x;
 	m_v.y = sn * t.y + cs * s.y;
 	m_v.z = sn * t.z + cs * s.z;
+
+	m_up = m_v;
 }
 
 void Camera::Yaw(float angle)
@@ -75,6 +77,8 @@ void Camera::Yaw(float angle)
 	m_u.x = sn * t.x + cs * s.x;
 	m_u.y = sn * t.y + cs * s.y;
 	m_u.z = sn * t.z + cs * s.z;
+
+	m_target = m_pos - m_n * m_distance;
 }
 
 void Camera::Pitch(float angle)
@@ -91,6 +95,9 @@ void Camera::Pitch(float angle)
 	m_n.x = sn * t.x + cs * s.x;
 	m_n.y = sn * t.y + cs * s.y;
 	m_n.z = sn * t.z + cs * s.z;
+
+	m_target = m_pos - m_n * m_distance;
+	m_up = m_v;
 }
 
 void Camera::Translate(float dx, float dy)
@@ -157,6 +164,21 @@ void Camera::Reset()
 	m_pos    = m_init_pos;
 	m_target = m_init_target;
 	m_up     = m_init_up;
+
+	m_distance = (m_pos - m_target).Length();
+
+	InitUVN();
+}
+
+void Camera::Reset(const sm::vec3& pos, const sm::vec3& target, const sm::vec3& up)
+{
+	m_init_pos    = pos;
+	m_init_target = target;
+	m_init_up     = up;
+
+	m_pos    = pos;
+	m_target = target;
+	m_up     = up;
 
 	m_distance = (m_pos - m_target).Length();
 

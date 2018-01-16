@@ -2,9 +2,10 @@
 
 #include "node3/AABB.h"
 
-#include <memory>
-
 #include <cu/uncopyable.h>
+
+#include <string>
+#include <memory>
 
 namespace n3
 {
@@ -21,8 +22,13 @@ public:
 	void SetAABB(const AABB& aabb) { m_aabb = aabb; }
 	const AABB& GetAABB() const { return m_aabb; }
 
+	void SetFilepath(const std::string& filepath) { m_filepath = filepath; }
+	const std::string& GetFilepath() const { return m_filepath; }
+	
 private:
 	AABB m_aabb;
+
+	std::string m_filepath;
 
 }; // IModel
 

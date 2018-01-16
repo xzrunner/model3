@@ -26,7 +26,9 @@ public:
 	void AimAtTarget();
 
 	const sm::vec3& GetPos() const { return m_pos; }
+	const sm::vec3& GetTarget() const { return m_target; }
 	float GetDistance() const { return m_distance; }
+	const sm::vec3& GetUp() const { return m_up; }
 
 	sm::mat4 GetModelViewMat() const;
 	sm::mat4 GetProjectionMat() const;
@@ -42,6 +44,7 @@ public:
 	void SetAspect(float aspect) { m_aspect = aspect; }
 
 	void Reset();
+	void Reset(const sm::vec3& pos, const sm::vec3& target, const sm::vec3& up);
 
 private:
 	void InitUVN();
