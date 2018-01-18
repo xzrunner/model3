@@ -45,7 +45,7 @@ sm::vec3 Viewport::TransPos3ScreenToDir(const sm::vec2& screen, const Camera& ca
 
 	float x = (screen.x - hw) / hw * tan_half_fovy * aspect;
 	float y = - (screen.y - hh) / hh * tan_half_fovy;
-	float z = -1;
+	float z = 1;
 
 	return cam.GetRotateMat().Inverted() * sm::vec3(x, y, z);
 }
