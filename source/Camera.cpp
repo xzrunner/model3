@@ -140,11 +140,11 @@ sm::mat4 Camera::GetModelViewMat() const
 
 sm::mat4 Camera::GetProjectionMat() const
 {
-	return sm::mat4::Perspective(m_angle_of_view, m_aspect, m_znear, m_zfar);
+	//return sm::mat4::Perspective(m_angle_of_view, m_aspect, m_znear, m_zfar);
 
-	//float scale = tan(m_angle_of_view * 0.5f * SM_DEG_TO_RAD) * m_znear;
-	//auto mat_proj = sm::mat4::Perspective(-m_aspect * scale, m_aspect * scale, -scale, scale, m_znear, m_zfar);
-	//return mat_proj;
+	float scale = tan(m_angle_of_view * 0.5f * SM_DEG_TO_RAD) * m_znear;
+	auto mat_proj = sm::mat4::Perspective(-m_aspect * scale, m_aspect * scale, -scale, scale, m_znear, m_zfar);
+	return mat_proj;
 }
 
 sm::mat4 Camera::GetRotateMat() const
