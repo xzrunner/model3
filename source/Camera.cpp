@@ -21,7 +21,6 @@ Camera::Camera()
 Camera::Camera(const sm::vec3& pos, const sm::vec3& target, const sm::vec3& up)
 	: m_pos(pos)
 	, m_target(target)
-	, m_up(up)
 	, m_distance(0)
 	, m_init_pos(pos)
 	, m_init_target(target)
@@ -32,7 +31,7 @@ Camera::Camera(const sm::vec3& pos, const sm::vec3& target, const sm::vec3& up)
 	, m_angle_of_view(ASPECT)
 {
 	m_distance = (pos - target).Length();
-	InitUVN();
+	InitUVN(up);
 }
 
 void Camera::Slide(float du, float dv, float dn)
@@ -59,8 +58,6 @@ void Camera::Roll(float angle)
 	m_v.x = sn * t.x + cs * s.x;
 	m_v.y = sn * t.y + cs * s.y;
 	m_v.z = sn * t.z + cs * s.z;
-
-	m_up = m_v;
 }
 
 void Camera::Yaw(float angle)
@@ -77,8 +74,6 @@ void Camera::Yaw(float angle)
 	m_u.x = sn * t.x + cs * s.x;
 	m_u.y = sn * t.y + cs * s.y;
 	m_u.z = sn * t.z + cs * s.z;
-
-	m_target = m_pos - m_n * m_distance;
 }
 
 void Camera::Pitch(float angle)
@@ -95,9 +90,13 @@ void Camera::Pitch(float angle)
 	m_n.x = sn * t.x + cs * s.x;
 	m_n.y = sn * t.y + cs * s.y;
 	m_n.z = sn * t.z + cs * s.z;
+}
 
-	m_target = m_pos - m_n * m_distance;
-	m_up = m_v;
+void Camera::SetUpDir(const sm::vec3& up)
+{
+	m_v = up;
+	m_u = m_v.Cross(m_n).Normalized();
+	m_v = m_n.Cross(m_u).Normalized();
 }
 
 void Camera::Translate(float dx, float dy)
@@ -113,39 +112,39 @@ void Camera::Translate(float dx, float dy)
 void Camera::MoveToward(float offset)
 {
 	m_pos += m_n * offset;
-	m_distance = (m_pos - m_target).Length();
+	m_distance = (m_target - m_pos).Length();
 }
 
 void Camera::Move(const sm::vec3& dir, float offset)
 {
 	m_pos += dir * offset;
-	m_distance = (m_pos - m_target).Length();
-	m_target = m_pos - m_n * m_distance;
+	m_distance = (m_target - m_pos).Length();
+	m_target = m_pos + m_n * m_distance;
 }
 
 void Camera::AimAtTarget()
 {
-	m_pos = m_target + m_n * m_distance;
+	m_pos = m_target - m_n * m_distance;
 }
 
 sm::mat4 Camera::GetModelViewMat() const
 {
 	sm::mat4 mat;
 	float* m = mat.x;
-	m[0] = m_u.x; m[4] = m_u.y; m[8] = m_u.z; m[12] = - m_pos.Dot(m_u);
-	m[1] = m_v.x; m[5] = m_v.y; m[9] = m_v.z; m[13] = - m_pos.Dot(m_v);
-	m[2] = m_n.x; m[6] = m_n.y; m[10]= m_n.z; m[14] = - m_pos.Dot(m_n);
+	m[0] = m_u.x; m[4] = m_u.y; m[8] = m_u.z; m[12] = -m_pos.Dot(m_u);
+	m[1] = m_v.x; m[5] = m_v.y; m[9] = m_v.z; m[13] = -m_pos.Dot(m_v);
+	m[2] = m_n.x; m[6] = m_n.y; m[10]= m_n.z; m[14] = -m_pos.Dot(m_n);
 	m[3] = 0;     m[7] = 0;     m[11]= 0;     m[15] = 1.0;
 	return mat;
 }
 
 sm::mat4 Camera::GetProjectionMat() const
 {
-//	return sm::mat4::Perspective(m_angle_of_view, m_aspect, m_znear, m_zfar);
+	return sm::mat4::Perspective(m_angle_of_view, m_aspect, m_znear, m_zfar);
 
-	float scale = tan(m_angle_of_view * 0.5f * SM_DEG_TO_RAD) * m_znear;
-	auto mat_proj = sm::mat4::Perspective(-m_aspect * scale, m_aspect * scale, -scale, scale, m_znear, m_zfar);
-	return mat_proj;
+	//float scale = tan(m_angle_of_view * 0.5f * SM_DEG_TO_RAD) * m_znear;
+	//auto mat_proj = sm::mat4::Perspective(-m_aspect * scale, m_aspect * scale, -scale, scale, m_znear, m_zfar);
+	//return mat_proj;
 }
 
 sm::mat4 Camera::GetRotateMat() const
@@ -163,11 +162,10 @@ void Camera::Reset()
 {
 	m_pos    = m_init_pos;
 	m_target = m_init_target;
-	m_up     = m_init_up;
 
-	m_distance = (m_pos - m_target).Length();
+	m_distance = (m_target - m_pos).Length();
 
-	InitUVN();
+	InitUVN(m_init_up);
 }
 
 void Camera::Reset(const sm::vec3& pos, const sm::vec3& target, const sm::vec3& up)
@@ -178,17 +176,17 @@ void Camera::Reset(const sm::vec3& pos, const sm::vec3& target, const sm::vec3& 
 
 	m_pos    = pos;
 	m_target = target;
-	m_up     = up;
 
-	m_distance = (m_pos - m_target).Length();
+	m_distance = (m_target - m_pos).Length();
 
-	InitUVN();
+	InitUVN(up);
 }
 
-void Camera::InitUVN()
+void Camera::InitUVN(const sm::vec3& up)
 {
-	m_n = (m_pos - m_target).Normalized();
-	m_u = m_up.Cross(m_n).Normalized();
+	m_n = (m_target - m_pos).Normalized();
+	m_v = up.Normalized();
+	m_u = m_v.Cross(m_n).Normalized();
 	m_v = m_n.Cross(m_u).Normalized();
 }
 

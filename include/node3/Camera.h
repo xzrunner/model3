@@ -18,6 +18,7 @@ public:
 	void Roll(float angle);
 	void Yaw(float angle);
 	void Pitch(float angle);
+	void SetUpDir(const sm::vec3& up);
 
 	// translate
 	void Translate(float dx, float dy);
@@ -28,7 +29,7 @@ public:
 	const sm::vec3& GetPos() const { return m_pos; }
 	const sm::vec3& GetTarget() const { return m_target; }
 	float GetDistance() const { return m_distance; }
-	const sm::vec3& GetUp() const { return m_up; }
+	const sm::vec3& GetUpDir() const { return m_v; }
 
 	sm::mat4 GetModelViewMat() const;
 	sm::mat4 GetProjectionMat() const;
@@ -47,7 +48,7 @@ public:
 	void Reset(const sm::vec3& pos, const sm::vec3& target, const sm::vec3& up);
 
 private:
-	void InitUVN();
+	void InitUVN(const sm::vec3& up);
 
 private:
 	// pos
@@ -55,7 +56,6 @@ private:
 	float m_distance;
 
 	// angle
-	sm::vec3 m_up;
 	sm::vec3 m_u, m_v, m_n;
 
 	// store for reset
