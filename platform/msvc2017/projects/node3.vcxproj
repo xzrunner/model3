@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -77,6 +77,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\include\node3\RenderSystem.cpp" />
     <ClCompile Include="..\..\..\source\AssimpHelper.cpp" />
     <ClCompile Include="..\..\..\source\Camera.cpp" />
     <ClCompile Include="..\..\..\source\ComplexModel.cpp" />
@@ -97,6 +98,7 @@
     <ClCompile Include="..\..\..\source\RenderContext.cpp" />
     <ClCompile Include="..\..\..\source\RenderCtxStack.cpp" />
     <ClCompile Include="..\..\..\source\ResourceAPI.cpp" />
+    <ClCompile Include="..\..\..\source\SceneNode.cpp" />
     <ClCompile Include="..\..\..\source\Sprite2Model.cpp" />
     <ClCompile Include="..\..\..\source\Sprite2Node.cpp" />
     <ClCompile Include="..\..\..\source\SurfaceFactory.cpp" />
@@ -109,6 +111,10 @@
     <ClInclude Include="..\..\..\include\node3\Camera.h" />
     <ClInclude Include="..\..\..\include\node3\ComplexModel.h" />
     <ClInclude Include="..\..\..\include\node3\ComplexNode.h" />
+    <ClInclude Include="..\..\..\include\node3\CompMesh.h" />
+    <ClInclude Include="..\..\..\include\node3\CompModel.h" />
+    <ClInclude Include="..\..\..\include\node3\CompTransform.h" />
+    <ClInclude Include="..\..\..\include\node3\NodeComponent.h" />
     <ClInclude Include="..\..\..\include\node3\DrawNode.h" />
     <ClInclude Include="..\..\..\include\node3\IModel.h" />
     <ClInclude Include="..\..\..\include\node3\INode.h" />
@@ -129,7 +135,9 @@
     <ClInclude Include="..\..\..\include\node3\RenderContext.h" />
     <ClInclude Include="..\..\..\include\node3\RenderCtxStack.h" />
     <ClInclude Include="..\..\..\include\node3\RenderParams.h" />
+    <ClInclude Include="..\..\..\include\node3\RenderSystem.h" />
     <ClInclude Include="..\..\..\include\node3\ResourceAPI.h" />
+    <ClInclude Include="..\..\..\include\node3\SceneNode.h" />
     <ClInclude Include="..\..\..\include\node3\Sprite2Model.h" />
     <ClInclude Include="..\..\..\include\node3\Sprite2Node.h" />
     <ClInclude Include="..\..\..\include\node3\Surface.h" />
@@ -138,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\include\node3\AABB.inl" />
+    <None Include="..\..\..\include\node3\SceneNode.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

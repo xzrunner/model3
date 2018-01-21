@@ -49,6 +49,18 @@
     <Filter Include="model\surface">
       <UniqueIdentifier>{b3cba04f-cb90-4241-877a-f93248d94453}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ecs">
+      <UniqueIdentifier>{50510616-3600-458a-9be5-77a9154c2561}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ecs\components">
+      <UniqueIdentifier>{1f0efb10-0a28-402c-bfa5-956a68b5685e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ecs\entity">
+      <UniqueIdentifier>{424741ab-b78f-4273-affd-63a84b8fc864}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ecs\system">
+      <UniqueIdentifier>{493ce7c0-f5c6-481b-bb1c-266291bb380b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Material.cpp">
@@ -122,6 +134,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\SurfaceFactory.cpp">
       <Filter>model\surface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\SceneNode.cpp">
+      <Filter>ecs\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\include\node3\RenderSystem.cpp">
+      <Filter>ecs\system</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -217,10 +235,31 @@
     <ClInclude Include="..\..\..\include\node3\SurfaceFactory.h">
       <Filter>model\surface</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\CompMesh.h">
+      <Filter>ecs\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\CompTransform.h">
+      <Filter>ecs\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\CompModel.h">
+      <Filter>ecs\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\NodeComponent.h">
+      <Filter>ecs\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\SceneNode.h">
+      <Filter>ecs\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\RenderSystem.h">
+      <Filter>ecs\system</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\include\node3\AABB.inl">
       <Filter>dataset</Filter>
+    </None>
+    <None Include="..\..\..\include\node3\SceneNode.inl">
+      <Filter>ecs\entity</Filter>
     </None>
   </ItemGroup>
 </Project>
