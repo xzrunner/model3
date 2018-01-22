@@ -109,6 +109,7 @@
     <ClInclude Include="..\..\..\include\node3\AABB.h" />
     <ClInclude Include="..\..\..\include\node3\AssimpHelper.h" />
     <ClInclude Include="..\..\..\include\node3\Camera.h" />
+    <ClInclude Include="..\..\..\include\node3\CompAABB.h" />
     <ClInclude Include="..\..\..\include\node3\ComplexModel.h" />
     <ClInclude Include="..\..\..\include\node3\ComplexNode.h" />
     <ClInclude Include="..\..\..\include\node3\CompMesh.h" />

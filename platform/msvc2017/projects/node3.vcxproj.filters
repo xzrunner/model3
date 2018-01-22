@@ -253,6 +253,9 @@
     <ClInclude Include="..\..\..\include\node3\RenderSystem.h">
       <Filter>ecs\system</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\CompAABB.h">
+      <Filter>ecs\components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\include\node3\AABB.inl">
