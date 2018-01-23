@@ -25,8 +25,8 @@ sm::vec2 Viewport::TransPos3ProjectToScreen(const sm::vec3& proj, const Camera& 
 	float hw = m_width * 0.5f;
 	float hh = m_height * 0.5f;
 
-	float x = - proj.x / proj.z;
-	float y = - proj.y / proj.z;
+	float x = proj.x / proj.z;
+	float y = proj.y / proj.z;
 
 	float sx = x / (tan_half_fovy * aspect) * hw + hw;
 	float sy = - y / tan_half_fovy * hh + hh;
