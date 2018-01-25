@@ -13,6 +13,14 @@ namespace n3
 class SceneNode
 {
 public:
+	void AddChild(const std::shared_ptr<SceneNode>& child);
+	void RemoveChild(const std::shared_ptr<SceneNode>& child);
+
+	const std::vector<std::shared_ptr<SceneNode>>& GetAllChildren() const {
+		return m_children;
+	}
+
+	void SetParent(const std::shared_ptr<SceneNode>& parent);
 
 	template <typename T>
 	bool HasComponent() const;
