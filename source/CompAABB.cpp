@@ -20,9 +20,9 @@ bool CompAABB::StoreToJson(rapidjson::Value& val, rapidjson::MemoryPoolAllocator
 	rapidjson::Value val_max;
 	auto& max = m_aabb.Max();
 	val_max.SetArray();
-	val_max.PushBack(min.x, alloc);
-	val_max.PushBack(min.y, alloc);
-	val_max.PushBack(min.z, alloc);
+	val_max.PushBack(max.x, alloc);
+	val_max.PushBack(max.y, alloc);
+	val_max.PushBack(max.z, alloc);
 	val.AddMember("max", val_max, alloc);
 
 	return true;
