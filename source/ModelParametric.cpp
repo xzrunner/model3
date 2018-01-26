@@ -8,9 +8,10 @@
 namespace n3
 {
 
+const char* const ModelParametric::TYPE_NAME = "parametric";
+
 ModelParametric::ModelParametric()
 {
-
 }
 
 ModelParametric::ModelParametric(const Surface* surface, AABB& aabb)
@@ -20,7 +21,7 @@ ModelParametric::ModelParametric(const Surface* surface, AABB& aabb)
 
 bool ModelParametric::StoreToJson(rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const
 {
-	val.SetObject();
+//	val.SetObject();
 
 	rapidjson::Value val_meshes;
 	val_meshes.SetArray();
@@ -48,9 +49,9 @@ void ModelParametric::LoadFromJson(const rapidjson::Value& val)
 	}
 }
 
-Mesh* ModelParametric::CreateMeshFromSurface(const Surface* surface, AABB& aabb)
+MeshPtr ModelParametric::CreateMeshFromSurface(const Surface* surface, AABB& aabb)
 {
-	Mesh* mesh = new Mesh;
+	auto mesh = std::make_shared<Mesh>();
 
 	mesh->SetType(surface->Type());
 

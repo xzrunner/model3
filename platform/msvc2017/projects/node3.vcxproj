@@ -94,6 +94,7 @@
     <ClCompile Include="..\..\..\source\Math.cpp" />
     <ClCompile Include="..\..\..\source\Mesh.cpp" />
     <ClCompile Include="..\..\..\source\Model.cpp" />
+    <ClCompile Include="..\..\..\source\ModelFactory.cpp" />
     <ClCompile Include="..\..\..\source\ModelObj.cpp" />
     <ClCompile Include="..\..\..\source\ModelParametric.cpp" />
     <ClCompile Include="..\..\..\source\ObjectModel.cpp" />
@@ -123,6 +124,7 @@
     <ClInclude Include="..\..\..\include\node3\CompModel.h" />
     <ClInclude Include="..\..\..\include\node3\ComponentFactory.h" />
     <ClInclude Include="..\..\..\include\node3\CompTransform.h" />
+    <ClInclude Include="..\..\..\include\node3\ModelFactory.h" />
     <ClInclude Include="..\..\..\include\node3\NodeComponent.h" />
     <ClInclude Include="..\..\..\include\node3\DrawNode.h" />
     <ClInclude Include="..\..\..\include\node3\IModel.h" />

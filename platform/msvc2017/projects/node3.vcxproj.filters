@@ -165,6 +165,9 @@
     <ClCompile Include="..\..\..\source\ParametricEquations.cpp">
       <Filter>model\surface</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\ModelFactory.cpp">
+      <Filter>model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\node3\Material.h">
@@ -285,6 +288,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\ComponentFactory.h">
       <Filter>ecs\components\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\ModelFactory.h">
+      <Filter>model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

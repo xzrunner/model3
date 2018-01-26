@@ -1,10 +1,10 @@
 #include "node3/AssimpHelper.h"
 #include "node3/ModelObj.h"
-#include "node3/Mesh.h"
 #include "node3/Material.h"
 #include "node3/n3_typedef.h"
 #include "node3/ResourceAPI.h"
 #include "node3/AABB.h"
+#include "node3/Model.h"
 
 #include <SM_Matrix.h>
 
@@ -32,7 +32,7 @@ unsigned int ppsteps = aiProcess_CalcTangentSpace | // calculate tangents and bi
 	aiProcess_SplitByBoneCount         | // split meshes with too many bones. Necessary for our (limited) hardware skinning shader
 	0;
 
-Model* AssimpHelper::Load(const std::string& filepath, AABB& aabb)
+std::shared_ptr<Model> AssimpHelper::Load(const std::string& filepath, AABB& aabb)
 {
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(filepath.c_str(),
@@ -49,7 +49,7 @@ Model* AssimpHelper::Load(const std::string& filepath, AABB& aabb)
 	}
 
 	auto dir = boost::filesystem::path(filepath).parent_path().string();
-	ModelObj* model = new ModelObj("tood");
+	auto model = std::make_shared<ModelObj>("todo");
 	LoadNode(scene, scene->mRootNode, *model, dir, aabb);
 
 	// todo: load lights and cameras
@@ -101,18 +101,17 @@ void AssimpHelper::LoadNode(const aiScene* ai_scene, const aiNode* ai_node,
 				const aiMesh* mesh = ai_scene->mMeshes[ai_node->mMeshes[i]];
 				const aiMaterial* material = ai_scene->mMaterials[mesh->mMaterialIndex];
 
-				n3::Mesh* n3_mesh = LoadMesh(mesh, material, dir, trans_mat, aabb);
+				auto n3_mesh = LoadMesh(mesh, material, dir, trans_mat, aabb);
 				model.AddMesh(n3_mesh);
-				n3_mesh->RemoveReference();
 			}
 		}
 	}
 }
 
-Mesh* AssimpHelper::LoadMesh(const aiMesh* ai_mesh, const aiMaterial* ai_material, 
-	                         const std::string& dir, const sm::mat4& trans, AABB& aabb)
+MeshPtr AssimpHelper::LoadMesh(const aiMesh* ai_mesh, const aiMaterial* ai_material, 
+	                           const std::string& dir, const sm::mat4& trans, AABB& aabb)
 {
-	Mesh* mesh = new Mesh;
+	auto mesh = std::make_shared<Mesh>();
 
 	LoadMaterial(ai_mesh, ai_material, *mesh, dir);
 

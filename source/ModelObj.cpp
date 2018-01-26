@@ -13,6 +13,8 @@
 namespace n3 
 {
 
+const char* const ModelObj::TYPE_NAME = "object";
+
 ModelObj::ModelObj(const std::string& filepath, float scale /*= 1.0f*/)
 	: m_scale(scale)
 {
@@ -135,7 +137,7 @@ void ModelObj::InitAllMeshes()
 			const MeshInfo& mesh_data = m_objects[i].meshes[j];
 			const MaterialInfo& material_data = m_materials[mesh_data.material_id];
 
-			Mesh* mesh = new Mesh;
+			auto mesh = std::make_shared<Mesh>();
 
 			Material material;
 			material.ambient  = material_data.ambient;

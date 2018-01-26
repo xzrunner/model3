@@ -12,7 +12,7 @@
 namespace n3
 {
 
-class Mesh : public cu::RefCountObj, private cu::Uncopyable
+class Mesh : private cu::Uncopyable
 {
 public:
 	Mesh();
@@ -47,6 +47,8 @@ private:
 	Material m_material;
 
 }; // Mesh
+
+using MeshPtr = std::shared_ptr<Mesh>;
 
 }
 

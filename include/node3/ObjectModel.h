@@ -12,13 +12,11 @@ public:
 	virtual size_t Type() const override;
 	virtual void Draw(const RenderParams&) const override;
 
-	void SetModel(std::unique_ptr<Model>& model) {
-		m_model = std::move(model);
-	}
-	const Model* GetModel() const { return m_model.get(); }
+	void SetModel(const std::shared_ptr<Model>& model) { m_model = model; }
+	const std::shared_ptr<Model>& GetModel() const { return m_model; }
 
 private:
-	std::unique_ptr<Model> m_model = nullptr;
+	std::shared_ptr<Model> m_model = nullptr;
 
 }; // ObjectModel
 
