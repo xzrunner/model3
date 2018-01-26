@@ -8,23 +8,54 @@
 namespace n3
 {
 
+CU_SINGLETON_DEFINITION(ComponentFactory);
+
+ComponentFactory::ComponentFactory()
+{
+	m_creator.insert(std::make_pair(CompAABB::TYPE_NAME,
+		[](SceneNodePtr& node, const rapidjson::Value& val)
+	{
+		auto& comp = node->AddComponent<n3::CompAABB>();
+		comp.LoadFromJson(val);
+	}));
+
+	m_creator.insert(std::make_pair(CompMesh::TYPE_NAME,
+		[](SceneNodePtr& node, const rapidjson::Value& val)
+	{
+		auto& comp = node->AddComponent<n3::CompMesh>();
+		comp.LoadFromJson(val);
+	}));
+
+	m_creator.insert(std::make_pair(CompModel::TYPE_NAME,
+		[](SceneNodePtr& node, const rapidjson::Value& val)
+	{
+		auto& comp = node->AddComponent<n3::CompModel>();
+		comp.LoadFromJson(val);
+	}));
+
+	m_creator.insert(std::make_pair(CompTransform::TYPE_NAME,
+		[](SceneNodePtr& node, const rapidjson::Value& val)
+	{
+		auto& comp = node->AddComponent<n3::CompTransform>();
+		comp.LoadFromJson(val);
+	}));
+}
+
 void ComponentFactory::Create(SceneNodePtr& node, 
 	                          const std::string& name, 
 	                          const rapidjson::Value& val)
 {
-	if (name == CompAABB::TYPE_NAME) {
-		auto& comp = node->AddComponent<n3::CompAABB>();
-		comp.LoadFromJson(val);
-	} else if (name == CompMesh::TYPE_NAME) {
-		auto& comp = node->AddComponent<n3::CompMesh>();
-		comp.LoadFromJson(val);
-	} else if (name == CompModel::TYPE_NAME) {
-		auto& comp = node->AddComponent<n3::CompModel>();
-		comp.LoadFromJson(val);
-	} else if (name == CompTransform::TYPE_NAME) {
-		auto& comp = node->AddComponent<n3::CompTransform>();
-		comp.LoadFromJson(val);
+	auto itr = m_creator.find(name);
+	if (itr != m_creator.end()) {
+		itr->second(node, val);
+	} else {
+		GD_REPORT_ASSERT("no comp creator");
 	}
+}
+
+void ComponentFactory::AddCreator(const std::string& name, const CreateFunc& func)
+{
+	m_creator.insert(std::make_pair(name, func));
 }
 
 }

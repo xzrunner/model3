@@ -65,7 +65,8 @@ void SerializeSystem::LoadNodeFromJson(SceneNodePtr& node, const rapidjson::Valu
 	{
 		auto itr = val["components"].MemberBegin();
 		for ( ; itr != val["components"].MemberEnd(); ++itr) {
-			ComponentFactory::Create(node, itr->name.GetString(), itr->value);
+			ComponentFactory::Instance()->Create(
+				node, itr->name.GetString(), itr->value);
 		}
 	}
 }
