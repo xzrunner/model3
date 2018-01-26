@@ -16,6 +16,10 @@ class ModelObj : public Model
 public:
 	ModelObj(const std::string& filepath, float scale = 1.0f);
 
+	virtual bool StoreToJson(rapidjson::Value& val,
+		rapidjson::MemoryPoolAllocator<>& alloc) const override;
+	virtual void LoadFromJson(const rapidjson::Value& val) override;
+
 private:
 	void Import(const std::string& filepath);
 	void InitNormals();

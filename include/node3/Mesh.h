@@ -18,6 +18,9 @@ public:
 	Mesh();
 	virtual ~Mesh();
 
+	void SetType(const std::string& type) { m_type = type; }
+	const std::string& GetType() const { return m_type; }
+
 	void SetRenderBuffer(int vertex_type, const CU_VEC<float>& vertices,
 		const CU_VEC<uint16_t>& indices);
 
@@ -32,6 +35,8 @@ public:
 	const CU_VEC<uint16_t>& GetIndices() const { return m_indices; }
 
 private:
+	std::string m_type;
+
 	int m_vertex_type;
 	CU_VEC<float> m_vertices;
 

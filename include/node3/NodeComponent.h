@@ -1,5 +1,7 @@
 #pragma once
 
+#include <rapidjson/document.h>
+
 namespace n3
 {
 
@@ -28,16 +30,17 @@ class SceneNode;
 class NodeComponent
 {
 public:
-	NodeComponent(SceneNode* entity) 
-		: m_entity(entity) {}
 	virtual ~NodeComponent() {}
 
-	virtual void Init() {}
-	virtual void Update() {}
-	virtual void Draw() {}
+	//virtual void Init() {}
+	//virtual void Update() {}
+	//virtual void Draw() {}
 
-private:
-	SceneNode* m_entity = nullptr;
+	virtual const char* Type() const = 0;
+
+	virtual bool StoreToJson(rapidjson::Value& val, 
+		rapidjson::MemoryPoolAllocator<>& alloc) const { return false; }
+	virtual void LoadFromJson(const rapidjson::Value& val) {}
 
 }; // NodeComponent
 

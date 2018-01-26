@@ -19,6 +19,15 @@ ModelObj::ModelObj(const std::string& filepath, float scale /*= 1.0f*/)
 	Import(filepath);
 }
 
+bool ModelObj::StoreToJson(rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const
+{
+	return false;
+}
+
+void ModelObj::LoadFromJson(const rapidjson::Value& val)
+{
+}
+
 void ModelObj::Import(const std::string& filepath)
 {
 	std::locale::global(std::locale(""));

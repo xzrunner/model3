@@ -8,9 +8,12 @@
 namespace n3
 {
 
-class CompMesh : NodeComponent
+class CompMesh : public NodeComponent
 {
 public:
+	virtual const char* Type() const override { return TYPE_NAME; }
+
+	static const char* const TYPE_NAME;
 
 private:
 	std::unique_ptr<Model> m_model = nullptr;

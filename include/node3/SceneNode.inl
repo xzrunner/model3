@@ -17,7 +17,7 @@ T& SceneNode::AddComponent(TArgs&&... args)
 {
 	assert(!HasComponent<T>());
 
-	auto comp_ptr = std::make_unique<T>(this, std::forward<TArgs>(args)...);
+	auto comp_ptr = std::make_unique<T>(std::forward<TArgs>(args)...);
 	auto& comp = *comp_ptr;
 	size_t idx = m_components.size();
 	assert(idx < 256);
@@ -26,7 +26,7 @@ T& SceneNode::AddComponent(TArgs&&... args)
 	m_component_array[GetComponentTypeID<T>()]  = static_cast<uint8_t>(idx);
 	m_component_bitset[GetComponentTypeID<T>()] = true;
 
-	comp.Init();
+//	comp.Init();
 	return comp;
 }
 

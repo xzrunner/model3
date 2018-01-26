@@ -61,6 +61,9 @@
     <Filter Include="ecs\system">
       <UniqueIdentifier>{493ce7c0-f5c6-481b-bb1c-266291bb380b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ecs\components\base">
+      <UniqueIdentifier>{4ed2276b-929d-46e3-bf5d-a7d37703901e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Material.cpp">
@@ -140,6 +143,27 @@
     </ClCompile>
     <ClCompile Include="..\..\..\include\node3\RenderSystem.cpp">
       <Filter>ecs\system</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\SerializeSystem.cpp">
+      <Filter>ecs\system</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\CompTransform.cpp">
+      <Filter>ecs\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\ComponentFactory.cpp">
+      <Filter>ecs\components\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\CompAABB.cpp">
+      <Filter>ecs\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\CompMesh.cpp">
+      <Filter>ecs\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\CompModel.cpp">
+      <Filter>ecs\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\ParametricEquations.cpp">
+      <Filter>model\surface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -244,9 +268,6 @@
     <ClInclude Include="..\..\..\include\node3\CompModel.h">
       <Filter>ecs\components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\NodeComponent.h">
-      <Filter>ecs\components</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\node3\SceneNode.h">
       <Filter>ecs\entity</Filter>
     </ClInclude>
@@ -255,6 +276,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\CompAABB.h">
       <Filter>ecs\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\SerializeSystem.h">
+      <Filter>ecs\system</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\NodeComponent.h">
+      <Filter>ecs\components\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\ComponentFactory.h">
+      <Filter>ecs\components\base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -47,12 +47,12 @@ inline void AABB::Rotate(const sm::mat4& mat)
 	m_max = mat * m_max;
 }
 
-inline const sm::vec3 AABB::Max() const 
+inline const sm::vec3& AABB::Max() const 
 { 
 	return m_max; 
 }
 
-inline const sm::vec3 AABB::Min() const 
+inline const sm::vec3& AABB::Min() const 
 { 
 	return m_min; 
 }

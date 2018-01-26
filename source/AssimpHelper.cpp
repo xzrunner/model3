@@ -1,5 +1,5 @@
 #include "node3/AssimpHelper.h"
-#include "node3/Model.h"
+#include "node3/ModelObj.h"
 #include "node3/Mesh.h"
 #include "node3/Material.h"
 #include "node3/n3_typedef.h"
@@ -49,7 +49,7 @@ Model* AssimpHelper::Load(const std::string& filepath, AABB& aabb)
 	}
 
 	auto dir = boost::filesystem::path(filepath).parent_path().string();
-	Model* model = new Model;
+	ModelObj* model = new ModelObj("tood");
 	LoadNode(scene, scene->mRootNode, *model, dir, aabb);
 
 	// todo: load lights and cameras

@@ -7,17 +7,17 @@ namespace n3
 Surface* SurfaceFactory::Create(const std::string& name)
 {
 	Surface* surface = nullptr;
-	if (name == "Cone") {
+	if (name == Cone::TYPE_NAME) {
 		surface = new Cone(2, 1);
-	}  else if (name == "Sphere") {
+	}  else if (name == Sphere::TYPE_NAME) {
 		surface = new Sphere(1);
-	} else if (name == "Torus") {
+	} else if (name == Torus::TYPE_NAME) {
 		surface = new Torus(0.5f, 0.2f);
-	} else if (name == "TrefoilKnot") {
+	} else if (name == TrefoilKnot::TYPE_NAME) {
 		surface = new TrefoilKnot(1);
-	} else if (name == "MobiusStrip") {
+	} else if (name == MobiusStrip::TYPE_NAME) {
 		surface = new MobiusStrip(0.2f);
-	} else if (name == "KleinBottle") {
+	} else if (name == KleinBottle::TYPE_NAME) {
 		surface = new KleinBottle(0.1f);
 	}
 	return surface;

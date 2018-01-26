@@ -15,6 +15,13 @@ public:
 	ModelParametric();
 	ModelParametric(const Surface* surface, AABB& aabb);
 
+	virtual bool StoreToJson(rapidjson::Value& val,
+		rapidjson::MemoryPoolAllocator<>& alloc) const override;
+	virtual void LoadFromJson(const rapidjson::Value& val) override;
+
+private:
+	static Mesh* CreateMeshFromSurface(const Surface* surface, AABB& aabb);
+
 }; // ModelParametric
 
 }

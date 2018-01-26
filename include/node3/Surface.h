@@ -9,6 +9,7 @@ namespace n3
 class Surface 
 {
 public:
+	virtual const char* Type() const = 0;
 	virtual int GetVertexCount() const = 0;
 	virtual int GetTriangleIndexCount() const = 0;
 	virtual void GenerateVertices(int vertex_type, CU_VEC<float>& vertices) const = 0;
