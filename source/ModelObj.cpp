@@ -15,11 +15,16 @@ namespace n3
 
 const char* const ModelObj::TYPE_NAME = "object";
 
-ModelObj::ModelObj(const std::string& filepath, float scale /*= 1.0f*/)
-	: m_scale(scale)
+ModelObj::ModelObj()
+	: m_scale(1)
 {
-	Import(filepath);
 }
+
+//ModelObj::ModelObj(const std::string& filepath, float scale /*= 1.0f*/)
+//	: m_scale(scale)
+//{
+////	Import(filepath);
+//}
 
 bool ModelObj::StoreToJson(rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const
 {

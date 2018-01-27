@@ -24,14 +24,14 @@ void RenderSystem::DrawModel(const Model& model, const sm::mat4& mat)
 	auto& meshes = model.GetAllMeshes();
 	for (auto& mesh : meshes)
 	{
-		const n3::Material& material = mesh->GetMaterial();
-		int tex_id = n3::ResourceAPI::GetTexID(material.texture);
+		const Material& material = mesh->GetMaterial();
+		int tex_id = ResourceAPI::GetTexID(material.texture);
 		shader->SetMaterial(sl::Model3Shader::Material(material.ambient, 
 			material.diffuse, material.specular, material.shininess, tex_id));
 
 		int vertex_type = mesh->GetVertexType();
-		bool has_normal = vertex_type & n3::VERTEX_FLAG_NORMALS;
-		bool has_texcoord = vertex_type & n3::VERTEX_FLAG_TEXCOORDS;
+		bool has_normal = vertex_type & VERTEX_FLAG_NORMALS;
+		bool has_texcoord = vertex_type & VERTEX_FLAG_TEXCOORDS;
 
 		auto& vertices = mesh->GetVertices();
 		auto& indieces = mesh->GetIndices();

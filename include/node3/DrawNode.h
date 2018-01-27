@@ -1,16 +1,16 @@
 #pragma once
 
-#include "node3/INode.h"
+#include "node3/SceneNode.h"
+
+#include <SM_Matrix.h>
 
 namespace n3
 {
 
-class RenderParams;
-
 class DrawNode
 {
 public:
-	static void Draw(const NodeConstPtr& node, const RenderParams& rp);
+	static void Draw(const SceneNodePtr& node, const sm::mat4& mt);
 
 }; // DrawNode
 

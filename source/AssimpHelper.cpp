@@ -49,7 +49,7 @@ std::shared_ptr<Model> AssimpHelper::Load(const std::string& filepath, AABB& aab
 	}
 
 	auto dir = boost::filesystem::path(filepath).parent_path().string();
-	auto model = std::make_shared<ModelObj>("todo");
+	auto model = std::make_shared<ModelObj>();
 	LoadNode(scene, scene->mRootNode, *model, dir, aabb);
 
 	// todo: load lights and cameras
@@ -120,12 +120,12 @@ MeshPtr AssimpHelper::LoadMesh(const aiMesh* ai_mesh, const aiMaterial* ai_mater
 	bool has_normal = ai_mesh->HasNormals();
 	if (has_normal) {
 		floats_per_vertex += 3;
-		vertex_type |= n3::VERTEX_FLAG_NORMALS;
+		vertex_type |= VERTEX_FLAG_NORMALS;
 	}
 	bool has_texcoord = ai_mesh->HasTextureCoords(0);
 	if (has_texcoord) {
 		floats_per_vertex += 2;
-		vertex_type |= n3::VERTEX_FLAG_TEXCOORDS;
+		vertex_type |= VERTEX_FLAG_TEXCOORDS;
 	}
 
 	CU_VEC<float> vertices;
@@ -176,7 +176,7 @@ MeshPtr AssimpHelper::LoadMesh(const aiMesh* ai_mesh, const aiMaterial* ai_mater
 
 void AssimpHelper::LoadMaterial(const aiMesh* ai_mesh, const aiMaterial* ai_material, Mesh& mesh, const std::string& dir)
 {
-	n3::Material material;
+	Material material;
 
 	aiColor4D col;
 

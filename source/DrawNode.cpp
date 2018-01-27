@@ -1,17 +1,29 @@
 #include "node3/DrawNode.h"
-#include "node3/RenderParams.h"
+
+#include <node3/CompModel.h>
+#include <node3/RenderSystem.h>
 
 namespace n3
 {
 
-void DrawNode::Draw(const NodeConstPtr& node, const RenderParams& rp)
+void DrawNode::Draw(const SceneNodePtr& node, const sm::mat4& mt)
 {
-	auto& pos = node->GetPos();
-	auto mt_trans = sm::mat4::Translated(pos.x, pos.y, pos.z);
-	auto mt_rot = sm::mat4(node->GetAngle());
-	
-	RenderParams child_rp(mt_rot * mt_trans * rp.mt);
-	node->GetModel()->Draw(child_rp);
+	auto& ctrans = node->GetComponent<CompTransform>();
+	sm::mat4 mt_child = ctrans.GetTransformMat() * mt;
+
+	if (node->HasComponent<CompModel>())
+	{
+		auto& cmodel = node->GetComponent<CompModel>();
+		auto& model = cmodel.GetModel();
+		if (model) {
+			RenderSystem::DrawModel(*model, mt_child);
+		}
+	}
+
+	auto& children = node->GetAllChildren();
+	for (auto& child : children) {
+		Draw(child, mt_child);
+	}
 }
 
 }

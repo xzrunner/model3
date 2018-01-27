@@ -14,7 +14,8 @@ namespace n3
 class ModelObj : public Model
 {
 public:
-	ModelObj(const std::string& filepath, float scale = 1.0f);
+	ModelObj();
+//	ModelObj(const std::string& filepath, float scale = 1.0f);
 
 	virtual const char* Type() const override { return TYPE_NAME; }
 

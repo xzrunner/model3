@@ -15,28 +15,28 @@ ComponentFactory::ComponentFactory()
 	m_creator.insert(std::make_pair(CompAABB::TYPE_NAME,
 		[](SceneNodePtr& node, const rapidjson::Value& val)
 	{
-		auto& comp = node->AddComponent<n3::CompAABB>();
+		auto& comp = node->AddComponent<CompAABB>();
 		comp.LoadFromJson(val);
 	}));
 
 	m_creator.insert(std::make_pair(CompMesh::TYPE_NAME,
 		[](SceneNodePtr& node, const rapidjson::Value& val)
 	{
-		auto& comp = node->AddComponent<n3::CompMesh>();
+		auto& comp = node->AddComponent<CompMesh>();
 		comp.LoadFromJson(val);
 	}));
 
 	m_creator.insert(std::make_pair(CompModel::TYPE_NAME,
 		[](SceneNodePtr& node, const rapidjson::Value& val)
 	{
-		auto& comp = node->AddComponent<n3::CompModel>();
+		auto& comp = node->AddComponent<CompModel>();
 		comp.LoadFromJson(val);
 	}));
 
 	m_creator.insert(std::make_pair(CompTransform::TYPE_NAME,
 		[](SceneNodePtr& node, const rapidjson::Value& val)
 	{
-		auto& comp = node->AddComponent<n3::CompTransform>();
+		auto& comp = node->AddComponent<CompTransform>();
 		comp.LoadFromJson(val);
 	}));
 }

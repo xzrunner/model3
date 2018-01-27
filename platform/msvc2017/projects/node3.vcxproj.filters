@@ -16,53 +16,23 @@
     <Filter Include="render">
       <UniqueIdentifier>{5cd09632-601f-42e8-884b-8214a7fc2bd1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="nodes">
-      <UniqueIdentifier>{6d8cb769-7aaf-4669-8202-47addf009776}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\02.complex">
-      <UniqueIdentifier>{0bbdfeb0-91b3-489b-bec1-ac2731d78fe5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\03.animation">
-      <UniqueIdentifier>{17394a8a-712c-4f83-83c2-46d7681ef870}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\04.terrain">
-      <UniqueIdentifier>{14de15ce-9364-41ef-a48d-695a0f0eb79d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\00.anchor">
-      <UniqueIdentifier>{e5c76ddf-05de-409f-8e67-1cbb23b66809}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\01.object">
-      <UniqueIdentifier>{2610799d-42fa-4c58-a5f0-e3fa14d46976}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\model">
-      <UniqueIdentifier>{7629b7cf-b009-4d77-9213-72c0d0b0a32c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\node">
-      <UniqueIdentifier>{b2eb09b6-3f63-4d38-961b-2306378a18aa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="dataset\camera">
       <UniqueIdentifier>{ab9d472b-75e0-4655-aa2d-d69dd2d88c93}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="nodes\05.sprite2">
-      <UniqueIdentifier>{3c5cefbf-2acd-4489-8d39-655610996227}</UniqueIdentifier>
     </Filter>
     <Filter Include="model\surface">
       <UniqueIdentifier>{b3cba04f-cb90-4241-877a-f93248d94453}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ecs">
-      <UniqueIdentifier>{50510616-3600-458a-9be5-77a9154c2561}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ecs\components">
+    <Filter Include="components">
       <UniqueIdentifier>{1f0efb10-0a28-402c-bfa5-956a68b5685e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ecs\entity">
+    <Filter Include="components\base">
+      <UniqueIdentifier>{4ed2276b-929d-46e3-bf5d-a7d37703901e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="entity">
       <UniqueIdentifier>{424741ab-b78f-4273-affd-63a84b8fc864}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ecs\system">
+    <Filter Include="system">
       <UniqueIdentifier>{493ce7c0-f5c6-481b-bb1c-266291bb380b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ecs\components\base">
-      <UniqueIdentifier>{4ed2276b-929d-46e3-bf5d-a7d37703901e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -102,71 +72,47 @@
     <ClCompile Include="..\..\..\source\ResourceAPI.cpp">
       <Filter>utility</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\ComplexModel.cpp">
-      <Filter>nodes\02.complex</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\ComplexNode.cpp">
-      <Filter>nodes\02.complex</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\ObjectModel.cpp">
-      <Filter>nodes\01.object</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\ObjectNode.cpp">
-      <Filter>nodes\01.object</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\IModel.cpp">
-      <Filter>nodes\model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\INode.cpp">
-      <Filter>nodes\node</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\DrawNode.cpp">
-      <Filter>render</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\Camera.cpp">
       <Filter>dataset\camera</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\Viewport.cpp">
       <Filter>dataset\camera</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\Sprite2Model.cpp">
-      <Filter>nodes\05.sprite2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\Sprite2Node.cpp">
-      <Filter>nodes\05.sprite2</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\SurfaceFactory.cpp">
       <Filter>model\surface</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\SceneNode.cpp">
-      <Filter>ecs\entity</Filter>
+      <Filter>entity</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\include\node3\RenderSystem.cpp">
-      <Filter>ecs\system</Filter>
+      <Filter>system</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\SerializeSystem.cpp">
-      <Filter>ecs\system</Filter>
+      <Filter>system</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\CompTransform.cpp">
-      <Filter>ecs\components</Filter>
+      <Filter>components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\ComponentFactory.cpp">
-      <Filter>ecs\components\base</Filter>
+      <Filter>components\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\CompAABB.cpp">
-      <Filter>ecs\components</Filter>
+      <Filter>components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\CompMesh.cpp">
-      <Filter>ecs\components</Filter>
+      <Filter>components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\CompModel.cpp">
-      <Filter>ecs\components</Filter>
+      <Filter>components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\ParametricEquations.cpp">
       <Filter>model\surface</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\ModelFactory.cpp">
       <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\DrawNode.cpp">
+      <Filter>render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -218,30 +164,6 @@
     <ClInclude Include="..\..\..\include\node3\ResourceAPI.h">
       <Filter>utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\ComplexModel.h">
-      <Filter>nodes\02.complex</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\ComplexNode.h">
-      <Filter>nodes\02.complex</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\ObjectModel.h">
-      <Filter>nodes\01.object</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\ObjectNode.h">
-      <Filter>nodes\01.object</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\IModel.h">
-      <Filter>nodes\model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\INode.h">
-      <Filter>nodes\node</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\ModelType.h">
-      <Filter>nodes\model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\DrawNode.h">
-      <Filter>render</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\node3\RenderParams.h">
       <Filter>render</Filter>
     </ClInclude>
@@ -253,44 +175,41 @@
     <ClInclude Include="..\..\..\include\node3\Viewport.h">
       <Filter>dataset\camera</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\Sprite2Model.h">
-      <Filter>nodes\05.sprite2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\Sprite2Node.h">
-      <Filter>nodes\05.sprite2</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\node3\SurfaceFactory.h">
       <Filter>model\surface</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\CompMesh.h">
-      <Filter>ecs\components</Filter>
+      <Filter>components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\CompTransform.h">
-      <Filter>ecs\components</Filter>
+      <Filter>components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\CompModel.h">
-      <Filter>ecs\components</Filter>
+      <Filter>components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\SceneNode.h">
-      <Filter>ecs\entity</Filter>
+      <Filter>entity</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\RenderSystem.h">
-      <Filter>ecs\system</Filter>
+      <Filter>system</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\CompAABB.h">
-      <Filter>ecs\components</Filter>
+      <Filter>components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\SerializeSystem.h">
-      <Filter>ecs\system</Filter>
+      <Filter>system</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\NodeComponent.h">
-      <Filter>ecs\components\base</Filter>
+      <Filter>components\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\ComponentFactory.h">
-      <Filter>ecs\components\base</Filter>
+      <Filter>components\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\ModelFactory.h">
       <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\DrawNode.h">
+      <Filter>render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -298,7 +217,7 @@
       <Filter>dataset</Filter>
     </None>
     <None Include="..\..\..\include\node3\SceneNode.inl">
-      <Filter>ecs\entity</Filter>
+      <Filter>entity</Filter>
     </None>
   </ItemGroup>
 </Project>
