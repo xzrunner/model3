@@ -1,12 +1,12 @@
 #include "node3/DrawNode.h"
-
-#include <node3/CompModel.h>
-#include <node3/RenderSystem.h>
+#include "node3/CompTransform.h"
+#include "node3/CompModel.h"
+#include "node3/RenderSystem.h"
 
 namespace n3
 {
 
-void DrawNode::Draw(const SceneNodePtr& node, const sm::mat4& mt)
+void DrawNode::Draw(const n0::SceneNodePtr& node, const sm::mat4& mt)
 {
 	auto& ctrans = node->GetComponent<CompTransform>();
 	sm::mat4 mt_child = ctrans.GetTransformMat() * mt;

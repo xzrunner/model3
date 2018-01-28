@@ -4,7 +4,7 @@
 namespace n3
 {
 
-void SerializeSystem::StoreNodeToJson(const SceneNodePtr& node, rapidjson::Value& val,
+void SerializeSystem::StoreNodeToJson(const n0::SceneNodePtr& node, rapidjson::Value& val,
 	                                  rapidjson::MemoryPoolAllocator<>& alloc)
 {
 	val.SetObject();
@@ -46,14 +46,14 @@ void SerializeSystem::StoreNodeToJson(const SceneNodePtr& node, rapidjson::Value
 	}
 }
 
-void SerializeSystem::LoadNodeFromJson(SceneNodePtr& node, const rapidjson::Value& val)
+void SerializeSystem::LoadNodeFromJson(n0::SceneNodePtr& node, const rapidjson::Value& val)
 {
 	// tree
 	if (val.HasMember("children")) 
 	{
 		for (auto& val_child : val["children"].GetArray()) 
 		{
-			auto child = std::make_shared<SceneNode>();
+			auto child = std::make_shared<n0::SceneNode>();
 			LoadNodeFromJson(child, val_child);
 			node->AddChild(child);
 			child->SetParent(node);

@@ -28,9 +28,6 @@
     <Filter Include="components\base">
       <UniqueIdentifier>{4ed2276b-929d-46e3-bf5d-a7d37703901e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="entity">
-      <UniqueIdentifier>{424741ab-b78f-4273-affd-63a84b8fc864}</UniqueIdentifier>
-    </Filter>
     <Filter Include="system">
       <UniqueIdentifier>{493ce7c0-f5c6-481b-bb1c-266291bb380b}</UniqueIdentifier>
     </Filter>
@@ -80,9 +77,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\SurfaceFactory.cpp">
       <Filter>model\surface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\SceneNode.cpp">
-      <Filter>entity</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\include\node3\RenderSystem.cpp">
       <Filter>system</Filter>
@@ -187,9 +181,6 @@
     <ClInclude Include="..\..\..\include\node3\CompModel.h">
       <Filter>components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\SceneNode.h">
-      <Filter>entity</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\node3\RenderSystem.h">
       <Filter>system</Filter>
     </ClInclude>
@@ -198,9 +189,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\SerializeSystem.h">
       <Filter>system</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\NodeComponent.h">
-      <Filter>components\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\ComponentFactory.h">
       <Filter>components\base</Filter>
@@ -215,9 +203,6 @@
   <ItemGroup>
     <None Include="..\..\..\include\node3\AABB.inl">
       <Filter>dataset</Filter>
-    </None>
-    <None Include="..\..\..\include\node3\SceneNode.inl">
-      <Filter>entity</Filter>
     </None>
   </ItemGroup>
 </Project>

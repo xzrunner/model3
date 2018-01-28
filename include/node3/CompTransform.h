@@ -1,15 +1,14 @@
 #pragma once
 
-#include "node3/NodeComponent.h"
-
 #include <SM_Vector.h>
 #include <SM_Quaternion.h>
 #include <SM_Matrix.h>
+#include <node0/NodeComponent.h>
 
 namespace n3
 {
 
-class CompTransform : public NodeComponent
+class CompTransform : public n0::NodeComponent
 {
 public:
 	CompTransform();

@@ -1,5 +1,3 @@
 # Node3
 
-Scene graph for 3D.
-
-Model and Node layers.
+3D Scene graph. No inheritance in SceneNode, use components.

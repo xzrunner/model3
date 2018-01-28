@@ -1,8 +1,7 @@
 #pragma once
 
-#include "node3/SceneNode.h"
-
 #include <cu/cu_macro.h>
+#include <node0/SceneNode.h>
 
 #include <functional>
 #include <map>
@@ -13,9 +12,9 @@ namespace n3
 class ComponentFactory
 {
 public:
-	using CreateFunc = std::function<void(SceneNodePtr&, const rapidjson::Value&)>;
+	using CreateFunc = std::function<void(n0::SceneNodePtr&, const rapidjson::Value&)>;
 
-	void Create(SceneNodePtr& node, const std::string& name, 
+	void Create(n0::SceneNodePtr& node, const std::string& name, 
 		const rapidjson::Value& val);
 
 	void AddCreator(const std::string& name, const CreateFunc& func);

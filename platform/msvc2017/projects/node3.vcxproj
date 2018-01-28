@@ -53,7 +53,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\sm\src\sm;..\..\..\..\cu\src;..\..\..\..\rapidvg\src\rapidvg;..\..\..\..\guard\include;..\..\..\..\sprite2\include;..\..\..\..\memmgr\include;..\..\..\..\unirender\include;..\..\..\..\shaderlab\include;..\..\..\..\editor-external\assimp\include;..\..\..\..\editor-external\boost\include;..\..\..\..\editor-external\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\sm\src\sm;..\..\..\..\cu\src;..\..\..\..\rapidvg\src\rapidvg;..\..\..\..\node0\include;..\..\..\..\guard\include;..\..\..\..\sprite2\include;..\..\..\..\memmgr\include;..\..\..\..\unirender\include;..\..\..\..\shaderlab\include;..\..\..\..\editor-external\assimp\include;..\..\..\..\editor-external\boost\include;..\..\..\..\editor-external\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;__STDC_LIMIT_MACROS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -67,7 +67,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\sm\src\sm;..\..\..\..\cu\src;..\..\..\..\rapidvg\src\rapidvg;..\..\..\..\guard\include;..\..\..\..\sprite2\include;..\..\..\..\memmgr\include;..\..\..\..\unirender\include;..\..\..\..\shaderlab\include;..\..\..\..\editor-external\assimp\include;..\..\..\..\editor-external\boost\include;..\..\..\..\editor-external\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\sm\src\sm;..\..\..\..\cu\src;..\..\..\..\rapidvg\src\rapidvg;..\..\..\..\node0\include;..\..\..\..\guard\include;..\..\..\..\sprite2\include;..\..\..\..\memmgr\include;..\..\..\..\unirender\include;..\..\..\..\shaderlab\include;..\..\..\..\editor-external\assimp\include;..\..\..\..\editor-external\boost\include;..\..\..\..\editor-external\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;__STDC_LIMIT_MACROS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -99,7 +99,6 @@
     <ClCompile Include="..\..\..\source\RenderContext.cpp" />
     <ClCompile Include="..\..\..\source\RenderCtxStack.cpp" />
     <ClCompile Include="..\..\..\source\ResourceAPI.cpp" />
-    <ClCompile Include="..\..\..\source\SceneNode.cpp" />
     <ClCompile Include="..\..\..\source\SerializeSystem.cpp" />
     <ClCompile Include="..\..\..\source\SurfaceFactory.cpp" />
     <ClCompile Include="..\..\..\source\Viewport.cpp" />
@@ -116,7 +115,6 @@
     <ClInclude Include="..\..\..\include\node3\CompTransform.h" />
     <ClInclude Include="..\..\..\include\node3\DrawNode.h" />
     <ClInclude Include="..\..\..\include\node3\ModelFactory.h" />
-    <ClInclude Include="..\..\..\include\node3\NodeComponent.h" />
     <ClInclude Include="..\..\..\include\node3\Material.h" />
     <ClInclude Include="..\..\..\include\node3\Math.h" />
     <ClInclude Include="..\..\..\include\node3\Mesh.h" />
@@ -133,7 +131,6 @@
     <ClInclude Include="..\..\..\include\node3\RenderParams.h" />
     <ClInclude Include="..\..\..\include\node3\RenderSystem.h" />
     <ClInclude Include="..\..\..\include\node3\ResourceAPI.h" />
-    <ClInclude Include="..\..\..\include\node3\SceneNode.h" />
     <ClInclude Include="..\..\..\include\node3\SerializeSystem.h" />
     <ClInclude Include="..\..\..\include\node3\Surface.h" />
     <ClInclude Include="..\..\..\include\node3\SurfaceFactory.h" />
@@ -141,7 +138,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\include\node3\AABB.inl" />
-    <None Include="..\..\..\include\node3\SceneNode.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,8 +1,7 @@
 #pragma once
 
-#include "node3/SceneNode.h"
-
 #include <SM_Matrix.h>
+#include <node0/SceneNode.h>
 
 namespace n3
 {

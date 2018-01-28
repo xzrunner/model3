@@ -1,12 +1,13 @@
 #pragma once
 
-#include "node3/NodeComponent.h"
 #include "node3/AABB.h"
+
+#include <node0/NodeComponent.h>
 
 namespace n3
 {
 
-class CompAABB : public NodeComponent
+class CompAABB : public n0::NodeComponent
 {
 public:
 	virtual const char* Type() const override { return TYPE_NAME; }

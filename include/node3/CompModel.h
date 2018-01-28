@@ -1,6 +1,6 @@
 #pragma once
 
-#include "node3/NodeComponent.h"
+#include <node0/NodeComponent.h>
 
 #include <memory>
 
@@ -9,7 +9,7 @@ namespace n3
 
 class Model;
 
-class CompModel : public NodeComponent
+class CompModel : public n0::NodeComponent
 {
 public:
 	virtual const char* Type() const override { return TYPE_NAME; }
