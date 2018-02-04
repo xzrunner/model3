@@ -1,7 +1,7 @@
 #pragma once
 
 #include <rapidjson/document.h>
-#include <node0/SceneNode.h>
+#include <node0/typedef.h>
 
 namespace n3
 {

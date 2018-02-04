@@ -5,6 +5,8 @@
 #include "node3/CompModel.h"
 #include "node3/CompTransform.h"
 
+#include <node0/SceneNode.h>
+
 namespace n3
 {
 

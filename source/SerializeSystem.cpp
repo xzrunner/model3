@@ -1,6 +1,8 @@
 #include "node3/SerializeSystem.h"
 #include "node3/ComponentFactory.h"
 
+#include <node0/SceneNode.h>
+
 namespace n3
 {
 
