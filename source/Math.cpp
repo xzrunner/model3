@@ -1,6 +1,7 @@
 #include "node3/Math.h"
-#include "node3/Ray.h"
-#include "node3/AABB.h"
+
+#include <painting3/AABB.h>
+#include <painting3/Ray.h>
 
 namespace n3
 {
@@ -12,7 +13,7 @@ namespace n3
 
 // This code from GraphicsGems's RayBox.c
 // https://github.com/erich666/GraphicsGems/blob/master/gems/RayBox.c
-bool Math::RayAABBIntersection(const AABB& aabb, const Ray& ray, sm::vec3* coord)
+bool Math::RayAABBIntersection(const pt3::AABB& aabb, const pt3::Ray& ray, sm::vec3* coord)
 {
 	sm::vec3 cross;
 
@@ -37,7 +38,7 @@ bool Math::RayAABBIntersection(const AABB& aabb, const Ray& ray, sm::vec3* coord
 		}
 	}
 
-	/* Ray origin inside bounding box */
+	/* pt3::Ray origin inside bounding box */
 	if (inside) {
 		cross = ray.Start();
 		return true;
@@ -83,14 +84,14 @@ bool Math::RayAABBIntersection(const AABB& aabb, const Ray& ray, sm::vec3* coord
 	return true;
 }
 
-bool Math::RayOBBIntersection(const AABB& aabb, const sm::vec3& pos, const sm::Quaternion& angle, 
-	                          const Ray& ray, sm::vec3* coord)
+bool Math::RayOBBIntersection(const pt3::AABB& aabb, const sm::vec3& pos, const sm::Quaternion& angle, 
+	                          const pt3::Ray& ray, sm::vec3* coord)
 {
 	sm::mat4 rot_mat(-angle);
 
 	sm::vec3 start = rot_mat * (ray.Start() - pos);
 	sm::vec3 dir = rot_mat * ray.Dir();
-	Ray ray_fix(start, dir);
+	pt3::Ray ray_fix(start, dir);
 
 	return RayAABBIntersection(aabb, ray_fix, coord);
 }

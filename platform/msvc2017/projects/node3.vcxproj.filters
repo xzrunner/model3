@@ -7,17 +7,11 @@
     <Filter Include="model\obj">
       <UniqueIdentifier>{7c3f0edf-715f-4510-a6b8-f3b65e970f9c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="dataset">
-      <UniqueIdentifier>{0b2ddd2a-d865-487d-a2e8-8fa47e78dc07}</UniqueIdentifier>
-    </Filter>
     <Filter Include="utility">
       <UniqueIdentifier>{da3eeec6-0a86-4c4d-91b5-69824a1136d8}</UniqueIdentifier>
     </Filter>
     <Filter Include="render">
       <UniqueIdentifier>{5cd09632-601f-42e8-884b-8214a7fc2bd1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="dataset\camera">
-      <UniqueIdentifier>{ab9d472b-75e0-4655-aa2d-d69dd2d88c93}</UniqueIdentifier>
     </Filter>
     <Filter Include="model\surface">
       <UniqueIdentifier>{b3cba04f-cb90-4241-877a-f93248d94453}</UniqueIdentifier>
@@ -63,17 +57,8 @@
     <ClCompile Include="..\..\..\source\RenderCtxStack.cpp">
       <Filter>render</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\PrimitiveDraw.cpp">
-      <Filter>render</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\ResourceAPI.cpp">
       <Filter>utility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\Camera.cpp">
-      <Filter>dataset\camera</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\Viewport.cpp">
-      <Filter>dataset\camera</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\SurfaceFactory.cpp">
       <Filter>model\surface</Filter>
@@ -134,14 +119,8 @@
     <ClInclude Include="..\..\..\include\node3\ModelObj.h">
       <Filter>model\obj</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\AABB.h">
-      <Filter>dataset</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\node3\AssimpHelper.h">
       <Filter>utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\Ray.h">
-      <Filter>dataset</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\Math.h">
       <Filter>utility</Filter>
@@ -152,9 +131,6 @@
     <ClInclude Include="..\..\..\include\node3\RenderCtxStack.h">
       <Filter>render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\PrimitiveDraw.h">
-      <Filter>render</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\node3\ResourceAPI.h">
       <Filter>utility</Filter>
     </ClInclude>
@@ -163,12 +139,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\c_wrap_n3.h" />
     <ClInclude Include="..\..\..\include\node3\n3_typedef.h" />
-    <ClInclude Include="..\..\..\include\node3\Camera.h">
-      <Filter>dataset\camera</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\Viewport.h">
-      <Filter>dataset\camera</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\node3\SurfaceFactory.h">
       <Filter>model\surface</Filter>
     </ClInclude>
@@ -199,10 +169,5 @@
     <ClInclude Include="..\..\..\include\node3\DrawNode.h">
       <Filter>render</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\include\node3\AABB.inl">
-      <Filter>dataset</Filter>
-    </None>
   </ItemGroup>
 </Project>

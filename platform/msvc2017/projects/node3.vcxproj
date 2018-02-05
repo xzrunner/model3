@@ -53,7 +53,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\sm\src\sm;..\..\..\..\cu\src;..\..\..\..\rapidvg\src\rapidvg;..\..\..\..\node0\include;..\..\..\..\guard\include;..\..\..\..\sprite2\include;..\..\..\..\painting2\include;..\..\..\..\memmgr\include;..\..\..\..\unirender\include;..\..\..\..\shaderlab\include;..\..\..\..\editor-external\assimp\include;..\..\..\..\editor-external\boost\include;..\..\..\..\editor-external\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\sm\src\sm;..\..\..\..\cu\src;..\..\..\..\rapidvg\src\rapidvg;..\..\..\..\node0\include;..\..\..\..\guard\include;..\..\..\..\sprite2\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\memmgr\include;..\..\..\..\unirender\include;..\..\..\..\shaderlab\include;..\..\..\..\editor-external\assimp\include;..\..\..\..\editor-external\boost\include;..\..\..\..\editor-external\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;__STDC_LIMIT_MACROS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -67,7 +67,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\sm\src\sm;..\..\..\..\cu\src;..\..\..\..\rapidvg\src\rapidvg;..\..\..\..\node0\include;..\..\..\..\guard\include;..\..\..\..\sprite2\include;..\..\..\..\painting2\include;..\..\..\..\memmgr\include;..\..\..\..\unirender\include;..\..\..\..\shaderlab\include;..\..\..\..\editor-external\assimp\include;..\..\..\..\editor-external\boost\include;..\..\..\..\editor-external\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\sm\src\sm;..\..\..\..\cu\src;..\..\..\..\rapidvg\src\rapidvg;..\..\..\..\node0\include;..\..\..\..\guard\include;..\..\..\..\sprite2\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\memmgr\include;..\..\..\..\unirender\include;..\..\..\..\shaderlab\include;..\..\..\..\editor-external\assimp\include;..\..\..\..\editor-external\boost\include;..\..\..\..\editor-external\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;__STDC_LIMIT_MACROS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -79,7 +79,6 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\include\node3\RenderSystem.cpp" />
     <ClCompile Include="..\..\..\source\AssimpHelper.cpp" />
-    <ClCompile Include="..\..\..\source\Camera.cpp" />
     <ClCompile Include="..\..\..\source\CompAABB.cpp" />
     <ClCompile Include="..\..\..\source\CompMesh.cpp" />
     <ClCompile Include="..\..\..\source\CompModel.cpp" />
@@ -95,19 +94,15 @@
     <ClCompile Include="..\..\..\source\ModelParametric.cpp" />
     <ClCompile Include="..\..\..\source\ParametricEquations.cpp" />
     <ClCompile Include="..\..\..\source\ParametricSurface.cpp" />
-    <ClCompile Include="..\..\..\source\PrimitiveDraw.cpp" />
     <ClCompile Include="..\..\..\source\RenderContext.cpp" />
     <ClCompile Include="..\..\..\source\RenderCtxStack.cpp" />
     <ClCompile Include="..\..\..\source\ResourceAPI.cpp" />
     <ClCompile Include="..\..\..\source\SerializeSystem.cpp" />
     <ClCompile Include="..\..\..\source\SurfaceFactory.cpp" />
-    <ClCompile Include="..\..\..\source\Viewport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\c_wrap_n3.h" />
-    <ClInclude Include="..\..\..\include\node3\AABB.h" />
     <ClInclude Include="..\..\..\include\node3\AssimpHelper.h" />
-    <ClInclude Include="..\..\..\include\node3\Camera.h" />
     <ClInclude Include="..\..\..\include\node3\CompAABB.h" />
     <ClInclude Include="..\..\..\include\node3\CompMesh.h" />
     <ClInclude Include="..\..\..\include\node3\CompModel.h" />
@@ -124,8 +119,6 @@
     <ClInclude Include="..\..\..\include\node3\n3_typedef.h" />
     <ClInclude Include="..\..\..\include\node3\ParametricEquations.h" />
     <ClInclude Include="..\..\..\include\node3\ParametricSurface.h" />
-    <ClInclude Include="..\..\..\include\node3\PrimitiveDraw.h" />
-    <ClInclude Include="..\..\..\include\node3\Ray.h" />
     <ClInclude Include="..\..\..\include\node3\RenderContext.h" />
     <ClInclude Include="..\..\..\include\node3\RenderCtxStack.h" />
     <ClInclude Include="..\..\..\include\node3\RenderParams.h" />
@@ -134,10 +127,6 @@
     <ClInclude Include="..\..\..\include\node3\SerializeSystem.h" />
     <ClInclude Include="..\..\..\include\node3\Surface.h" />
     <ClInclude Include="..\..\..\include\node3\SurfaceFactory.h" />
-    <ClInclude Include="..\..\..\include\node3\Viewport.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\include\node3\AABB.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -4,17 +4,18 @@
 #include "node3/Model.h"
 #include "node3/Mesh.h"
 
+namespace pt3 { class AABB; }
+
 namespace n3
 {
 
 class Surface;
-class AABB;
 
 class ModelParametric : public Model
 {
 public:
 	ModelParametric();
-	ModelParametric(const Surface* surface, AABB& aabb);
+	ModelParametric(const Surface* surface, pt3::AABB& aabb);
 
 	virtual const char* Type() const override { return TYPE_NAME; }
 
@@ -25,7 +26,7 @@ public:
 	static const char* const TYPE_NAME;
 
 private:
-	static MeshPtr CreateMeshFromSurface(const Surface* surface, AABB& aabb);
+	static MeshPtr CreateMeshFromSurface(const Surface* surface, pt3::AABB& aabb);
 
 }; // ModelParametric
 

@@ -3,10 +3,10 @@
 #include "node3/Material.h"
 #include "node3/n3_typedef.h"
 #include "node3/ResourceAPI.h"
-#include "node3/AABB.h"
 #include "node3/Model.h"
 
 #include <SM_Matrix.h>
+#include <painting3/AABB.h>
 
 #include <assimp/Importer.hpp>      // C++ importer interface
 #include <assimp/scene.h>           // Output data structure
@@ -32,7 +32,7 @@ unsigned int ppsteps = aiProcess_CalcTangentSpace | // calculate tangents and bi
 	aiProcess_SplitByBoneCount         | // split meshes with too many bones. Necessary for our (limited) hardware skinning shader
 	0;
 
-std::shared_ptr<Model> AssimpHelper::Load(const std::string& filepath, AABB& aabb)
+std::shared_ptr<Model> AssimpHelper::Load(const std::string& filepath, pt3::AABB& aabb)
 {
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(filepath.c_str(),
@@ -58,7 +58,7 @@ std::shared_ptr<Model> AssimpHelper::Load(const std::string& filepath, AABB& aab
 }
 
 void AssimpHelper::LoadNode(const aiScene* ai_scene, const aiNode* ai_node, 
-							Model& model, const std::string& dir, AABB& aabb)
+							Model& model, const std::string& dir, pt3::AABB& aabb)
 {
 	if (ai_node->mNumChildren) 
 	{
@@ -109,7 +109,7 @@ void AssimpHelper::LoadNode(const aiScene* ai_scene, const aiNode* ai_node,
 }
 
 MeshPtr AssimpHelper::LoadMesh(const aiMesh* ai_mesh, const aiMaterial* ai_material, 
-	                           const std::string& dir, const sm::mat4& trans, AABB& aabb)
+	                           const std::string& dir, const sm::mat4& trans, pt3::AABB& aabb)
 {
 	auto mesh = std::make_shared<Mesh>();
 

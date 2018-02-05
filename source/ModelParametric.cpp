@@ -1,9 +1,10 @@
 #include "node3/ModelParametric.h"
 #include "node3/ParametricSurface.h"
-#include "node3/AABB.h"
 #include "node3/Mesh.h"
 #include "node3/n3_typedef.h"
 #include "node3/SurfaceFactory.h"
+
+#include <painting3/AABB.h>
 
 namespace n3
 {
@@ -14,7 +15,7 @@ ModelParametric::ModelParametric()
 {
 }
 
-ModelParametric::ModelParametric(const Surface* surface, AABB& aabb)
+ModelParametric::ModelParametric(const Surface* surface, pt3::AABB& aabb)
 {
 	m_meshes.push_back(CreateMeshFromSurface(surface, aabb));
 }
@@ -42,14 +43,14 @@ void ModelParametric::LoadFromJson(const rapidjson::Value& val)
 		return;
 	}
 
-	AABB aabb;
+	pt3::AABB aabb;
 	for (auto& val_mesh : val["meshes"].GetArray()) {
 		auto surface = SurfaceFactory::Create(val_mesh.GetString());
 		m_meshes.push_back(CreateMeshFromSurface(surface, aabb));
 	}
 }
 
-MeshPtr ModelParametric::CreateMeshFromSurface(const Surface* surface, AABB& aabb)
+MeshPtr ModelParametric::CreateMeshFromSurface(const Surface* surface, pt3::AABB& aabb)
 {
 	auto mesh = std::make_shared<Mesh>();
 
