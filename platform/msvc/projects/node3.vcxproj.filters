@@ -19,11 +19,14 @@
     <Filter Include="components">
       <UniqueIdentifier>{1f0efb10-0a28-402c-bfa5-956a68b5685e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="components\base">
-      <UniqueIdentifier>{4ed2276b-929d-46e3-bf5d-a7d37703901e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="system">
       <UniqueIdentifier>{493ce7c0-f5c6-481b-bb1c-266291bb380b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="components\mesh">
+      <UniqueIdentifier>{4fad5f5a-cf31-40c4-8e7f-78996c95a81a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="components\geo">
+      <UniqueIdentifier>{57c88e95-70d5-4510-8c97-3909e63521cb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -66,24 +69,6 @@
     <ClCompile Include="..\..\..\include\node3\RenderSystem.cpp">
       <Filter>system</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\SerializeSystem.cpp">
-      <Filter>system</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\CompTransform.cpp">
-      <Filter>components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\ComponentFactory.cpp">
-      <Filter>components\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\CompAABB.cpp">
-      <Filter>components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\CompMesh.cpp">
-      <Filter>components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\CompModel.cpp">
-      <Filter>components</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\ParametricEquations.cpp">
       <Filter>model\surface</Filter>
     </ClCompile>
@@ -92,6 +77,18 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\DrawNode.cpp">
       <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\CompMesh.cpp">
+      <Filter>components\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\CompModel.cpp">
+      <Filter>components\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\CompAABB.cpp">
+      <Filter>components\geo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\CompTransform.cpp">
+      <Filter>components\geo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -142,32 +139,26 @@
     <ClInclude Include="..\..\..\include\node3\SurfaceFactory.h">
       <Filter>model\surface</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\CompMesh.h">
-      <Filter>components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\CompTransform.h">
-      <Filter>components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\CompModel.h">
-      <Filter>components</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\node3\RenderSystem.h">
       <Filter>system</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\CompAABB.h">
-      <Filter>components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\SerializeSystem.h">
-      <Filter>system</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\ComponentFactory.h">
-      <Filter>components\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\ModelFactory.h">
       <Filter>model</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\DrawNode.h">
       <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\CompMesh.h">
+      <Filter>components\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\CompModel.h">
+      <Filter>components\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\CompAABB.h">
+      <Filter>components\geo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\CompTransform.h">
+      <Filter>components\geo</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

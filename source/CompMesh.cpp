@@ -3,6 +3,6 @@
 namespace n3
 {
 
-const char* const CompMesh::TYPE_NAME = "mesh";
+const char* const CompMesh::TYPE_NAME = "n3_mesh";
 
 }

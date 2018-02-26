@@ -82,7 +82,6 @@
     <ClCompile Include="..\..\..\source\CompAABB.cpp" />
     <ClCompile Include="..\..\..\source\CompMesh.cpp" />
     <ClCompile Include="..\..\..\source\CompModel.cpp" />
-    <ClCompile Include="..\..\..\source\ComponentFactory.cpp" />
     <ClCompile Include="..\..\..\source\CompTransform.cpp" />
     <ClCompile Include="..\..\..\source\DrawNode.cpp" />
     <ClCompile Include="..\..\..\source\Material.cpp" />
@@ -97,7 +96,6 @@
     <ClCompile Include="..\..\..\source\RenderContext.cpp" />
     <ClCompile Include="..\..\..\source\RenderCtxStack.cpp" />
     <ClCompile Include="..\..\..\source\ResourceAPI.cpp" />
-    <ClCompile Include="..\..\..\source\SerializeSystem.cpp" />
     <ClCompile Include="..\..\..\source\SurfaceFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -106,7 +104,6 @@
     <ClInclude Include="..\..\..\include\node3\CompAABB.h" />
     <ClInclude Include="..\..\..\include\node3\CompMesh.h" />
     <ClInclude Include="..\..\..\include\node3\CompModel.h" />
-    <ClInclude Include="..\..\..\include\node3\ComponentFactory.h" />
     <ClInclude Include="..\..\..\include\node3\CompTransform.h" />
     <ClInclude Include="..\..\..\include\node3\DrawNode.h" />
     <ClInclude Include="..\..\..\include\node3\ModelFactory.h" />
@@ -124,7 +121,6 @@
     <ClInclude Include="..\..\..\include\node3\RenderParams.h" />
     <ClInclude Include="..\..\..\include\node3\RenderSystem.h" />
     <ClInclude Include="..\..\..\include\node3\ResourceAPI.h" />
-    <ClInclude Include="..\..\..\include\node3\SerializeSystem.h" />
     <ClInclude Include="..\..\..\include\node3\Surface.h" />
     <ClInclude Include="..\..\..\include\node3\SurfaceFactory.h" />
   </ItemGroup>

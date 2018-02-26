@@ -11,10 +11,6 @@ class CompAABB : public n0::NodeComponent
 public:
 	virtual const char* Type() const override { return TYPE_NAME; }
 
-	virtual bool StoreToJson(rapidjson::Value& val,
-		rapidjson::MemoryPoolAllocator<>& alloc) const override;
-	virtual void LoadFromJson(const rapidjson::Value& val) override;
-
 	void SetAABB(const pt3::AABB& aabb) { m_aabb = aabb; }
 	const pt3::AABB& GetAABB() const { return m_aabb; }
 
