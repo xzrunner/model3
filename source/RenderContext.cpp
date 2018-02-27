@@ -2,7 +2,7 @@
 
 #include <shaderlab/SubjectMVP3.h>
 #include <shaderlab/Blackboard.h>
-#include <shaderlab/ShaderMgr.h>
+#include <shaderlab/RenderContext.h>
 #include <unirender/RenderContext.h>
 
 namespace n3
@@ -52,12 +52,12 @@ void RenderContext::UpdateMVP() const
 
 void RenderContext::UpdateModelView() const
 {
-	sl::SubjectMVP3::Instance()->NotifyModelview(m_mv_mat);
+	sl::Blackboard::Instance()->GetRenderContext().GetSubMVP3().NotifyModelview(m_mv_mat);
 }
 
 void RenderContext::UpdateProjection() const
 {
-	sl::SubjectMVP3::Instance()->NotifyProjection(m_proj_mat);
+	sl::Blackboard::Instance()->GetRenderContext().GetSubMVP3().NotifyProjection(m_proj_mat);
 }
 
 void RenderContext::UpdateViewport() const
@@ -66,7 +66,7 @@ void RenderContext::UpdateViewport() const
 		return;
 	}
 
-	ur::RenderContext& ur_rc = sl::Blackboard::Instance()->GetShaderMgr()->GetContext();
+	auto& ur_rc = sl::Blackboard::Instance()->GetRenderContext().GetContext();
 	ur_rc.SetViewport(0, 0, m_screen_width, m_screen_height);
 }
 

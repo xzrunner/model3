@@ -7,6 +7,7 @@
 
 #include <shaderlab/Blackboard.h>
 #include <shaderlab/ShaderMgr.h>
+#include <shaderlab/RenderContext.h>
 #include <shaderlab/Model3Shader.h>
 
 namespace n3
@@ -14,9 +15,9 @@ namespace n3
 
 void RenderSystem::DrawModel(const Model& model, const sm::mat4& mat)
 {
-	sl::ShaderMgr* mgr = sl::Blackboard::Instance()->GetShaderMgr();
-	mgr->SetShader(sl::MODEL3);
-	sl::Model3Shader* shader = static_cast<sl::Model3Shader*>(mgr->GetShader());
+	auto& shader_mgr = sl::Blackboard::Instance()->GetRenderContext().GetShaderMgr();
+	shader_mgr.SetShader(sl::MODEL3);
+	sl::Model3Shader* shader = static_cast<sl::Model3Shader*>(shader_mgr.GetShader());
 
 	shader->SetLightPosition(sm::vec3(0.25f, 0.25f, 1));
 	shader->SetModelview(mat);
