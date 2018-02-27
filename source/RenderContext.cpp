@@ -1,6 +1,7 @@
 #include "node3/RenderContext.h"
 
 #include <shaderlab/SubjectMVP3.h>
+#include <shaderlab/Blackboard.h>
 #include <shaderlab/ShaderMgr.h>
 #include <unirender/RenderContext.h>
 
@@ -65,8 +66,8 @@ void RenderContext::UpdateViewport() const
 		return;
 	}
 
-	sl::ShaderMgr::Instance()->GetContext()->SetViewport(
-		0, 0, m_screen_width, m_screen_height);
+	ur::RenderContext& ur_rc = sl::Blackboard::Instance()->GetShaderMgr()->GetContext();
+	ur_rc.SetViewport(0, 0, m_screen_width, m_screen_height);
 }
 
 }

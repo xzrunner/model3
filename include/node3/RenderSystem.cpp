@@ -5,6 +5,7 @@
 #include "node3/Mesh.h"
 #include "node3/n3_typedef.h"
 
+#include <shaderlab/Blackboard.h>
 #include <shaderlab/ShaderMgr.h>
 #include <shaderlab/Model3Shader.h>
 
@@ -13,7 +14,7 @@ namespace n3
 
 void RenderSystem::DrawModel(const Model& model, const sm::mat4& mat)
 {
-	sl::ShaderMgr* mgr = sl::ShaderMgr::Instance();
+	sl::ShaderMgr* mgr = sl::Blackboard::Instance()->GetShaderMgr();
 	mgr->SetShader(sl::MODEL3);
 	sl::Model3Shader* shader = static_cast<sl::Model3Shader*>(mgr->GetShader());
 
