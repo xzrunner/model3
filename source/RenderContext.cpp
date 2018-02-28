@@ -4,6 +4,7 @@
 #include <shaderlab/Blackboard.h>
 #include <shaderlab/RenderContext.h>
 #include <unirender/RenderContext.h>
+#include <unirender/Blackboard.h>
 
 namespace n3
 {
@@ -66,7 +67,7 @@ void RenderContext::UpdateViewport() const
 		return;
 	}
 
-	auto& ur_rc = sl::Blackboard::Instance()->GetRenderContext().GetContext();
+	auto& ur_rc = ur::Blackboard::Instance()->GetRenderContext();
 	ur_rc.SetViewport(0, 0, m_screen_width, m_screen_height);
 }
 
