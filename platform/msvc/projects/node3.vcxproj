@@ -93,8 +93,6 @@
     <ClCompile Include="..\..\..\source\ModelParametric.cpp" />
     <ClCompile Include="..\..\..\source\ParametricEquations.cpp" />
     <ClCompile Include="..\..\..\source\ParametricSurface.cpp" />
-    <ClCompile Include="..\..\..\source\RenderContext.cpp" />
-    <ClCompile Include="..\..\..\source\RenderCtxStack.cpp" />
     <ClCompile Include="..\..\..\source\ResourceAPI.cpp" />
     <ClCompile Include="..\..\..\source\SurfaceFactory.cpp" />
   </ItemGroup>
@@ -116,8 +114,6 @@
     <ClInclude Include="..\..\..\include\node3\n3_typedef.h" />
     <ClInclude Include="..\..\..\include\node3\ParametricEquations.h" />
     <ClInclude Include="..\..\..\include\node3\ParametricSurface.h" />
-    <ClInclude Include="..\..\..\include\node3\RenderContext.h" />
-    <ClInclude Include="..\..\..\include\node3\RenderCtxStack.h" />
     <ClInclude Include="..\..\..\include\node3\RenderParams.h" />
     <ClInclude Include="..\..\..\include\node3\RenderSystem.h" />
     <ClInclude Include="..\..\..\include\node3\ResourceAPI.h" />

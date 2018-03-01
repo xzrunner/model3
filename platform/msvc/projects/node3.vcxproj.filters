@@ -54,12 +54,6 @@
     <ClCompile Include="..\..\..\source\Math.cpp">
       <Filter>utility</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\RenderContext.cpp">
-      <Filter>render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\RenderCtxStack.cpp">
-      <Filter>render</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\ResourceAPI.cpp">
       <Filter>utility</Filter>
     </ClCompile>
@@ -121,12 +115,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\Math.h">
       <Filter>utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\RenderContext.h">
-      <Filter>render</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\RenderCtxStack.h">
-      <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\ResourceAPI.h">
       <Filter>utility</Filter>
