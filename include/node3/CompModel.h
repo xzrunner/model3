@@ -13,6 +13,7 @@ class CompModel : public n0::NodeComponent
 {
 public:
 	virtual const char* Type() const override { return TYPE_NAME; }
+	virtual std::unique_ptr<n0::NodeComponent> Clone() const override;
 
 	void SetModel(const std::shared_ptr<Model>& model) { m_model = model; }
 	const std::shared_ptr<Model>& GetModel() const { return m_model; }

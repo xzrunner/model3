@@ -10,6 +10,15 @@ CompTransform::CompTransform()
 {
 }
 
+std::unique_ptr<n0::NodeComponent> CompTransform::Clone() const
+{
+	auto comp = std::make_unique<CompTransform>();
+	comp->m_position = m_position;
+	comp->m_angle    = m_angle;
+	comp->m_scale    = m_scale;
+	return comp;
+}
+
 sm::mat4 CompTransform::GetTransformMat() const
 {
 	auto mt_scale = sm::mat4::Scaled(m_scale.x, m_scale.y, m_scale.z);

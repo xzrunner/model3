@@ -14,6 +14,7 @@ public:
 	CompTransform();
 
 	virtual const char* Type() const override { return TYPE_NAME; }
+	virtual std::unique_ptr<n0::NodeComponent> Clone() const override;
 
 	const sm::vec3& GetPosition() const { return m_position; }
 	const sm::Quaternion& GetAngle() const { return m_angle; }

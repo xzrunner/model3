@@ -13,6 +13,7 @@ class CompMesh : public n0::NodeComponent
 {
 public:
 	virtual const char* Type() const override { return TYPE_NAME; }
+	virtual std::unique_ptr<n0::NodeComponent> Clone() const override;
 
 	static const char* const TYPE_NAME;
 
