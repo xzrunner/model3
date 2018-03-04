@@ -14,6 +14,8 @@ public:
 	CompTransform();
 
 	virtual const char* Type() const override { return TYPE_NAME; }
+	virtual n0::ComponentID TypeID() const override { 
+		return n0::GetComponentTypeID<CompTransform>(); }
 	virtual std::unique_ptr<n0::NodeComponent> Clone() const override;
 
 	const sm::vec3& GetPosition() const { return m_position; }
