@@ -10,7 +10,7 @@ CompTransform::CompTransform()
 {
 }
 
-std::unique_ptr<n0::NodeComponent> CompTransform::Clone() const
+std::unique_ptr<n0::NodeUniqueComp> CompTransform::Clone() const
 {
 	auto comp = std::make_unique<CompTransform>();
 	comp->m_position = m_position;

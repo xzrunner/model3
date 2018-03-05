@@ -1,6 +1,6 @@
 #pragma once
 
-#include <node0/NodeComponent.h>
+#include <node0/CompAsset.h>
 
 #include <memory>
 
@@ -9,13 +9,15 @@ namespace n3
 
 class Model;
 
-class CompModel : public n0::NodeComponent
+class CompModel : public n0::CompAsset
 {
 public:
 	virtual const char* Type() const override { return TYPE_NAME; }
-	virtual n0::ComponentID TypeID() const override { 
-		return n0::GetComponentTypeID<CompModel>(); }
-	virtual std::unique_ptr<n0::NodeComponent> Clone() const override;
+
+	virtual n0::AssetID AssetTypeID() const override {
+		return n0::GetAssetUniqueTypeID<CompModel>();
+	}
+	virtual void Traverse(std::function<bool(const n0::SceneNodePtr&)> func) const {}
 
 	void SetModel(const std::shared_ptr<Model>& model) { m_model = model; }
 	const std::shared_ptr<Model>& GetModel() const { return m_model; }

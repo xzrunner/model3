@@ -11,21 +11,21 @@ namespace n3
 
 void DrawNode::Draw(const n0::SceneNodePtr& node, const sm::mat4& mt)
 {
-	auto& ctrans = node->GetComponent<CompTransform>();
+	auto& ctrans = node->GetUniqueComp<CompTransform>();
 	sm::mat4 mt_child = ctrans.GetTransformMat() * mt;
 
-	if (node->HasComponent<CompModel>())
+	if (node->HasSharedComp<CompModel>())
 	{
-		auto& cmodel = node->GetComponent<CompModel>();
+		auto& cmodel = node->GetSharedComp<CompModel>();
 		auto& model = cmodel.GetModel();
 		if (model) {
 			RenderSystem::DrawModel(*model, mt_child);
 		}
 	}
 
-	if (node->HasComponent<n0::CompComplex>())
+	if (node->HasSharedComp<n0::CompComplex>())
 	{
-		auto& ccomplex = node->GetComponent<n0::CompComplex>();
+		auto& ccomplex = node->GetSharedComp<n0::CompComplex>();
 		auto& children = ccomplex.GetAllChildren();
 		for (auto& child : children) {
 			Draw(child, mt_child);

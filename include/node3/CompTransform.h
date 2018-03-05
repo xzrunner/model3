@@ -3,20 +3,21 @@
 #include <SM_Vector.h>
 #include <SM_Quaternion.h>
 #include <SM_Matrix.h>
-#include <node0/NodeComponent.h>
+#include <node0/NodeUniqueComp.h>
 
 namespace n3
 {
 
-class CompTransform : public n0::NodeComponent
+class CompTransform : public n0::NodeUniqueComp
 {
 public:
 	CompTransform();
 
 	virtual const char* Type() const override { return TYPE_NAME; }
-	virtual n0::ComponentID TypeID() const override { 
-		return n0::GetComponentTypeID<CompTransform>(); }
-	virtual std::unique_ptr<n0::NodeComponent> Clone() const override;
+	virtual n0::UniqueCompID TypeID() const override {
+		return n0::GetUniqueCompTypeID<CompTransform>(); 
+	}
+	virtual std::unique_ptr<n0::NodeUniqueComp> Clone() const override;
 
 	const sm::vec3& GetPosition() const { return m_position; }
 	const sm::Quaternion& GetAngle() const { return m_angle; }

@@ -1,18 +1,19 @@
 #pragma once
 
-#include <node0/NodeComponent.h>
+#include <node0/NodeUniqueComp.h>
 #include <painting3/AABB.h>
 
 namespace n3
 {
 
-class CompAABB : public n0::NodeComponent
+class CompAABB : public n0::NodeUniqueComp
 {
 public:
 	virtual const char* Type() const override { return TYPE_NAME; }
-	virtual n0::ComponentID TypeID() const override { 
-		return n0::GetComponentTypeID<CompAABB>(); }
-	virtual std::unique_ptr<n0::NodeComponent> Clone() const override;
+	virtual n0::UniqueCompID TypeID() const override {
+		return n0::GetUniqueCompTypeID<CompAABB>(); 
+	}
+	virtual std::unique_ptr<n0::NodeUniqueComp> Clone() const override;
 
 	void SetAABB(const pt3::AABB& aabb) { m_aabb = aabb; }
 	const pt3::AABB& GetAABB() const { return m_aabb; }
