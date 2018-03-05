@@ -22,11 +22,11 @@
     <Filter Include="system">
       <UniqueIdentifier>{493ce7c0-f5c6-481b-bb1c-266291bb380b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="components\mesh">
-      <UniqueIdentifier>{4fad5f5a-cf31-40c4-8e7f-78996c95a81a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="components\geo">
       <UniqueIdentifier>{57c88e95-70d5-4510-8c97-3909e63521cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="components\asset">
+      <UniqueIdentifier>{4fad5f5a-cf31-40c4-8e7f-78996c95a81a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -73,10 +73,10 @@
       <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\CompMesh.cpp">
-      <Filter>components\mesh</Filter>
+      <Filter>components\asset</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\CompModel.cpp">
-      <Filter>components\mesh</Filter>
+      <Filter>components\asset</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\CompAABB.cpp">
       <Filter>components\geo</Filter>
@@ -137,10 +137,10 @@
       <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\CompMesh.h">
-      <Filter>components\mesh</Filter>
+      <Filter>components\asset</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\CompModel.h">
-      <Filter>components\mesh</Filter>
+      <Filter>components\asset</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\CompAABB.h">
       <Filter>components\geo</Filter>
