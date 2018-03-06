@@ -4,7 +4,7 @@
 #include "node3/RenderSystem.h"
 
 #include <node0/SceneNode.h>
-#include <node0/CompComplex.h>
+//#include <node2/CompComplex.h>
 
 namespace n3
 {
@@ -23,14 +23,14 @@ void DrawNode::Draw(const n0::SceneNodePtr& node, const sm::mat4& mt)
 		}
 	}
 
-	if (node->HasSharedComp<n0::CompComplex>())
-	{
-		auto& ccomplex = node->GetSharedComp<n0::CompComplex>();
-		auto& children = ccomplex.GetAllChildren();
-		for (auto& child : children) {
-			Draw(child, mt_child);
-		}
-	}
+	//if (node->HasSharedComp<n2::CompComplex>())
+	//{
+	//	auto& ccomplex = node->GetSharedComp<n2::CompComplex>();
+	//	auto& children = ccomplex.GetAllChildren();
+	//	for (auto& child : children) {
+	//		Draw(child, mt_child);
+	//	}
+	//}
 }
 
 }
