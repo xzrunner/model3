@@ -18,6 +18,7 @@ public:
 		return n0::GetAssetUniqueTypeID<CompModel>();
 	}
 	virtual void Traverse(std::function<bool(const n0::SceneNodePtr&)> func) const {}
+	virtual sm::rect GetBounding() const;
 
 	void SetModel(const std::shared_ptr<Model>& model) { m_model = model; }
 	const std::shared_ptr<Model>& GetModel() const { return m_model; }
