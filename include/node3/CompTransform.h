@@ -17,7 +17,7 @@ public:
 	virtual n0::UniqueCompID TypeID() const override {
 		return n0::GetUniqueCompTypeID<CompTransform>(); 
 	}
-	virtual std::unique_ptr<n0::NodeUniqueComp> Clone() const override;
+	virtual std::unique_ptr<n0::NodeUniqueComp> Clone(const n0::SceneNode& node) const override;
 
 	const sm::vec3& GetPosition() const { return m_position; }
 	const sm::Quaternion& GetAngle() const { return m_angle; }
