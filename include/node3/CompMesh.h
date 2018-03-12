@@ -17,7 +17,8 @@ public:
 	virtual n0::AssetID AssetTypeID() const override {
 		return n0::GetAssetUniqueTypeID<CompMesh>();
 	}
-	virtual void Traverse(std::function<bool(const n0::SceneNodePtr&)> func) const {}
+	virtual void Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
+		bool inverse = false) const {}
 
 	static const char* const TYPE_NAME;
 
