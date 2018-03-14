@@ -20,7 +20,6 @@ public:
 	virtual void Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 		bool inverse = false) const {}
 	virtual sm::rect GetBounding() const;
-	virtual void InitNodeCount() const { m_node_count = 1; }
 
 	void SetModel(const std::shared_ptr<Model>& model) { m_model = model; }
 	const std::shared_ptr<Model>& GetModel() const { return m_model; }
