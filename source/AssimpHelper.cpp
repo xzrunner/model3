@@ -1,12 +1,12 @@
 #include "node3/AssimpHelper.h"
-#include "node3/ModelObj.h"
-#include "node3/Material.h"
-#include "node3/n3_typedef.h"
 #include "node3/ResourceAPI.h"
-#include "node3/Model.h"
 
 #include <SM_Matrix.h>
 #include <painting3/AABB.h>
+#include <model/ModelObj.h>
+#include <model/Material.h>
+#include <model/typedef.h>
+#include <model/Model.h>
 
 #include <assimp/Importer.hpp>      // C++ importer interface
 #include <assimp/scene.h>           // Output data structure
@@ -32,7 +32,7 @@ unsigned int ppsteps = aiProcess_CalcTangentSpace | // calculate tangents and bi
 	aiProcess_SplitByBoneCount         | // split meshes with too many bones. Necessary for our (limited) hardware skinning shader
 	0;
 
-std::shared_ptr<Model> AssimpHelper::Load(const std::string& filepath, pt3::AABB& aabb)
+std::shared_ptr<model::Model> AssimpHelper::Load(const std::string& filepath, pt3::AABB& aabb)
 {
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(filepath.c_str(),
@@ -49,7 +49,7 @@ std::shared_ptr<Model> AssimpHelper::Load(const std::string& filepath, pt3::AABB
 	}
 
 	auto dir = boost::filesystem::path(filepath).parent_path().string();
-	auto model = std::make_shared<ModelObj>();
+	auto model = std::make_shared<model::ModelObj>();
 	LoadNode(scene, scene->mRootNode, *model, dir, aabb);
 
 	// todo: load lights and cameras
@@ -58,7 +58,7 @@ std::shared_ptr<Model> AssimpHelper::Load(const std::string& filepath, pt3::AABB
 }
 
 void AssimpHelper::LoadNode(const aiScene* ai_scene, const aiNode* ai_node, 
-							Model& model, const std::string& dir, pt3::AABB& aabb)
+							model::Model& model, const std::string& dir, pt3::AABB& aabb)
 {
 	if (ai_node->mNumChildren) 
 	{
@@ -108,10 +108,10 @@ void AssimpHelper::LoadNode(const aiScene* ai_scene, const aiNode* ai_node,
 	}
 }
 
-MeshPtr AssimpHelper::LoadMesh(const aiMesh* ai_mesh, const aiMaterial* ai_material, 
-	                           const std::string& dir, const sm::mat4& trans, pt3::AABB& aabb)
+model::MeshPtr AssimpHelper::LoadMesh(const aiMesh* ai_mesh, const aiMaterial* ai_material,
+	                                  const std::string& dir, const sm::mat4& trans, pt3::AABB& aabb)
 {
-	auto mesh = std::make_shared<Mesh>();
+	auto mesh = std::make_shared<model::Mesh>();
 
 	LoadMaterial(ai_mesh, ai_material, *mesh, dir);
 
@@ -120,15 +120,15 @@ MeshPtr AssimpHelper::LoadMesh(const aiMesh* ai_mesh, const aiMaterial* ai_mater
 	bool has_normal = ai_mesh->HasNormals();
 	if (has_normal) {
 		floats_per_vertex += 3;
-		vertex_type |= VERTEX_FLAG_NORMALS;
+		vertex_type |= model::VERTEX_FLAG_NORMALS;
 	}
 	bool has_texcoord = ai_mesh->HasTextureCoords(0);
 	if (has_texcoord) {
 		floats_per_vertex += 2;
-		vertex_type |= VERTEX_FLAG_TEXCOORDS;
+		vertex_type |= model::VERTEX_FLAG_TEXCOORDS;
 	}
 
-	CU_VEC<float> vertices;
+	std::vector<float> vertices;
 	vertices.reserve(floats_per_vertex * ai_mesh->mNumVertices);
 	for (size_t i = 0; i < ai_mesh->mNumVertices; ++i)
 	{
@@ -159,7 +159,7 @@ MeshPtr AssimpHelper::LoadMesh(const aiMesh* ai_mesh, const aiMaterial* ai_mater
 		const aiFace& face = ai_mesh->mFaces[i];
 		count += face.mNumIndices;
 	}
-	CU_VEC<uint16_t> indices;
+	std::vector<uint16_t> indices;
 	indices.reserve(count);
 
 	for (size_t i = 0; i < ai_mesh->mNumFaces; ++i) {
@@ -174,9 +174,9 @@ MeshPtr AssimpHelper::LoadMesh(const aiMesh* ai_mesh, const aiMaterial* ai_mater
 	return mesh;
 }
 
-void AssimpHelper::LoadMaterial(const aiMesh* ai_mesh, const aiMaterial* ai_material, Mesh& mesh, const std::string& dir)
+void AssimpHelper::LoadMaterial(const aiMesh* ai_mesh, const aiMaterial* ai_material, model::Mesh& mesh, const std::string& dir)
 {
-	Material material;
+	model::Material material;
 
 	aiColor4D col;
 

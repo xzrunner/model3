@@ -1,8 +1,7 @@
 #pragma once
 
-#include "node3/Model.h"
-
 #include <node0/CompAsset.h>
+#include <model/Model.h>
 
 #include <memory>
 
@@ -23,7 +22,7 @@ public:
 	static const char* const TYPE_NAME;
 
 private:
-	std::unique_ptr<Model> m_model = nullptr;
+	std::unique_ptr<model::Model> m_model = nullptr;
 
 }; // CompMesh
 

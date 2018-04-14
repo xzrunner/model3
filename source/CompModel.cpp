@@ -1,6 +1,7 @@
 #include "node3/CompModel.h"
-#include "node3/ModelFactory.h"
-#include "node3/Model.h"
+
+#include <model/ModelFactory.h>
+#include <model/Model.h>
 
 namespace n3
 {

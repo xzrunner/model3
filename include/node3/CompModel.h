@@ -4,10 +4,10 @@
 
 #include <memory>
 
+namespace model { class Model; }
+
 namespace n3
 {
-
-class Model;
 
 class CompModel : public n0::CompAsset
 {
@@ -21,13 +21,13 @@ public:
 		bool inverse = false) const {}
 	virtual sm::rect GetBounding() const;
 
-	void SetModel(const std::shared_ptr<Model>& model) { m_model = model; }
-	const std::shared_ptr<Model>& GetModel() const { return m_model; }
+	void SetModel(const std::shared_ptr<model::Model>& model) { m_model = model; }
+	const std::shared_ptr<model::Model>& GetModel() const { return m_model; }
 		
 	static const char* const TYPE_NAME;
 
 private:
-	std::shared_ptr<Model> m_model = nullptr;
+	std::shared_ptr<model::Model> m_model = nullptr;
 
 }; // CompModel
 
