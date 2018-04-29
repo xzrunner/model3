@@ -16,9 +16,4 @@ const char* const CompModel::TYPE_NAME = "n3_model";
 //	return comp;
 //}
 
-sm::rect CompModel::GetBounding() const
-{
-	return sm::rect(100, 100);
-}
-
 }
