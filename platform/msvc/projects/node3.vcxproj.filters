@@ -48,9 +48,6 @@
     <ClCompile Include="..\..\..\source\CompTransform.cpp">
       <Filter>components\geo</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\AABBSystem.cpp">
-      <Filter>system</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\node3\AssimpHelper.h">
@@ -83,9 +80,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\CompTransform.h">
       <Filter>components\geo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\AABBSystem.h">
-      <Filter>system</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

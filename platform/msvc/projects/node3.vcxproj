@@ -78,7 +78,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\include\node3\RenderSystem.cpp" />
-    <ClCompile Include="..\..\..\source\AABBSystem.cpp" />
     <ClCompile Include="..\..\..\source\AssimpHelper.cpp" />
     <ClCompile Include="..\..\..\source\CompAABB.cpp" />
     <ClCompile Include="..\..\..\source\CompMesh.cpp" />
@@ -90,7 +89,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\c_wrap_n3.h" />
-    <ClInclude Include="..\..\..\include\node3\AABBSystem.h" />
     <ClInclude Include="..\..\..\include\node3\AssimpHelper.h" />
     <ClInclude Include="..\..\..\include\node3\CompAABB.h" />
     <ClInclude Include="..\..\..\include\node3\CompMesh.h" />
