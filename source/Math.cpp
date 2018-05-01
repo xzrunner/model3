@@ -1,5 +1,6 @@
 #include "node3/Math.h"
 
+#include <SM_Matrix.h>
 #include <painting3/AABB.h>
 #include <painting3/Ray.h>
 

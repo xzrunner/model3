@@ -9,6 +9,9 @@ namespace n3
 class CompAABB : public n0::NodeUniqueComp
 {
 public:
+	CompAABB() {}
+	CompAABB(const pt3::AABB& aabb) : m_aabb(aabb) {}
+
 	virtual const char* Type() const override { return TYPE_NAME; }
 	virtual n0::UniqueCompID TypeID() const override {
 		return n0::GetUniqueCompTypeID<CompAABB>(); 
