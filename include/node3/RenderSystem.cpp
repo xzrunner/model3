@@ -27,7 +27,10 @@ void RenderSystem::DrawModel(const model::Model& model, const sm::mat4& mat)
 	for (auto& mesh : meshes)
 	{
 		auto& material = mesh->GetMaterial();
-		int tex_id = ResourceAPI::GetTexID(material.texture);
+		int tex_id = -1;
+		if (material.texture) {
+			tex_id = ResourceAPI::GetTexID(material.texture);
+		}
 		shader->SetMaterial(sl::Model3Shader::Material(material.ambient, 
 			material.diffuse, material.specular, material.shininess, tex_id));
 
