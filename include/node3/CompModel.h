@@ -20,12 +20,17 @@ public:
 	virtual void Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 		bool inverse = false) const override {}
 
+	void SetFilepath(const std::string& filepath) { m_filepath = filepath; }
+	const std::string& GetFilepath() const { return m_filepath; }
+
 	void SetModel(const std::shared_ptr<model::Model>& model) { m_model = model; }
 	const std::shared_ptr<model::Model>& GetModel() const { return m_model; }
 		
 	static const char* const TYPE_NAME;
 
 private:
+	std::string m_filepath;
+
 	std::shared_ptr<model::Model> m_model = nullptr;
 
 }; // CompModel
