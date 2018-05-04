@@ -53,7 +53,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\sm\src\sm;..\..\..\..\cu\src;..\..\..\..\rapidvg\src\rapidvg;..\..\..\..\node0\include;..\..\..\..\guard\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\memmgr\include;..\..\..\..\unirender\include;..\..\..\..\shaderlab\include;..\..\..\..\model\include;..\..\..\..\external\assimp\include;..\..\..\..\external\boost\include;..\..\..\..\external\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\sm\src\sm;..\..\..\..\cu\src;..\..\..\..\rapidvg\src\rapidvg;..\..\..\..\node0\include;..\..\..\..\guard\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\memmgr\include;..\..\..\..\unirender\include;..\..\..\..\shaderlab\include;..\..\..\..\model\include;..\..\..\..\external\boost\include;..\..\..\..\external\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;__STDC_LIMIT_MACROS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -67,7 +67,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\sm\src\sm;..\..\..\..\cu\src;..\..\..\..\rapidvg\src\rapidvg;..\..\..\..\node0\include;..\..\..\..\guard\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\memmgr\include;..\..\..\..\unirender\include;..\..\..\..\shaderlab\include;..\..\..\..\model\include;..\..\..\..\external\assimp\include;..\..\..\..\external\boost\include;..\..\..\..\external\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\sm\src\sm;..\..\..\..\cu\src;..\..\..\..\rapidvg\src\rapidvg;..\..\..\..\node0\include;..\..\..\..\guard\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\memmgr\include;..\..\..\..\unirender\include;..\..\..\..\shaderlab\include;..\..\..\..\model\include;..\..\..\..\external\boost\include;..\..\..\..\external\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;__STDC_LIMIT_MACROS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -77,26 +77,21 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\include\node3\RenderSystem.cpp" />
-    <ClCompile Include="..\..\..\source\AssimpHelper.cpp" />
     <ClCompile Include="..\..\..\source\CompAABB.cpp" />
     <ClCompile Include="..\..\..\source\CompMesh.cpp" />
     <ClCompile Include="..\..\..\source\CompModel.cpp" />
     <ClCompile Include="..\..\..\source\CompTransform.cpp" />
-    <ClCompile Include="..\..\..\source\DrawNode.cpp" />
     <ClCompile Include="..\..\..\source\Math.cpp" />
+    <ClCompile Include="..\..\..\source\RenderSystem.cpp" />
     <ClCompile Include="..\..\..\source\ResourceAPI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\c_wrap_n3.h" />
-    <ClInclude Include="..\..\..\include\node3\AssimpHelper.h" />
     <ClInclude Include="..\..\..\include\node3\CompAABB.h" />
     <ClInclude Include="..\..\..\include\node3\CompMesh.h" />
     <ClInclude Include="..\..\..\include\node3\CompModel.h" />
     <ClInclude Include="..\..\..\include\node3\CompTransform.h" />
-    <ClInclude Include="..\..\..\include\node3\DrawNode.h" />
     <ClInclude Include="..\..\..\include\node3\Math.h" />
-    <ClInclude Include="..\..\..\include\node3\RenderParams.h" />
     <ClInclude Include="..\..\..\include\node3\RenderSystem.h" />
     <ClInclude Include="..\..\..\include\node3\ResourceAPI.h" />
   </ItemGroup>

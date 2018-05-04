@@ -4,9 +4,6 @@
     <Filter Include="utility">
       <UniqueIdentifier>{da3eeec6-0a86-4c4d-91b5-69824a1136d8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="render">
-      <UniqueIdentifier>{5cd09632-601f-42e8-884b-8214a7fc2bd1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="components">
       <UniqueIdentifier>{1f0efb10-0a28-402c-bfa5-956a68b5685e}</UniqueIdentifier>
     </Filter>
@@ -21,20 +18,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\source\AssimpHelper.cpp">
-      <Filter>utility</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\Math.cpp">
       <Filter>utility</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\ResourceAPI.cpp">
       <Filter>utility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\include\node3\RenderSystem.cpp">
-      <Filter>system</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\DrawNode.cpp">
-      <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\CompMesh.cpp">
       <Filter>components\asset</Filter>
@@ -48,26 +36,20 @@
     <ClCompile Include="..\..\..\source\CompTransform.cpp">
       <Filter>components\geo</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\RenderSystem.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\node3\AssimpHelper.h">
-      <Filter>utility</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\node3\Math.h">
       <Filter>utility</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\ResourceAPI.h">
       <Filter>utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\RenderParams.h">
-      <Filter>render</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\c_wrap_n3.h" />
     <ClInclude Include="..\..\..\include\node3\RenderSystem.h">
       <Filter>system</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\DrawNode.h">
-      <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\CompMesh.h">
       <Filter>components\asset</Filter>
