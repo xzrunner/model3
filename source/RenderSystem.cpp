@@ -1,5 +1,4 @@
 #include "node3/RenderSystem.h"
-#include "node3/ResourceAPI.h"
 #include "node3/CompTransform.h"
 #include "node3/CompModel.h"
 #include "node3/RenderSystem.h"
@@ -11,6 +10,7 @@
 #include <model/Model.h>
 #include <model/Mesh.h>
 #include <model/typedef.h>
+#include <model/Callback.h>
 #include <node0/SceneNode.h>
 
 namespace n3
@@ -77,17 +77,30 @@ void RenderSystem::DrawModel(const model::Model& model, const sm::mat4& mat)
 	shader_mgr.SetShader(sl::MODEL3);
 	sl::Model3Shader* shader = static_cast<sl::Model3Shader*>(shader_mgr.GetShader());
 
-	model::MaterialOld material;
-	shader->SetMaterial(sl::Model3Shader::Material(material.ambient,
-		material.diffuse, material.specular, material.shininess, 0));
-
 	shader->SetLightPosition(sm::vec3(0.25f, 0.25f, 1));
 	shader->SetModelview(mat);
 	shader->SetNormalMatrix(mat);
 
 	auto& meshes = model.GetAllMeshes();
-	for (auto& mesh : meshes) {
-		shader->DrawVAO(mesh->GetVAO(), mesh->GetIndexCount(), true, false);
+	for (auto& mesh : meshes) 
+	{
+		auto& material = mesh->material_old;
+		int tex_id = -1;
+		if (material.texture) {
+			tex_id = model::Callback::GetTexID(material.texture);
+		}
+		shader->SetMaterial(sl::Model3Shader::Material(material.ambient, 
+			material.diffuse, material.specular, material.shininess, tex_id));
+
+		for (auto& sub : mesh->geometry.sub_geometries) {
+			shader->DrawVAO(
+				mesh->geometry.vao, 
+				sub.second.index_count, 
+				sub.second.index_offset, 
+				mesh->geometry.vertex_type & model::VERTEX_FLAG_NORMALS,
+				mesh->geometry.vertex_type & model::VERTEX_FLAG_TEXCOORDS
+			);
+		}
 	}
 }
 
