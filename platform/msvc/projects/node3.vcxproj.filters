@@ -21,9 +21,6 @@
     <ClCompile Include="..\..\..\source\Math.cpp">
       <Filter>utility</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\ResourceAPI.cpp">
-      <Filter>utility</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\CompMesh.cpp">
       <Filter>components\asset</Filter>
     </ClCompile>
@@ -42,9 +39,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\node3\Math.h">
-      <Filter>utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\ResourceAPI.h">
       <Filter>utility</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\c_wrap_n3.h" />
