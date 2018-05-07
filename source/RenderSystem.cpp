@@ -58,7 +58,7 @@ void RenderSystem::Draw(const n0::SceneNodePtr& node, const sm::mat4& mt)
 //		if (material.texture) {
 //			tex_id = ResourceAPI::GetTexID(material.texture);
 //		}
-//		shader->SetMaterial(sl::Model3Shader::Material(material.ambient, 
+//		shader->SetMaterial(sl::Model3Shader::Material(material.ambient,
 //			material.diffuse, material.specular, material.shininess, tex_id));
 //
 //		int vertex_type = mesh->GetVertexType();
@@ -68,7 +68,7 @@ void RenderSystem::Draw(const n0::SceneNodePtr& node, const sm::mat4& mt)
 //		auto& vertices = mesh->GetVertices();
 //		auto& indieces = mesh->GetIndices();
 //		shader->Draw(&vertices[0], vertices.size(), &indieces[0], indieces.size(), has_normal, has_texcoord);
-//	}	
+//	}
 //}
 
 void RenderSystem::DrawModel(const model::Model& model, const sm::mat4& mat)
@@ -82,21 +82,45 @@ void RenderSystem::DrawModel(const model::Model& model, const sm::mat4& mat)
 	shader->SetNormalMatrix(mat);
 
 	auto& meshes = model.GetAllMeshes();
-	for (auto& mesh : meshes) 
+	int last_mat = -1;
+	for (auto& mesh : meshes)
 	{
-		auto& material = mesh->material_old;
-		int tex_id = -1;
-		if (material.texture) {
-			tex_id = model::Callback::GetTexID(material.texture);
-		}
-		shader->SetMaterial(sl::Model3Shader::Material(material.ambient, 
-			material.diffuse, material.specular, material.shininess, tex_id));
+		GD_ASSERT(mesh->geometry.sub_geometries.size() == mesh->geometry.sub_geometry_materials.size(), "err material");
+		for (int i = 0, n = mesh->geometry.sub_geometries.size(); i < n; ++i)
+		{
+			int curr_mat = mesh->geometry.sub_geometry_materials[i];
+			// bind material
+			if (curr_mat != last_mat)
+			{
+				if (mesh->materials.empty())
+				{
+					auto& material = mesh->old_materials[curr_mat];
+					int tex_id = -1;
+					if (material.texture) {
+						tex_id = model::Callback::GetTexID(material.texture);
+					}
+					shader->SetMaterial(sl::Model3Shader::Material(material.ambient,
+						material.diffuse, material.specular, material.shininess, tex_id));
+				}
+				else
+				{
+					auto& material = mesh->materials[curr_mat];
+					int tex_id = -1;
+					if (material.texture) {
+						tex_id = model::Callback::GetTexID(material.texture);
+					}
+					model::MaterialOld old_mat;
+					shader->SetMaterial(sl::Model3Shader::Material(old_mat.ambient,
+						old_mat.diffuse, old_mat.specular, old_mat.shininess, tex_id));
+				}
+				last_mat = curr_mat;
+			}
 
-		for (auto& sub : mesh->geometry.sub_geometries) {
+			auto& sub = mesh->geometry.sub_geometries[i];
 			shader->DrawVAO(
-				mesh->geometry.vao, 
-				sub.second.index_count, 
-				sub.second.index_offset, 
+				mesh->geometry.vao,
+				sub.index_count,
+				sub.index_offset,
 				mesh->geometry.vertex_type & model::VERTEX_FLAG_NORMALS,
 				mesh->geometry.vertex_type & model::VERTEX_FLAG_TEXCOORDS
 			);
