@@ -1,9 +1,11 @@
 #pragma once
 
+#include <cu/cu_macro.h>
 #include <SM_Matrix.h>
 #include <node0/typedef.h>
 
 namespace model { class Model; }
+namespace ur { class Shader; }
 
 namespace n3
 {
@@ -14,7 +16,7 @@ public:
 	sm::mat4 mt;
 
 public:
-	RenderParams(const sm::mat4& mt) 
+	RenderParams(const sm::mat4& mt)
 		: mt(mt) {}
 
 }; // RenderParams
@@ -22,10 +24,15 @@ public:
 class RenderSystem
 {
 public:
-	static void Draw(const n0::SceneNodePtr& node, const sm::mat4& mt);
+	void Draw(const n0::SceneNodePtr& node, const sm::mat4& mt);
 
 private:
-	static void DrawModel(const model::Model& model, const sm::mat4& mat);
+	void DrawModel(const model::Model& model, const sm::mat4& mat);
+
+private:
+	ur::Shader* m_model_shader;
+
+	CU_SINGLETON_DECLARATION(RenderSystem)
 
 }; // RenderSystem
 
