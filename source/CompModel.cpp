@@ -1,7 +1,5 @@
 #include "node3/CompModel.h"
 
-#include <model/Model.h>
-
 namespace n3
 {
 

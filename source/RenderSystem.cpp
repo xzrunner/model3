@@ -3,59 +3,35 @@
 #include "node3/CompModel.h"
 #include "node3/RenderSystem.h"
 
-#include <unirender/Shader.h>
 #include <unirender/Blackboard.h>
-#include <unirender/typedef.h>
 #include <unirender/RenderContext.h>
 #include <shaderlab/Blackboard.h>
-#include <shaderlab/ShaderMgr.h>
 #include <shaderlab/RenderContext.h>
-#include <shaderlab/Model3Shader.h>
-#include <model/Model.h>
-#include <model/Mesh.h>
-#include <model/typedef.h>
+#include <model/Scene.h>
 #include <model/Callback.h>
 #include <node0/SceneNode.h>
-
-namespace
-{
-
-void model_shader_set_material(ur::Shader* shader,
-	                           const sm::vec3& ambient,
-	                           const sm::vec3& diffuse,
-	                           const sm::vec3& specular,
-	                           float shininess)
-{
-	shader->SetVec3("u_ambient_material", ambient.xyz);
-	shader->SetVec3("u_diffuse_material", diffuse.xyz);
-	shader->SetVec3("u_specular_material", specular.xyz);
-	shader->SetFloat("u_shininess", shininess);
-}
-
-}
+#include <painting3/Blackboard.h>
+#include <painting3/WindowContext.h>
+#include <painting3/EffectsManager.h>
 
 namespace n3
 {
 
-CU_SINGLETON_DEFINITION(RenderSystem)
-
-RenderSystem::RenderSystem()
-{
-	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
-	m_model_shader = new ur::Shader(&rc, "shaders/model.vs", "shaders/model.fs");
-}
-
 void RenderSystem::Draw(const n0::SceneNodePtr& node, const sm::mat4& mt)
 {
-	auto& ctrans = node->GetUniqueComp<CompTransform>();
-	sm::mat4 mt_child = ctrans.GetTransformMat() * mt;
+	sm::mat4 mt_child;
+	if (node->HasUniqueComp<CompTransform>())
+	{
+		auto& ctrans = node->GetUniqueComp<CompTransform>();
+		mt_child = ctrans.GetTransformMat() * mt;
+	}
 
 	if (node->HasSharedComp<CompModel>())
 	{
 		auto& cmodel = node->GetSharedComp<CompModel>();
-		auto& model = cmodel.GetModel();
-		if (model) {
-			RenderSystem::DrawModel(*model, mt_child);
+		auto& scene = cmodel.GetScene();
+		if (scene) {
+			RenderSystem::DrawModel(*scene, mt_child);
 		}
 	}
 
@@ -69,120 +45,62 @@ void RenderSystem::Draw(const n0::SceneNodePtr& node, const sm::mat4& mt)
 	//}
 }
 
-// use extern shader
-void RenderSystem::DrawModel(const model::Model& model, const sm::mat4& mat)
+void RenderSystem::DrawModel(const model::Scene& scene, const sm::mat4& mat)
 {
+	if (scene.nodes.empty()) {
+		return;
+	}
+
 	// flush shader status
 	sl::Blackboard::Instance()->GetRenderContext().GetShaderMgr().BindRenderShader(nullptr, sl::EXTERN_SHADER);
 
-	// change shader
-	m_model_shader->Use();
+	DrawNode(scene, *scene.nodes.front(), mat);
+}
 
-	float light_pos[] = { 0.25f, 0.25f, 1 };
-	m_model_shader->SetVec3("u_light_position", light_pos);
-	m_model_shader->SetMat4("u_modelview", mat.x);
-	m_model_shader->SetMat3("u_normal_matrix", sm::mat3(mat).x);
-
-	auto& meshes = model.GetAllMeshes();
-	int last_mat = -1;
-	for (auto& mesh : meshes)
+void RenderSystem::DrawNode(const model::Scene& scene, const model::Scene::Node& node, const sm::mat4& mat)
+{
+	if (!node.children.empty())
 	{
-		GD_ASSERT(mesh->geometry.sub_geometries.size() == mesh->geometry.sub_geometry_materials.size(), "err material");
-		for (int i = 0, n = mesh->geometry.sub_geometries.size(); i < n; ++i)
+		assert(node.meshes.empty());
+		auto child_mat = node.local_mat * mat;
+		for (auto& child : node.children) {
+			DrawNode(scene, *scene.nodes[child], child_mat);
+		}
+	}
+	else
+	{
+		auto mgr = pt3::EffectsManager::Instance();
+
+		assert(node.children.empty());
+		for (auto& mesh_idx : node.meshes)
 		{
-			int curr_mat = mesh->geometry.sub_geometry_materials[i];
-			// bind material
-			if (curr_mat != last_mat)
-			{
-				if (mesh->materials.empty())
-				{
-					auto& material = mesh->old_materials[curr_mat];
-					int tex_id = -1;
-					if (material.texture) {
-						tex_id = model::Callback::GetTexID(material.texture);
-					}
-					model_shader_set_material(m_model_shader, material.ambient, material.diffuse,
-						material.specular, material.shininess);
-					ur::Blackboard::Instance()->GetRenderContext().BindTexture(tex_id, 0);
-				}
-				else
-				{
-					auto& material = mesh->materials[curr_mat];
-					int tex_id = -1;
-					if (material.texture) {
-						tex_id = model::Callback::GetTexID(material.texture);
-					}
-					model::MaterialOld old_mat;
-					model_shader_set_material(m_model_shader, old_mat.ambient, old_mat.diffuse,
-						old_mat.specular, old_mat.shininess);
-					ur::Blackboard::Instance()->GetRenderContext().BindTexture(tex_id, 0);
-				}
-				last_mat = curr_mat;
+			auto& mesh = scene.meshes[mesh_idx];
+
+			auto& material = scene.materials[mesh->material];
+			if (material->diffuse_tex != -1) {
+				int tex_id = model::Callback::GetTexID(scene.textures[material->diffuse_tex].second);
+				ur::Blackboard::Instance()->GetRenderContext().BindTexture(tex_id, 0);
 			}
 
-			auto& sub = mesh->geometry.sub_geometries[i];
-			ur::Blackboard::Instance()->GetRenderContext().DrawElementsVAO(
-				ur::DRAW_TRIANGLES, sub.index_offset, sub.index_count, mesh->geometry.vao);
+			auto effect = pt3::EffectsManager::EffectType(mesh->effect);
+
+			mgr->Use(effect);
+
+			mgr->SetLightPosition(effect, sm::vec3(0.25f, 0.25f, 1));
+			mgr->SetProjMat(effect, pt3::Blackboard::Instance()->GetWindowContext()->GetProjMat().x);
+			mgr->SetNormalMat(effect, mat);
+
+			mgr->SetMaterial(effect, material->ambient, material->diffuse,
+				material->specular, material->shininess);
+			mgr->SetModelViewMat(effect, mat.x);
+
+			auto& geo = mesh->geometry;
+			for (auto& sub : geo.sub_geometries) {
+				ur::Blackboard::Instance()->GetRenderContext().DrawElementsVAO(
+					ur::DRAW_TRIANGLES, sub.index_offset, sub.index_count, geo.vao);
+			}
 		}
 	}
 }
-
-//// use shaderlab
-//void RenderSystem::DrawModel(const model::Model& model, const sm::mat4& mat)
-//{
-//	auto& shader_mgr = sl::Blackboard::Instance()->GetRenderContext().GetShaderMgr();
-//	shader_mgr.SetShader(sl::MODEL3);
-//	sl::Model3Shader* shader = static_cast<sl::Model3Shader*>(shader_mgr.GetShader());
-//
-//	shader->SetLightPosition(sm::vec3(0.25f, 0.25f, 1));
-//	shader->SetModelview(mat);
-//	shader->SetNormalMatrix(mat);
-//
-//	auto& meshes = model.GetAllMeshes();
-//	int last_mat = -1;
-//	for (auto& mesh : meshes)
-//	{
-//		GD_ASSERT(mesh->geometry.sub_geometries.size() == mesh->geometry.sub_geometry_materials.size(), "err material");
-//		for (int i = 0, n = mesh->geometry.sub_geometries.size(); i < n; ++i)
-//		{
-//			int curr_mat = mesh->geometry.sub_geometry_materials[i];
-//			// bind material
-//			if (curr_mat != last_mat)
-//			{
-//				if (mesh->materials.empty())
-//				{
-//					auto& material = mesh->old_materials[curr_mat];
-//					int tex_id = -1;
-//					if (material.texture) {
-//						tex_id = model::Callback::GetTexID(material.texture);
-//					}
-//					shader->SetMaterial(sl::Model3Shader::Material(material.ambient,
-//						material.diffuse, material.specular, material.shininess, tex_id));
-//				}
-//				else
-//				{
-//					auto& material = mesh->materials[curr_mat];
-//					int tex_id = -1;
-//					if (material.texture) {
-//						tex_id = model::Callback::GetTexID(material.texture);
-//					}
-//					model::MaterialOld old_mat;
-//					shader->SetMaterial(sl::Model3Shader::Material(old_mat.ambient,
-//						old_mat.diffuse, old_mat.specular, old_mat.shininess, tex_id));
-//				}
-//				last_mat = curr_mat;
-//			}
-//
-//			auto& sub = mesh->geometry.sub_geometries[i];
-//			shader->DrawVAO(
-//				mesh->geometry.vao,
-//				sub.index_count,
-//				sub.index_offset,
-//				mesh->geometry.vertex_type & model::VERTEX_FLAG_NORMALS,
-//				mesh->geometry.vertex_type & model::VERTEX_FLAG_TEXCOORDS
-//			);
-//		}
-//	}
-//}
 
 }
