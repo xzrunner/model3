@@ -2,9 +2,9 @@
 
 #include <SM_Matrix.h>
 #include <node0/typedef.h>
-#include <model/Scene.h>
 
 namespace ur { class Shader; }
+namespace model { struct Model; struct ModelInstance; }
 
 namespace n3
 {
@@ -26,8 +26,9 @@ public:
 	static void Draw(const n0::SceneNodePtr& node, const sm::mat4& mt);
 
 private:
-	static void DrawModel(const model::Scene& scene, const sm::mat4& mat);
-	static void DrawNode(const model::Scene& scene, const model::Scene::Node& node, const sm::mat4& mat);
+	static void DrawModel(const model::ModelInstance& model, const sm::mat4& mat);
+	static void DrawModelNode(const model::ModelInstance& model, int node_idx, const sm::mat4& mat);
+	static void DrawModelNodeDebug(const model::ModelInstance& model, int node_idx, const sm::mat4& mat);
 
 }; // RenderSystem
 

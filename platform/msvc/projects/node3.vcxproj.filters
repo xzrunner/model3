@@ -16,16 +16,13 @@
     <Filter Include="components\asset">
       <UniqueIdentifier>{4fad5f5a-cf31-40c4-8e7f-78996c95a81a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="components\asset\model">
+      <UniqueIdentifier>{f8252b3d-09a2-48e2-986d-ad2d4ebd1b98}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Math.cpp">
       <Filter>utility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\CompMesh.cpp">
-      <Filter>components\asset</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\CompModel.cpp">
-      <Filter>components\asset</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\CompAABB.cpp">
       <Filter>components\geo</Filter>
@@ -36,6 +33,18 @@
     <ClCompile Include="..\..\..\source\RenderSystem.cpp">
       <Filter>system</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\CompAnim.cpp">
+      <Filter>components\asset</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\UpdateSystem.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\CompModel.cpp">
+      <Filter>components\asset\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\CompModelInst.cpp">
+      <Filter>components\asset\model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\node3\Math.h">
@@ -45,17 +54,23 @@
     <ClInclude Include="..\..\..\include\node3\RenderSystem.h">
       <Filter>system</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\CompMesh.h">
-      <Filter>components\asset</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\CompModel.h">
-      <Filter>components\asset</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\node3\CompAABB.h">
       <Filter>components\geo</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\CompTransform.h">
       <Filter>components\geo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\CompAnim.h">
+      <Filter>components\asset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\UpdateSystem.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\CompModel.h">
+      <Filter>components\asset\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\CompModelInst.h">
+      <Filter>components\asset\model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

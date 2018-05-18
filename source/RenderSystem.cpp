@@ -1,18 +1,21 @@
 #include "node3/RenderSystem.h"
 #include "node3/CompTransform.h"
 #include "node3/CompModel.h"
+#include "node3/CompModelInst.h"
 #include "node3/RenderSystem.h"
 
 #include <unirender/Blackboard.h>
 #include <unirender/RenderContext.h>
 #include <shaderlab/Blackboard.h>
 #include <shaderlab/RenderContext.h>
-#include <model/Scene.h>
+#include <model/Model.h>
+#include <model/ModelInstance.h>
 #include <model/Callback.h>
 #include <node0/SceneNode.h>
 #include <painting3/Blackboard.h>
 #include <painting3/WindowContext.h>
 #include <painting3/EffectsManager.h>
+#include <painting3/PrimitiveDraw.h>
 
 namespace n3
 {
@@ -28,10 +31,10 @@ void RenderSystem::Draw(const n0::SceneNodePtr& node, const sm::mat4& mt)
 
 	if (node->HasSharedComp<CompModel>())
 	{
-		auto& cmodel = node->GetSharedComp<CompModel>();
-		auto& scene = cmodel.GetScene();
-		if (scene) {
-			RenderSystem::DrawModel(*scene, mt_child);
+		auto& cmodel = node->GetUniqueComp<CompModelInst>();
+		auto& model = cmodel.GetModel();
+		if (model) {
+			RenderSystem::DrawModel(*model, mt_child);
 		}
 	}
 
@@ -45,26 +48,32 @@ void RenderSystem::Draw(const n0::SceneNodePtr& node, const sm::mat4& mt)
 	//}
 }
 
-void RenderSystem::DrawModel(const model::Scene& scene, const sm::mat4& mat)
+void RenderSystem::DrawModel(const model::ModelInstance& model, const sm::mat4& mat)
 {
-	if (scene.nodes.empty()) {
+	if (model.model->nodes.empty()) {
 		return;
 	}
 
 	// flush shader status
 	sl::Blackboard::Instance()->GetRenderContext().GetShaderMgr().BindRenderShader(nullptr, sl::EXTERN_SHADER);
 
-	DrawNode(scene, *scene.nodes.front(), mat);
+	if (!model.model->nodes.empty()) {
+//		DrawModelNode(model, 0, mat);
+		DrawModelNodeDebug(model, 0, mat);
+	}
 }
 
-void RenderSystem::DrawNode(const model::Scene& scene, const model::Scene::Node& node, const sm::mat4& mat)
+void RenderSystem::DrawModelNode(const model::ModelInstance& model_inst, int node_idx, const sm::mat4& mat)
 {
+	auto& model = *model_inst.model;
+
+	auto& node = *model.nodes[node_idx];
 	if (!node.children.empty())
 	{
 		assert(node.meshes.empty());
-		auto child_mat = node.local_mat * mat;
+		auto child_mat = node.local_trans * mat;
 		for (auto& child : node.children) {
-			DrawNode(scene, *scene.nodes[child], child_mat);
+			DrawModelNode(model_inst, child, child_mat);
 		}
 	}
 	else
@@ -74,11 +83,11 @@ void RenderSystem::DrawNode(const model::Scene& scene, const model::Scene::Node&
 		assert(node.children.empty());
 		for (auto& mesh_idx : node.meshes)
 		{
-			auto& mesh = scene.meshes[mesh_idx];
+			auto& mesh = model.meshes[mesh_idx];
 
-			auto& material = scene.materials[mesh->material];
+			auto& material = model.materials[mesh->material];
 			if (material->diffuse_tex != -1) {
-				int tex_id = model::Callback::GetTexID(scene.textures[material->diffuse_tex].second);
+				int tex_id = model::Callback::GetTexID(model.textures[material->diffuse_tex].second);
 				ur::Blackboard::Instance()->GetRenderContext().BindTexture(tex_id, 0);
 			}
 
@@ -99,6 +108,24 @@ void RenderSystem::DrawNode(const model::Scene& scene, const model::Scene::Node&
 				ur::Blackboard::Instance()->GetRenderContext().DrawElementsVAO(
 					ur::DRAW_TRIANGLES, sub.index_offset, sub.index_count, geo.vao);
 			}
+		}
+	}
+}
+
+void RenderSystem::DrawModelNodeDebug(const model::ModelInstance& model_inst, int node_idx, const sm::mat4& mat)
+{
+	auto& model = *model_inst.model;
+
+	auto& node = *model.nodes[node_idx];
+	for (auto& child : node.children)
+	{
+		auto& ptrans = model_inst.global_trans[node_idx];
+		auto& ctrans = model_inst.global_trans[child];
+		pt3::PrimitiveDraw::Line(mat * ptrans.GetTranslate(), mat * ctrans.GetTranslate());
+
+		assert(node.meshes.empty());
+		for (auto& child : node.children) {
+			DrawModelNodeDebug(model_inst, child, mat);
 		}
 	}
 }

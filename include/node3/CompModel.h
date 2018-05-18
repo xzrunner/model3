@@ -4,7 +4,7 @@
 
 #include <memory>
 
-namespace model { struct Scene; }
+namespace model { struct Model; }
 
 namespace n3
 {
@@ -23,15 +23,15 @@ public:
 	void SetFilepath(const std::string& filepath) { m_filepath = filepath; }
 	const std::string& GetFilepath() const { return m_filepath; }
 
-	void SetScene(const std::shared_ptr<model::Scene>& model) { m_model = model; }
-	const std::shared_ptr<model::Scene>& GetScene() const { return m_model; }
+	void SetModel(const std::shared_ptr<model::Model>& model) { m_model = model; }
+	const std::shared_ptr<model::Model>& GetModel() const { return m_model; }
 
 	static const char* const TYPE_NAME;
 
 private:
 	std::string m_filepath;
 
-	std::shared_ptr<model::Scene> m_model = nullptr;
+	std::shared_ptr<model::Model> m_model = nullptr;
 
 }; // CompModel
 
