@@ -1,10 +1,9 @@
 #pragma once
 
 #include <node0/NodeUniqueComp.h>
+#include <model/ModelInstance.h>
 
 //#include <memory>
-
-namespace model { struct Model; struct ModelInstance; }
 
 namespace n3
 {
@@ -12,6 +11,7 @@ namespace n3
 class CompModelInst : public n0::NodeUniqueComp
 {
 public:
+	CompModelInst() = default;
 	CompModelInst(const std::shared_ptr<model::Model>& model, int anim_idx);
 
 	virtual const char* Type() const override { return TYPE_NAME; }
@@ -23,6 +23,7 @@ public:
 	bool Update();
 
 	std::unique_ptr<model::ModelInstance>& GetModel() { return m_inst; }
+	void SetModel(const std::shared_ptr<model::Model>& model, int anim_idx);
 
 	static const char* const TYPE_NAME;
 
