@@ -58,28 +58,26 @@ void RenderSystem::DrawModel(const model::ModelInstance& model, const sm::mat4& 
 	sl::Blackboard::Instance()->GetRenderContext().GetShaderMgr().BindRenderShader(nullptr, sl::EXTERN_SHADER);
 
 	if (!model.model->nodes.empty()) {
-//		DrawModelNode(model, 0, mat);
-		DrawModelNodeDebug(model, 0, mat);
+		DrawModelNode(model, 0, mat);
+//		DrawModelNodeDebug(model, 0, mat);
 	}
 }
 
 void RenderSystem::DrawModelNode(const model::ModelInstance& model_inst, int node_idx, const sm::mat4& mat)
 {
 	auto& model = *model_inst.model;
-
 	auto& node = *model.nodes[node_idx];
 	if (!node.children.empty())
 	{
 		assert(node.meshes.empty());
-		auto child_mat = node.local_trans * mat;
 		for (auto& child : node.children) {
-			DrawModelNode(model_inst, child, child_mat);
+			DrawModelNode(model_inst, child, mat);
 		}
 	}
 	else
 	{
 		auto mgr = pt3::EffectsManager::Instance();
-
+		auto child_mat = model_inst.global_trans[node_idx] * mat;
 		assert(node.children.empty());
 		for (auto& mesh_idx : node.meshes)
 		{
@@ -95,13 +93,22 @@ void RenderSystem::DrawModelNode(const model::ModelInstance& model_inst, int nod
 
 			mgr->Use(effect);
 
+			auto& bone_trans = model_inst.CalcBoneMatrices(node_idx, mesh_idx);
+			if (!bone_trans.empty()) {
+				mgr->SetBoneMatrixes(effect, &bone_trans[0], bone_trans.size());
+			} else {
+				sm::mat4 mat;
+				mgr->SetBoneMatrixes(effect, &mat, 1);
+			}
+
 			mgr->SetLightPosition(effect, sm::vec3(0.25f, 0.25f, 1));
 			mgr->SetProjMat(effect, pt3::Blackboard::Instance()->GetWindowContext()->GetProjMat().x);
-			mgr->SetNormalMat(effect, mat);
+			mgr->SetNormalMat(effect, child_mat);
 
 			mgr->SetMaterial(effect, material->ambient, material->diffuse,
 				material->specular, material->shininess);
-			mgr->SetModelViewMat(effect, mat.x);
+
+			mgr->SetModelViewMat(effect, child_mat.x);
 
 			auto& geo = mesh->geometry;
 			for (auto& sub : geo.sub_geometries) {
