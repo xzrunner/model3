@@ -1,5 +1,6 @@
 #include "node3/CompModelInst.h"
 
+#include <model/Model.h>
 #include <model/ModelInstance.h>
 
 namespace n3
@@ -26,6 +27,16 @@ bool CompModelInst::Update()
 void CompModelInst::SetModel(const std::shared_ptr<model::Model>& model, int anim_idx)
 {
 	m_inst = std::make_unique<model::ModelInstance>(model, anim_idx);
+}
+
+void CompModelInst::SetAnim(const std::string& anim_name)
+{
+	for (int i = 0, n = m_inst->model->anims.size(); i < n; ++i) {
+		if (m_inst->model->anims[i]->name == anim_name) {
+			m_inst->curr_anim_index = i;
+			break;
+		}
+	}
 }
 
 }

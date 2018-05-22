@@ -23,7 +23,10 @@ public:
 	bool Update();
 
 	std::unique_ptr<model::ModelInstance>& GetModel() { return m_inst; }
+	const std::unique_ptr<model::ModelInstance>& GetModel() const { return m_inst; }
 	void SetModel(const std::shared_ptr<model::Model>& model, int anim_idx);
+
+	void SetAnim(const std::string& anim_name);
 
 	static const char* const TYPE_NAME;
 
