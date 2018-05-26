@@ -1,6 +1,6 @@
 #pragma once
 
-#include <node0/NodeUniqueComp.h>
+#include <node0/NodeComp.h>
 #include <model/ModelInstance.h>
 
 //#include <memory>
@@ -8,17 +8,17 @@
 namespace n3
 {
 
-class CompModelInst : public n0::NodeUniqueComp
+class CompModelInst : public n0::NodeComp
 {
 public:
 	CompModelInst() = default;
 	CompModelInst(const std::shared_ptr<model::Model>& model, int anim_idx);
 
 	virtual const char* Type() const override { return TYPE_NAME; }
-	virtual n0::UniqueCompID TypeID() const override {
-		return n0::GetUniqueCompTypeID<CompModelInst>();
+	virtual n0::CompID TypeID() const override {
+		return n0::GetCompTypeID<CompModelInst>();
 	}
-	virtual std::unique_ptr<n0::NodeUniqueComp> Clone(const n0::SceneNode& node) const override;
+	virtual std::unique_ptr<n0::NodeComp> Clone(const n0::SceneNode& node) const override;
 
 	bool Update();
 
