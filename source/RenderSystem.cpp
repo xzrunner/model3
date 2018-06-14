@@ -90,7 +90,6 @@ void RenderSystem::DrawModelNode(const model::ModelInstance& model_inst, int nod
 			}
 
 			auto effect = pt3::EffectsManager::EffectType(mesh->effect);
-
 			mgr->Use(effect);
 
 			auto& bone_trans = model_inst.CalcBoneMatrices(node_idx, mesh_idx);
@@ -111,9 +110,15 @@ void RenderSystem::DrawModelNode(const model::ModelInstance& model_inst, int nod
 			mgr->SetModelViewMat(effect, child_mat.x);
 
 			auto& geo = mesh->geometry;
-			for (auto& sub : geo.sub_geometries) {
-				ur::Blackboard::Instance()->GetRenderContext().DrawElementsVAO(
-					ur::DRAW_TRIANGLES, sub.index_offset, sub.index_count, geo.vao);
+			for (auto& sub : geo.sub_geometries)
+			{
+				if (sub.index) {
+					ur::Blackboard::Instance()->GetRenderContext().DrawElementsVAO(
+						ur::DRAW_TRIANGLES, sub.offset, sub.count, geo.vao);
+				} else {
+					ur::Blackboard::Instance()->GetRenderContext().DrawArraysVAO(
+						ur::DRAW_TRIANGLES, sub.offset, sub.count, geo.vao);
+				}
 			}
 		}
 	}
