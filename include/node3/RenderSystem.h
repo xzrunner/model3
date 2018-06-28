@@ -27,8 +27,11 @@ public:
 
 private:
 	static void DrawModel(const model::ModelInstance& model, const sm::mat4& mat);
-	static void DrawModelNode(const model::ModelInstance& model, int node_idx, const sm::mat4& mat);
-	static void DrawModelNodeDebug(const model::ModelInstance& model, int node_idx, const sm::mat4& mat);
+
+	static void DrawMesh(const model::Model& model, const sm::mat4& mat);
+
+	static void DrawSkeletalNode(const model::ModelInstance& model, int node_idx, const sm::mat4& mat);
+	static void DrawSkeletalNodeDebug(const model::ModelInstance& model, int node_idx, const sm::mat4& mat);
 
 }; // RenderSystem
 

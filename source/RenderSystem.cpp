@@ -50,28 +50,65 @@ void RenderSystem::Draw(const n0::SceneNodePtr& node, const sm::mat4& mt)
 
 void RenderSystem::DrawModel(const model::ModelInstance& model, const sm::mat4& mat)
 {
-	if (model.model->nodes.empty()) {
-		return;
-	}
-
 	// flush shader status
 	sl::Blackboard::Instance()->GetRenderContext().GetShaderMgr().BindRenderShader(nullptr, sl::EXTERN_SHADER);
 
-	if (!model.model->nodes.empty()) {
-		DrawModelNode(model, 0, mat);
-//		DrawModelNodeDebug(model, 0, mat);
+	auto& nodes = model.model->sk_anim.GetAllAnims();
+	if (nodes.empty()) {
+		DrawMesh(*model.model, mat);
+	} else {
+		DrawSkeletalNode(model, 0, mat);
+//		DrawSkeletalNodeDebug(model, 0, mat);
 	}
 }
 
-void RenderSystem::DrawModelNode(const model::ModelInstance& model_inst, int node_idx, const sm::mat4& mat)
+void RenderSystem::DrawMesh(const model::Model& model, const sm::mat4& mat)
+{
+	auto mgr = pt3::EffectsManager::Instance();
+	for (auto& mesh : model.meshes)
+	{
+		auto& material = model.materials[mesh->material];
+		if (material->diffuse_tex != -1) {
+			int tex_id = model::Callback::GetTexID(model.textures[material->diffuse_tex].second);
+			ur::Blackboard::Instance()->GetRenderContext().BindTexture(tex_id, 0);
+		}
+
+		auto effect = pt3::EffectsManager::EffectType(mesh->effect);
+		mgr->Use(effect);
+
+		mgr->SetLightPosition(effect, sm::vec3(0.25f, 0.25f, 1));
+		mgr->SetProjMat(effect, pt3::Blackboard::Instance()->GetWindowContext()->GetProjMat().x);
+		mgr->SetNormalMat(effect, mat);
+
+		mgr->SetMaterial(effect, material->ambient, material->diffuse,
+			material->specular, material->shininess);
+
+		mgr->SetModelViewMat(effect, mat.x);
+
+		auto& geo = mesh->geometry;
+		for (auto& sub : geo.sub_geometries)
+		{
+			if (sub.index) {
+				ur::Blackboard::Instance()->GetRenderContext().DrawElementsVAO(
+					ur::DRAW_TRIANGLES, sub.offset, sub.count, geo.vao);
+			} else {
+				ur::Blackboard::Instance()->GetRenderContext().DrawArraysVAO(
+					ur::DRAW_TRIANGLES, sub.offset, sub.count, geo.vao);
+			}
+		}
+	}
+}
+
+void RenderSystem::DrawSkeletalNode(const model::ModelInstance& model_inst, int node_idx, const sm::mat4& mat)
 {
 	auto& model = *model_inst.model;
-	auto& node = *model.nodes[node_idx];
+	auto& nodes = model.sk_anim.GetAllNodes();
+	auto& node = *nodes[node_idx];
 	if (!node.children.empty())
 	{
 		assert(node.meshes.empty());
 		for (auto& child : node.children) {
-			DrawModelNode(model_inst, child, mat);
+			DrawSkeletalNode(model_inst, child, mat);
 		}
 	}
 	else
@@ -124,11 +161,12 @@ void RenderSystem::DrawModelNode(const model::ModelInstance& model_inst, int nod
 	}
 }
 
-void RenderSystem::DrawModelNodeDebug(const model::ModelInstance& model_inst, int node_idx, const sm::mat4& mat)
+void RenderSystem::DrawSkeletalNodeDebug(const model::ModelInstance& model_inst, int node_idx, const sm::mat4& mat)
 {
 	auto& model = *model_inst.model;
 
-	auto& node = *model.nodes[node_idx];
+	auto& nodes = model.sk_anim.GetAllNodes();
+	auto& node = *nodes[node_idx];
 	for (auto& child : node.children)
 	{
 		auto& ptrans = model_inst.global_trans[node_idx];
@@ -137,7 +175,7 @@ void RenderSystem::DrawModelNodeDebug(const model::ModelInstance& model_inst, in
 
 		assert(node.meshes.empty());
 		for (auto& child : node.children) {
-			DrawModelNodeDebug(model_inst, child, mat);
+			DrawSkeletalNodeDebug(model_inst, child, mat);
 		}
 	}
 }
