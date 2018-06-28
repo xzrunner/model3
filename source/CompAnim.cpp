@@ -1,7 +1,5 @@
 #include "node3/CompAnim.h"
 
-#include <model/SkinnedModel.h>
-
 namespace n3
 {
 

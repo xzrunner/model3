@@ -1,8 +1,7 @@
 #pragma once
 
 #include <node0/CompAsset.h>
-
-namespace model { struct SkinnedModelInstance; }
+#include <model/SkinnedModel.h>
 
 namespace n3
 {

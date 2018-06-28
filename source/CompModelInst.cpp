@@ -31,8 +31,9 @@ void CompModelInst::SetModel(const std::shared_ptr<model::Model>& model, int ani
 
 void CompModelInst::SetAnim(const std::string& anim_name)
 {
-	for (int i = 0, n = m_inst->model->anims.size(); i < n; ++i) {
-		if (m_inst->model->anims[i]->name == anim_name) {
+	auto& anims = m_inst->model->sk_anim.GetAllAnims();
+	for (int i = 0, n = anims.size(); i < n; ++i) {
+		if (anims[i]->name == anim_name) {
 			m_inst->curr_anim_index = i;
 			break;
 		}
