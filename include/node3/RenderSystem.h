@@ -30,6 +30,8 @@ private:
 
 	static void DrawMesh(const model::Model& model, const sm::mat4& mat);
 
+	static void DrawMorphAnim(const model::Model& model, const sm::mat4& mat);
+
 	static void DrawSkeletalNode(const model::ModelInstance& model, int node_idx, const sm::mat4& mat);
 	static void DrawSkeletalNodeDebug(const model::ModelInstance& model, int node_idx, const sm::mat4& mat);
 

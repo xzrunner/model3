@@ -2,6 +2,7 @@
 
 #include <model/Model.h>
 #include <model/ModelInstance.h>
+#include <model/SkeletalAnim.h>
 
 namespace n3
 {
@@ -31,7 +32,12 @@ void CompModelInst::SetModel(const std::shared_ptr<model::Model>& model, int ani
 
 void CompModelInst::SetAnim(const std::string& anim_name)
 {
-	auto& anims = m_inst->model->sk_anim.GetAllAnims();
+	if (!m_inst->model->anim || m_inst->model->anim->Type() != model::ANIM_SKELETAL) {
+		return;
+	}
+
+	auto sk_anim = static_cast<model::SkeletalAnim*>(m_inst->model->anim.get());
+	auto& anims = sk_anim->GetAllAnims();
 	for (int i = 0, n = anims.size(); i < n; ++i) {
 		if (anims[i]->name == anim_name) {
 			m_inst->curr_anim_index = i;
