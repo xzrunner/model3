@@ -114,6 +114,8 @@ void RenderSystem::DrawMesh(const model::Model& model, const sm::mat4& mat)
 
 void RenderSystem::DrawMorphAnim(const model::Model& model, const sm::mat4& mat)
 {
+	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
+
 	auto anim = static_cast<model::MorphTargetAnim*>(model.anim.get());
 
 	auto mgr = pt3::EffectsManager::Instance();
@@ -122,7 +124,7 @@ void RenderSystem::DrawMorphAnim(const model::Model& model, const sm::mat4& mat)
 		auto& material = model.materials[mesh->material];
 		if (material->diffuse_tex != -1) {
 			int tex_id = model::Callback::GetTexID(model.textures[material->diffuse_tex].second);
-			ur::Blackboard::Instance()->GetRenderContext().BindTexture(tex_id, 0);
+			rc.BindTexture(tex_id, 0);
 		}
 
 		auto effect = pt3::EffectsManager::EffectType(mesh->effect);
@@ -140,13 +142,23 @@ void RenderSystem::DrawMorphAnim(const model::Model& model, const sm::mat4& mat)
 		int frame = anim->GetFrame();
 		auto& geo = mesh->geometry;
 		assert(frame >= 0 && frame < geo.sub_geometries.size());
-		auto& sub = geo.sub_geometries[frame];
-		if (sub.index) {
-			ur::Blackboard::Instance()->GetRenderContext().DrawElementsVAO(
-				ur::DRAW_TRIANGLES, sub.offset, sub.count, geo.vao);
-		} else {
-			ur::Blackboard::Instance()->GetRenderContext().DrawArraysVAO(
-				ur::DRAW_TRIANGLES, sub.offset, sub.count, geo.vao);
+		if (geo.vao > 0)
+		{
+			auto& sub = geo.sub_geometries[frame];
+			if (sub.index) {
+				rc.DrawElementsVAO(
+					ur::DRAW_TRIANGLES, sub.offset, sub.count, geo.vao);
+			} else {
+				rc.DrawArraysVAO(
+					ur::DRAW_TRIANGLES, sub.offset, sub.count, geo.vao);
+			}
+		}
+		else
+		{
+			rc.UpdateVertexLayout(geo.vertex_layout);
+			auto& sub = geo.sub_geometries[frame];
+			rc.BindBuffer(ur::VERTEXBUFFER, geo.vbo);
+			rc.DrawArrays(ur::DRAW_TRIANGLES, sub.offset, sub.count);
 		}
 	}
 }
