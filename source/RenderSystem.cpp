@@ -117,6 +117,9 @@ void RenderSystem::DrawMorphAnim(const model::Model& model, const sm::mat4& mat)
 	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
 
 	auto anim = static_cast<model::MorphTargetAnim*>(model.anim.get());
+	int frame = anim->GetFrame();
+	assert(frame < anim->GetNumFrames());
+	int stride = anim->GetNumVertices() * (4 * 3 * 2);
 
 	auto mgr = pt3::EffectsManager::Instance();
 	for (auto& mesh : model.meshes)
@@ -139,24 +142,36 @@ void RenderSystem::DrawMorphAnim(const model::Model& model, const sm::mat4& mat)
 
 		mgr->SetModelViewMat(effect, mat.x);
 
-		int frame = anim->GetFrame();
 		auto& geo = mesh->geometry;
-		assert(frame >= 0 && frame < geo.sub_geometries.size());
-		if (geo.vao > 0)
+//		assert(frame >= 0 && frame < geo.sub_geometries.size());
+		//if (geo.vao > 0)
+		//{
+		//	auto& sub = geo.sub_geometries[frame];
+		//	if (sub.index) {
+		//		rc.DrawElementsVAO(
+		//			ur::DRAW_TRIANGLES, sub.offset, sub.count, geo.vao);
+		//	} else {
+		//		rc.DrawArraysVAO(
+		//			ur::DRAW_TRIANGLES, sub.offset, sub.count, geo.vao);
+		//	}
+		//}
+		//else
 		{
-			auto& sub = geo.sub_geometries[frame];
-			if (sub.index) {
-				rc.DrawElementsVAO(
-					ur::DRAW_TRIANGLES, sub.offset, sub.count, geo.vao);
-			} else {
-				rc.DrawArraysVAO(
-					ur::DRAW_TRIANGLES, sub.offset, sub.count, geo.vao);
-			}
-		}
-		else
-		{
+			// update anim blend
+			mgr->SetMorphAnimBlend(anim->GetBlend());
+
+			// pose1_vert, pose1_normal
+			int offset = stride * frame;
+			geo.vertex_layout[0].offset = offset;
+			geo.vertex_layout[1].offset = offset;
+			// pose2_vert, pose2_normal
+			offset += stride;
+			geo.vertex_layout[2].offset = offset;
+			geo.vertex_layout[3].offset = offset;
+			// update vertex layout
 			rc.UpdateVertexLayout(geo.vertex_layout);
-			auto& sub = geo.sub_geometries[frame];
+
+			auto& sub = geo.sub_geometries[0];
 			rc.BindBuffer(ur::VERTEXBUFFER, geo.vbo);
 			rc.DrawArrays(ur::DRAW_TRIANGLES, sub.offset, sub.count);
 		}
