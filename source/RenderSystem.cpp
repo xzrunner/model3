@@ -10,7 +10,6 @@
 #include <shaderlab/RenderContext.h>
 #include <model/Model.h>
 #include <model/ModelInstance.h>
-#include <model/Callback.h>
 #include <model/SkeletalAnim.h>
 #include <model/MorphTargetAnim.h>
 #include <node0/SceneNode.h>
@@ -82,7 +81,7 @@ void RenderSystem::DrawMesh(const model::Model& model, const sm::mat4& mat)
 	{
 		auto& material = model.materials[mesh->material];
 		if (material->diffuse_tex != -1) {
-			int tex_id = model::Callback::GetTexID(model.textures[material->diffuse_tex].second);
+			int tex_id = model.textures[material->diffuse_tex].second->TexID();
 			ur::Blackboard::Instance()->GetRenderContext().BindTexture(tex_id, 0);
 		}
 
@@ -126,7 +125,7 @@ void RenderSystem::DrawMorphAnim(const model::Model& model, const sm::mat4& mat)
 	{
 		auto& material = model.materials[mesh->material];
 		if (material->diffuse_tex != -1) {
-			int tex_id = model::Callback::GetTexID(model.textures[material->diffuse_tex].second);
+			int tex_id = model.textures[material->diffuse_tex].second->TexID();
 			rc.BindTexture(tex_id, 0);
 		}
 
@@ -201,7 +200,7 @@ void RenderSystem::DrawSkeletalNode(const model::ModelInstance& model_inst, int 
 
 			auto& material = model.materials[mesh->material];
 			if (material->diffuse_tex != -1) {
-				int tex_id = model::Callback::GetTexID(model.textures[material->diffuse_tex].second);
+				int tex_id = model.textures[material->diffuse_tex].second->TexID();
 				ur::Blackboard::Instance()->GetRenderContext().BindTexture(tex_id, 0);
 			}
 
