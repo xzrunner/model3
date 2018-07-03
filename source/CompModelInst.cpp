@@ -32,11 +32,11 @@ void CompModelInst::SetModel(const std::shared_ptr<model::Model>& model, int ani
 
 void CompModelInst::SetAnim(const std::string& anim_name)
 {
-	if (!m_inst->model->anim || m_inst->model->anim->Type() != model::ANIM_SKELETAL) {
+	if (!m_inst->model->ext || m_inst->model->ext->Type() != model::EXT_SKELETAL) {
 		return;
 	}
 
-	auto sk_anim = static_cast<model::SkeletalAnim*>(m_inst->model->anim.get());
+	auto sk_anim = static_cast<model::SkeletalAnim*>(m_inst->model->ext.get());
 	auto& anims = sk_anim->GetAllAnims();
 	for (int i = 0, n = anims.size(); i < n; ++i) {
 		if (anims[i]->name == anim_name) {
