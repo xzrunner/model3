@@ -12,11 +12,33 @@
 #include <model/ModelInstance.h>
 #include <model/SkeletalAnim.h>
 #include <model/MorphTargetAnim.h>
+#include <model/BspModel.h>
 #include <node0/SceneNode.h>
 #include <painting3/Blackboard.h>
 #include <painting3/WindowContext.h>
 #include <painting3/EffectsManager.h>
 #include <painting3/PrimitiveDraw.h>
+
+namespace
+{
+
+#define MAX_BATCH_SIZE 4096
+
+static unsigned int vbo_indices[MAX_BATCH_SIZE];
+static unsigned int num_vbo_indices;
+
+void FlushBatch()
+{
+	if (num_vbo_indices > 0)
+	{
+		auto& rc = ur::Blackboard::Instance()->GetRenderContext();
+		rc.DrawElements(ur::DRAW_TRIANGLES, num_vbo_indices, vbo_indices);
+
+		num_vbo_indices = 0;
+	}
+}
+
+}
 
 namespace n3
 {
@@ -54,17 +76,20 @@ void RenderSystem::DrawModel(const model::ModelInstance& model, const sm::mat4& 
 	// flush shader status
 	sl::Blackboard::Instance()->GetRenderContext().GetShaderMgr().BindRenderShader(nullptr, sl::EXTERN_SHADER);
 
-	auto& anim = model.model->anim;
-	if (anim)
+	auto& ext = model.model->ext;
+	if (ext)
 	{
-		switch (anim->Type())
+		switch (ext->Type())
 		{
-		case model::ANIM_MORPH_TARGET:
+		case model::EXT_MORPH_TARGET:
 			DrawMorphAnim(*model.model, mat);
 			break;
-		case model::ANIM_SKELETAL:
+		case model::EXT_SKELETAL:
 			DrawSkeletalNode(model, 0, mat);
 			//DrawSkeletalNodeDebug(model, 0, mat);
+			break;
+		case model::EXT_BSP:
+			DrawBSP(*model.model, mat);
 			break;
 		}
 	}
@@ -76,6 +101,8 @@ void RenderSystem::DrawModel(const model::ModelInstance& model, const sm::mat4& 
 
 void RenderSystem::DrawMesh(const model::Model& model, const sm::mat4& mat)
 {
+	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
+
 	auto mgr = pt3::EffectsManager::Instance();
 	for (auto& mesh : model.meshes)
 	{
@@ -100,12 +127,27 @@ void RenderSystem::DrawMesh(const model::Model& model, const sm::mat4& mat)
 		auto& geo = mesh->geometry;
 		for (auto& sub : geo.sub_geometries)
 		{
-			if (sub.index) {
-				ur::Blackboard::Instance()->GetRenderContext().DrawElementsVAO(
-					ur::DRAW_TRIANGLES, sub.offset, sub.count, geo.vao);
-			} else {
-				ur::Blackboard::Instance()->GetRenderContext().DrawArraysVAO(
-					ur::DRAW_TRIANGLES, sub.offset, sub.count, geo.vao);
+			if (geo.vao > 0)
+			{
+				if (sub.index) {
+					ur::Blackboard::Instance()->GetRenderContext().DrawElementsVAO(
+						ur::DRAW_TRIANGLES, sub.offset, sub.count, geo.vao);
+				} else {
+					ur::Blackboard::Instance()->GetRenderContext().DrawArraysVAO(
+						ur::DRAW_TRIANGLES, sub.offset, sub.count, geo.vao);
+				}
+			}
+			else
+			{
+				auto& sub = geo.sub_geometries[0];
+				if (geo.ebo) {
+					rc.BindBuffer(ur::INDEXBUFFER, geo.ebo);
+					rc.BindBuffer(ur::VERTEXBUFFER, geo.vbo);
+					rc.DrawElements(ur::DRAW_TRIANGLES, sub.offset, sub.count);
+				} else {
+					rc.BindBuffer(ur::VERTEXBUFFER, geo.vbo);
+					rc.DrawArrays(ur::DRAW_TRIANGLES, sub.offset, sub.count);
+				}
 			}
 		}
 	}
@@ -115,7 +157,7 @@ void RenderSystem::DrawMorphAnim(const model::Model& model, const sm::mat4& mat)
 {
 	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
 
-	auto anim = static_cast<model::MorphTargetAnim*>(model.anim.get());
+	auto anim = static_cast<model::MorphTargetAnim*>(model.ext.get());
 	int frame = anim->GetFrame();
 	assert(frame < anim->GetNumFrames());
 	int stride = anim->GetNumVertices() * (4 * 3 * 2);
@@ -180,7 +222,7 @@ void RenderSystem::DrawMorphAnim(const model::Model& model, const sm::mat4& mat)
 void RenderSystem::DrawSkeletalNode(const model::ModelInstance& model_inst, int node_idx, const sm::mat4& mat)
 {
 	auto& model = *model_inst.model;
-	auto& nodes = static_cast<model::SkeletalAnim*>(model.anim.get())->GetAllNodes();
+	auto& nodes = static_cast<model::SkeletalAnim*>(model.ext.get())->GetAllNodes();
 	auto& node = *nodes[node_idx];
 	if (!node.children.empty())
 	{
@@ -243,7 +285,7 @@ void RenderSystem::DrawSkeletalNodeDebug(const model::ModelInstance& model_inst,
 {
 	auto& model = *model_inst.model;
 
-	auto& nodes = static_cast<model::SkeletalAnim*>(model.anim.get())->GetAllNodes();
+	auto& nodes = static_cast<model::SkeletalAnim*>(model.ext.get())->GetAllNodes();
 	auto& node = *nodes[node_idx];
 	for (auto& child : node.children)
 	{
@@ -255,6 +297,52 @@ void RenderSystem::DrawSkeletalNodeDebug(const model::ModelInstance& model_inst,
 		for (auto& child : node.children) {
 			DrawSkeletalNodeDebug(model_inst, child, mat);
 		}
+	}
+}
+
+void RenderSystem::DrawBSP(const model::Model& model, const sm::mat4& mat)
+{
+	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
+	rc.SetCull(ur::CULL_DISABLE);
+
+	auto mgr = pt3::EffectsManager::Instance();
+	auto effect = pt3::EffectsManager::EFFECT_BSP;
+	mgr->Use(effect);
+	mgr->SetProjMat(effect, pt3::Blackboard::Instance()->GetWindowContext()->GetProjMat().x);
+	mgr->SetModelViewMat(effect, mat.x);
+
+	num_vbo_indices = 0;
+
+	rc.BindBuffer(ur::VERTEXBUFFER, model.meshes[0]->geometry.vbo);
+
+	auto bsp = static_cast<model::BspModel*>(model.ext.get());
+	for (auto& tex : bsp->textures)
+	{
+		if (!tex.surfaces_chain || !tex.tex) {
+			continue;
+		}
+
+		rc.BindTexture(tex.tex->TexID(), 0);
+
+		auto s = tex.surfaces_chain;
+		while (s)
+		{
+			int num_surf_indices = 3 * (s->numedges - 2);
+			if (num_vbo_indices + num_surf_indices > MAX_BATCH_SIZE) {
+				FlushBatch();
+			}
+
+			for (int i = 2; i < s->numedges; ++i)
+			{
+				vbo_indices[num_vbo_indices++] = s->vbo_firstvert;
+				vbo_indices[num_vbo_indices++] = s->vbo_firstvert + i - 1;
+				vbo_indices[num_vbo_indices++] = s->vbo_firstvert + i;
+			}
+
+			s = s->next;
+		}
+
+		FlushBatch();
 	}
 }
 

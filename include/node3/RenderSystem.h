@@ -35,6 +35,8 @@ private:
 	static void DrawSkeletalNode(const model::ModelInstance& model, int node_idx, const sm::mat4& mat);
 	static void DrawSkeletalNodeDebug(const model::ModelInstance& model, int node_idx, const sm::mat4& mat);
 
+	static void DrawBSP(const model::Model& model, const sm::mat4& mat);
+
 }; // RenderSystem
 
 }
