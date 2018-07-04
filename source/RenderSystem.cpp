@@ -18,6 +18,7 @@
 #include <painting3/WindowContext.h>
 #include <painting3/EffectsManager.h>
 #include <painting3/PrimitiveDraw.h>
+#include <quake/Lightmaps.h>
 
 namespace
 {
@@ -315,6 +316,8 @@ void RenderSystem::DrawBSP(const model::Model& model, const sm::mat4& mat)
 
 	rc.BindBuffer(ur::VERTEXBUFFER, model.meshes[0]->geometry.vbo);
 
+	int last_lightmap = -1;
+
 	auto bsp = static_cast<model::BspModel*>(model.ext.get());
 	for (auto& tex : bsp->textures)
 	{
@@ -327,6 +330,14 @@ void RenderSystem::DrawBSP(const model::Model& model, const sm::mat4& mat)
 		auto s = tex.surfaces_chain;
 		while (s)
 		{
+			if (s->lightmaptexturenum != last_lightmap)
+			{
+				FlushBatch();
+				last_lightmap = s->lightmaptexturenum;
+				int texid = quake::Lightmaps::Instance()->GetTexID(s->lightmaptexturenum);
+				rc.BindTexture(texid, 1);
+			}
+
 			int num_surf_indices = 3 * (s->numedges - 2);
 			if (num_vbo_indices + num_surf_indices > MAX_BATCH_SIZE) {
 				FlushBatch();
