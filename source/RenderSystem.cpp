@@ -116,14 +116,17 @@ void RenderSystem::DrawMesh(const model::Model& model, const sm::mat4& mat)
 		auto effect = pt3::EffectsManager::EffectType(mesh->effect);
 		mgr->Use(effect);
 
-		mgr->SetLightPosition(effect, sm::vec3(0.25f, 0.25f, 1));
 		mgr->SetProjMat(effect, pt3::Blackboard::Instance()->GetWindowContext()->GetProjMat().x);
-		mgr->SetNormalMat(effect, mat);
+		mgr->SetModelViewMat(effect, mat.x);
 
 		mgr->SetMaterial(effect, material->ambient, material->diffuse,
 			material->specular, material->shininess);
 
-		mgr->SetModelViewMat(effect, mat.x);
+		if (mesh->effect == pt3::EffectsManager::EFFECT_DEFAULT ||
+			mesh->effect == pt3::EffectsManager::EFFECT_DEFAULT_NO_TEX) {
+			mgr->SetLightPosition(effect, sm::vec3(0.25f, 0.25f, 1));
+			mgr->SetNormalMat(effect, mat);
+		}
 
 		auto& geo = mesh->geometry;
 		for (auto& sub : geo.sub_geometries)
