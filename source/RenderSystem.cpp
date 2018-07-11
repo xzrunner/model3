@@ -6,6 +6,7 @@
 
 #include <unirender/Blackboard.h>
 #include <unirender/RenderContext.h>
+#include <unirender/Shader.h>
 #include <shaderlab/Blackboard.h>
 #include <shaderlab/RenderContext.h>
 #include <model/Model.h>
@@ -107,25 +108,32 @@ void RenderSystem::DrawMesh(const model::Model& model, const sm::mat4& mat)
 	auto mgr = pt3::EffectsManager::Instance();
 	for (auto& mesh : model.meshes)
 	{
+		ur::TexturePtr tex = nullptr;
+
 		auto& material = model.materials[mesh->material];
 		if (material->diffuse_tex != -1) {
-			int tex_id = model.textures[material->diffuse_tex].second->TexID();
-			ur::Blackboard::Instance()->GetRenderContext().BindTexture(tex_id, 0);
+			tex = model.textures[material->diffuse_tex].second;
+			if (tex) {
+				ur::Blackboard::Instance()->GetRenderContext().BindTexture(tex->TexID(), 0);
+			}
 		}
 
-		auto effect = pt3::EffectsManager::EffectType(mesh->effect);
-		mgr->Use(effect);
+		auto effect_type = pt3::EffectsManager::EffectType(mesh->effect);
+		mgr->Use(effect_type);
 
-		mgr->SetProjMat(effect, pt3::Blackboard::Instance()->GetWindowContext()->GetProjMat().x);
-		mgr->SetModelViewMat(effect, mat.x);
+		auto effect = mgr->GetShader(effect_type);
+		effect->DrawBefore(tex);
 
-		mgr->SetMaterial(effect, material->ambient, material->diffuse,
+		mgr->SetProjMat(effect_type, pt3::Blackboard::Instance()->GetWindowContext()->GetProjMat().x);
+		mgr->SetModelViewMat(effect_type, mat.x);
+
+		mgr->SetMaterial(effect_type, material->ambient, material->diffuse,
 			material->specular, material->shininess);
 
 		if (mesh->effect == pt3::EffectsManager::EFFECT_DEFAULT ||
 			mesh->effect == pt3::EffectsManager::EFFECT_DEFAULT_NO_TEX) {
-			mgr->SetLightPosition(effect, sm::vec3(0.25f, 0.25f, 1));
-			mgr->SetNormalMat(effect, mat);
+			mgr->SetLightPosition(effect_type, sm::vec3(0.25f, 0.25f, 1));
+			mgr->SetNormalMat(effect_type, mat);
 		}
 
 		auto& geo = mesh->geometry;
