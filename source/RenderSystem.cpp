@@ -2,7 +2,7 @@
 #include "node3/CompTransform.h"
 #include "node3/CompModel.h"
 #include "node3/CompModelInst.h"
-#include "node3/RenderSystem.h"
+#include "node3/CompAABB.h"
 
 #include <unirender/Blackboard.h>
 #include <unirender/RenderContext.h>
@@ -29,12 +29,12 @@ namespace
 static unsigned int vbo_indices[MAX_BATCH_SIZE];
 static unsigned int num_vbo_indices;
 
-void FlushBatch()
+void FlushBatch(ur::DRAW_MODE mode)
 {
 	if (num_vbo_indices > 0)
 	{
 		auto& rc = ur::Blackboard::Instance()->GetRenderContext();
-		rc.DrawElements(ur::DRAW_TRIANGLES, num_vbo_indices, vbo_indices);
+		rc.DrawElements(mode, num_vbo_indices, vbo_indices);
 
 		num_vbo_indices = 0;
 	}
@@ -119,9 +119,7 @@ void RenderSystem::DrawMesh(const model::Model& model, const sm::mat4& mat)
 		}
 
 		auto effect_type = pt3::EffectsManager::EffectType(mesh->effect);
-		mgr->Use(effect_type);
-
-		auto effect = mgr->GetShader(effect_type);
+		auto effect = mgr->Use(effect_type);
 		effect->DrawBefore(tex);
 
 		mgr->SetProjMat(effect_type, pt3::Blackboard::Instance()->GetWindowContext()->GetProjMat().x);
@@ -137,16 +135,17 @@ void RenderSystem::DrawMesh(const model::Model& model, const sm::mat4& mat)
 		}
 
 		auto& geo = mesh->geometry;
+		auto mode = effect->GetDrawMode();
 		for (auto& sub : geo.sub_geometries)
 		{
 			if (geo.vao > 0)
 			{
 				if (sub.index) {
 					ur::Blackboard::Instance()->GetRenderContext().DrawElementsVAO(
-						ur::DRAW_TRIANGLES, sub.offset, sub.count, geo.vao);
+						mode, sub.offset, sub.count, geo.vao);
 				} else {
 					ur::Blackboard::Instance()->GetRenderContext().DrawArraysVAO(
-						ur::DRAW_TRIANGLES, sub.offset, sub.count, geo.vao);
+						mode, sub.offset, sub.count, geo.vao);
 				}
 			}
 			else
@@ -155,10 +154,10 @@ void RenderSystem::DrawMesh(const model::Model& model, const sm::mat4& mat)
 				if (geo.ebo) {
 					rc.BindBuffer(ur::INDEXBUFFER, geo.ebo);
 					rc.BindBuffer(ur::VERTEXBUFFER, geo.vbo);
-					rc.DrawElements(ur::DRAW_TRIANGLES, sub.offset, sub.count);
+					rc.DrawElements(mode, sub.offset, sub.count);
 				} else {
 					rc.BindBuffer(ur::VERTEXBUFFER, geo.vbo);
-					rc.DrawArrays(ur::DRAW_TRIANGLES, sub.offset, sub.count);
+					rc.DrawArrays(mode, sub.offset, sub.count);
 				}
 			}
 		}
@@ -183,17 +182,17 @@ void RenderSystem::DrawMorphAnim(const model::Model& model, const sm::mat4& mat)
 			rc.BindTexture(tex_id, 0);
 		}
 
-		auto effect = pt3::EffectsManager::EffectType(mesh->effect);
-		mgr->Use(effect);
+		auto effect_type = pt3::EffectsManager::EffectType(mesh->effect);
+		auto effect = mgr->Use(effect_type);
 
-		mgr->SetLightPosition(effect, sm::vec3(0.25f, 0.25f, 1));
-		mgr->SetProjMat(effect, pt3::Blackboard::Instance()->GetWindowContext()->GetProjMat().x);
-		mgr->SetNormalMat(effect, mat);
+		mgr->SetLightPosition(effect_type, sm::vec3(0.25f, 0.25f, 1));
+		mgr->SetProjMat(effect_type, pt3::Blackboard::Instance()->GetWindowContext()->GetProjMat().x);
+		mgr->SetNormalMat(effect_type, mat);
 
-		mgr->SetMaterial(effect, material->ambient, material->diffuse,
+		mgr->SetMaterial(effect_type, material->ambient, material->diffuse,
 			material->specular, material->shininess);
 
-		mgr->SetModelViewMat(effect, mat.x);
+		mgr->SetModelViewMat(effect_type, mat.x);
 
 		auto& geo = mesh->geometry;
 //		assert(frame >= 0 && frame < geo.sub_geometries.size());
@@ -202,10 +201,10 @@ void RenderSystem::DrawMorphAnim(const model::Model& model, const sm::mat4& mat)
 		//	auto& sub = geo.sub_geometries[frame];
 		//	if (sub.index) {
 		//		rc.DrawElementsVAO(
-		//			ur::DRAW_TRIANGLES, sub.offset, sub.count, geo.vao);
+		//			mode, sub.offset, sub.count, geo.vao);
 		//	} else {
 		//		rc.DrawArraysVAO(
-		//			ur::DRAW_TRIANGLES, sub.offset, sub.count, geo.vao);
+		//			mode, sub.offset, sub.count, geo.vao);
 		//	}
 		//}
 		//else
@@ -226,7 +225,7 @@ void RenderSystem::DrawMorphAnim(const model::Model& model, const sm::mat4& mat)
 
 			auto& sub = geo.sub_geometries[0];
 			rc.BindBuffer(ur::VERTEXBUFFER, geo.vbo);
-			rc.DrawArrays(ur::DRAW_TRIANGLES, sub.offset, sub.count);
+			rc.DrawArrays(effect->GetDrawMode(), sub.offset, sub.count);
 		}
 	}
 }
@@ -258,35 +257,36 @@ void RenderSystem::DrawSkeletalNode(const model::ModelInstance& model_inst, int 
 				ur::Blackboard::Instance()->GetRenderContext().BindTexture(tex_id, 0);
 			}
 
-			auto effect = pt3::EffectsManager::EffectType(mesh->effect);
-			mgr->Use(effect);
+			auto effect_type = pt3::EffectsManager::EffectType(mesh->effect);
+			auto effect = mgr->Use(effect_type);
+			auto mode = effect->GetDrawMode();
 
 			auto& bone_trans = model_inst.CalcBoneMatrices(node_idx, mesh_idx);
 			if (!bone_trans.empty()) {
-				mgr->SetBoneMatrixes(effect, &bone_trans[0], bone_trans.size());
+				mgr->SetBoneMatrixes(effect_type, &bone_trans[0], bone_trans.size());
 			} else {
 				sm::mat4 mat;
-				mgr->SetBoneMatrixes(effect, &mat, 1);
+				mgr->SetBoneMatrixes(effect_type, &mat, 1);
 			}
 
-			mgr->SetLightPosition(effect, sm::vec3(0.25f, 0.25f, 1));
-			mgr->SetProjMat(effect, pt3::Blackboard::Instance()->GetWindowContext()->GetProjMat().x);
-			mgr->SetNormalMat(effect, child_mat);
+			mgr->SetLightPosition(effect_type, sm::vec3(0.25f, 0.25f, 1));
+			mgr->SetProjMat(effect_type, pt3::Blackboard::Instance()->GetWindowContext()->GetProjMat().x);
+			mgr->SetNormalMat(effect_type, child_mat);
 
-			mgr->SetMaterial(effect, material->ambient, material->diffuse,
+			mgr->SetMaterial(effect_type, material->ambient, material->diffuse,
 				material->specular, material->shininess);
 
-			mgr->SetModelViewMat(effect, child_mat.x);
+			mgr->SetModelViewMat(effect_type, child_mat.x);
 
 			auto& geo = mesh->geometry;
 			for (auto& sub : geo.sub_geometries)
 			{
 				if (sub.index) {
 					ur::Blackboard::Instance()->GetRenderContext().DrawElementsVAO(
-						ur::DRAW_TRIANGLES, sub.offset, sub.count, geo.vao);
+						mode, sub.offset, sub.count, geo.vao);
 				} else {
 					ur::Blackboard::Instance()->GetRenderContext().DrawArraysVAO(
-						ur::DRAW_TRIANGLES, sub.offset, sub.count, geo.vao);
+						mode, sub.offset, sub.count, geo.vao);
 				}
 			}
 		}
@@ -318,10 +318,11 @@ void RenderSystem::DrawBSP(const model::Model& model, const sm::mat4& mat)
 	rc.SetCull(ur::CULL_DISABLE);
 
 	auto mgr = pt3::EffectsManager::Instance();
-	auto effect = pt3::EffectsManager::EFFECT_BSP;
-	mgr->Use(effect);
-	mgr->SetProjMat(effect, pt3::Blackboard::Instance()->GetWindowContext()->GetProjMat().x);
-	mgr->SetModelViewMat(effect, mat.x);
+	auto effect_type = pt3::EffectsManager::EFFECT_BSP;
+	auto effect = mgr->Use(effect_type);
+	auto mode = effect->GetDrawMode();
+	mgr->SetProjMat(effect_type, pt3::Blackboard::Instance()->GetWindowContext()->GetProjMat().x);
+	mgr->SetModelViewMat(effect_type, mat.x);
 
 	num_vbo_indices = 0;
 
@@ -343,7 +344,7 @@ void RenderSystem::DrawBSP(const model::Model& model, const sm::mat4& mat)
 		{
 			if (s->lightmaptexturenum != last_lightmap)
 			{
-				FlushBatch();
+				FlushBatch(mode);
 				last_lightmap = s->lightmaptexturenum;
 				int texid = quake::Lightmaps::Instance()->GetTexID(s->lightmaptexturenum);
 				rc.BindTexture(texid, 1);
@@ -351,7 +352,7 @@ void RenderSystem::DrawBSP(const model::Model& model, const sm::mat4& mat)
 
 			int num_surf_indices = 3 * (s->numedges - 2);
 			if (num_vbo_indices + num_surf_indices > MAX_BATCH_SIZE) {
-				FlushBatch();
+				FlushBatch(mode);
 			}
 
 			for (int i = 2; i < s->numedges; ++i)
@@ -364,7 +365,7 @@ void RenderSystem::DrawBSP(const model::Model& model, const sm::mat4& mat)
 			s = s->next;
 		}
 
-		FlushBatch();
+		FlushBatch(mode);
 	}
 }
 
