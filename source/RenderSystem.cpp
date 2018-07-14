@@ -47,11 +47,12 @@ namespace n3
 
 void RenderSystem::Draw(const n0::SceneNodePtr& node, const sm::mat4& mt)
 {
-	sm::mat4 mt_child;
+	sm::mat4 mt_child, mt_trans;
 	if (node->HasUniqueComp<CompTransform>())
 	{
 		auto& ctrans = node->GetUniqueComp<CompTransform>();
-		mt_child = ctrans.GetTransformMat() * mt;
+		mt_trans = ctrans.GetTransformMat();
+		mt_child = mt_trans * mt;
 	}
 
 	if (node->HasSharedComp<CompModel>())
@@ -70,6 +71,14 @@ void RenderSystem::Draw(const n0::SceneNodePtr& node, const sm::mat4& mt)
 	//	for (auto& child : children) {
 	//		Draw(child, mt_child);
 	//	}
+	//}
+
+	//// debug draw
+	//if (node->HasUniqueComp<n3::CompAABB>())
+	//{
+	//	pt3::PrimitiveDraw::SetColor(0xffff0000);
+	//	auto& caabb = node->GetUniqueComp<n3::CompAABB>();
+	//	pt3::PrimitiveDraw::Cube(mt_trans, caabb.GetAABB());
 	//}
 }
 
