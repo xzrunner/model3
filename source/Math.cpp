@@ -85,8 +85,8 @@ bool Math::RayAABBIntersection(const pt3::AABB& aabb, const pt3::Ray& ray, sm::v
 	return true;
 }
 
-bool Math::RayOBBIntersection(const pt3::AABB& aabb, const sm::vec3& pos, const sm::Quaternion& angle, 
-	                          const pt3::Ray& ray, sm::vec3* coord)
+bool Math::RayOBBIntersection(const pt3::AABB& aabb, const sm::vec3& pos, const sm::Quaternion& angle,
+	                          const sm::vec3& scale, const pt3::Ray& ray, sm::vec3* coord)
 {
 	sm::mat4 rot_mat(-angle);
 
@@ -94,7 +94,10 @@ bool Math::RayOBBIntersection(const pt3::AABB& aabb, const sm::vec3& pos, const 
 	sm::vec3 dir = rot_mat * ray.Dir();
 	pt3::Ray ray_fix(start, dir);
 
-	return RayAABBIntersection(aabb, ray_fix, coord);
+	auto aabb_scaled = aabb;
+	aabb_scaled.Scale(scale);
+
+	return RayAABBIntersection(aabb_scaled, ray_fix, coord);
 }
 
 }

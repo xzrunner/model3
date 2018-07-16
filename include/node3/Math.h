@@ -14,7 +14,7 @@ public:
 	static bool RayAABBIntersection(const pt3::AABB& aabb, const pt3::Ray& ray, sm::vec3* coord);
 
 	static bool RayOBBIntersection(const pt3::AABB& aabb, const sm::vec3& pos, const sm::Quaternion& angle,
-		const pt3::Ray& ray, sm::vec3* coord);
+		const sm::vec3& scale, const pt3::Ray& ray, sm::vec3* coord);
 
 }; // Math
 
