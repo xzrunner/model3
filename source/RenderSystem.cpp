@@ -7,8 +7,6 @@
 #include <unirender/Blackboard.h>
 #include <unirender/RenderContext.h>
 #include <unirender/Shader.h>
-#include <shaderlab/Blackboard.h>
-#include <shaderlab/RenderContext.h>
 #include <model/Model.h>
 #include <model/ModelInstance.h>
 #include <model/SkeletalAnim.h>
@@ -84,9 +82,6 @@ void RenderSystem::Draw(const n0::SceneNodePtr& node, const sm::mat4& mt)
 
 void RenderSystem::DrawModel(const model::ModelInstance& model, const sm::mat4& mat)
 {
-	// flush shader status
-	sl::Blackboard::Instance()->GetRenderContext().GetShaderMgr().BindRenderShader(nullptr, sl::EXTERN_SHADER);
-
 	auto& ext = model.model->ext;
 	if (ext)
 	{
