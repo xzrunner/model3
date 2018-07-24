@@ -80,28 +80,29 @@ void RenderSystem::Draw(const n0::SceneNodePtr& node, const sm::mat4& mt)
 	//}
 }
 
-void RenderSystem::DrawModel(const model::ModelInstance& model, const sm::mat4& mat)
+void RenderSystem::DrawModel(const model::ModelInstance& model_inst, const sm::mat4& mat)
 {
-	auto& ext = model.model->ext;
+	auto& model = model_inst.GetModel();
+	auto& ext = model->ext;
 	if (ext)
 	{
 		switch (ext->Type())
 		{
 		case model::EXT_MORPH_TARGET:
-			DrawMorphAnim(*model.model, mat);
+			DrawMorphAnim(*model, mat);
 			break;
 		case model::EXT_SKELETAL:
-			DrawSkeletalNode(model, 0, mat);
+			DrawSkeletalNode(model_inst, 0, mat);
 			//DrawSkeletalNodeDebug(model, 0, mat);
 			break;
 		case model::EXT_BSP:
-			DrawBSP(*model.model, mat);
+			DrawBSP(*model, mat);
 			break;
 		}
 	}
 	else
 	{
-		DrawMesh(*model.model, mat);
+		DrawMesh(*model, mat);
 	}
 }
 
@@ -236,7 +237,8 @@ void RenderSystem::DrawMorphAnim(const model::Model& model, const sm::mat4& mat)
 
 void RenderSystem::DrawSkeletalNode(const model::ModelInstance& model_inst, int node_idx, const sm::mat4& mat)
 {
-	auto& model = *model_inst.model;
+	auto& model = *model_inst.GetModel();
+	auto& g_trans = model_inst.GetGlobalTrans();
 	auto& nodes = static_cast<model::SkeletalAnim*>(model.ext.get())->GetAllNodes();
 	auto& node = *nodes[node_idx];
 	if (!node.children.empty())
@@ -249,7 +251,7 @@ void RenderSystem::DrawSkeletalNode(const model::ModelInstance& model_inst, int 
 	else
 	{
 		auto mgr = pt3::EffectsManager::Instance();
-		auto child_mat = model_inst.global_trans[node_idx] * mat;
+		auto child_mat = g_trans[node_idx] * mat;
 		assert(node.children.empty());
 		for (auto& mesh_idx : node.meshes)
 		{
@@ -299,14 +301,15 @@ void RenderSystem::DrawSkeletalNode(const model::ModelInstance& model_inst, int 
 
 void RenderSystem::DrawSkeletalNodeDebug(const model::ModelInstance& model_inst, int node_idx, const sm::mat4& mat)
 {
-	auto& model = *model_inst.model;
+	auto& model = *model_inst.GetModel();
+	auto& g_trans = model_inst.GetGlobalTrans();
 
 	auto& nodes = static_cast<model::SkeletalAnim*>(model.ext.get())->GetAllNodes();
 	auto& node = *nodes[node_idx];
 	for (auto& child : node.children)
 	{
-		auto& ptrans = model_inst.global_trans[node_idx];
-		auto& ctrans = model_inst.global_trans[child];
+		auto& ptrans = g_trans[node_idx];
+		auto& ctrans = g_trans[child];
 		pt3::PrimitiveDraw::Line(mat * ptrans.GetTranslate(), mat * ctrans.GetTranslate());
 
 		assert(node.meshes.empty());

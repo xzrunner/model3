@@ -4,7 +4,7 @@
 #include <node0/typedef.h>
 
 namespace ur { class Shader; }
-namespace model { struct Model; struct ModelInstance; }
+namespace model { struct Model; class ModelInstance; }
 
 namespace n3
 {
