@@ -82,7 +82,6 @@
     <ClCompile Include="..\..\..\source\CompModel.cpp" />
     <ClCompile Include="..\..\..\source\CompModelInst.cpp" />
     <ClCompile Include="..\..\..\source\CompTransform.cpp" />
-    <ClCompile Include="..\..\..\source\Math.cpp" />
     <ClCompile Include="..\..\..\source\RenderSystem.cpp" />
     <ClCompile Include="..\..\..\source\UpdateSystem.cpp" />
   </ItemGroup>
@@ -93,7 +92,6 @@
     <ClInclude Include="..\..\..\include\node3\CompModel.h" />
     <ClInclude Include="..\..\..\include\node3\CompModelInst.h" />
     <ClInclude Include="..\..\..\include\node3\CompTransform.h" />
-    <ClInclude Include="..\..\..\include\node3\Math.h" />
     <ClInclude Include="..\..\..\include\node3\RenderSystem.h" />
     <ClInclude Include="..\..\..\include\node3\UpdateSystem.h" />
   </ItemGroup>

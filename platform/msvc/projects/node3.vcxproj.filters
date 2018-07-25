@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="utility">
-      <UniqueIdentifier>{da3eeec6-0a86-4c4d-91b5-69824a1136d8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="components">
       <UniqueIdentifier>{1f0efb10-0a28-402c-bfa5-956a68b5685e}</UniqueIdentifier>
     </Filter>
@@ -21,9 +18,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\source\Math.cpp">
-      <Filter>utility</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\CompAABB.cpp">
       <Filter>components\geo</Filter>
     </ClCompile>
@@ -47,9 +41,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\node3\Math.h">
-      <Filter>utility</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\c_wrap_n3.h" />
     <ClInclude Include="..\..\..\include\node3\RenderSystem.h">
       <Filter>system</Filter>
