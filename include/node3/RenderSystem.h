@@ -12,30 +12,38 @@ namespace n3
 class RenderParams
 {
 public:
-	sm::mat4 mt;
+	enum DrawType
+	{
+		DRAW_MESH = 0,
+		DRAW_BORDER_MESH,
+	};
 
 public:
-	RenderParams(const sm::mat4& mt)
-		: mt(mt) {}
+	sm::mat4 mt;
+
+	DrawType type = DRAW_MESH;
 
 }; // RenderParams
 
 class RenderSystem
 {
 public:
-	static void Draw(const n0::SceneNodePtr& node, const sm::mat4& mt);
+
+
+public:
+	static void Draw(const n0::SceneNodePtr& node, const RenderParams& params);
 
 private:
-	static void DrawModel(const model::ModelInstance& model, const sm::mat4& mat);
+	static void DrawModel(const model::ModelInstance& model, const RenderParams& params);
 
-	static void DrawMesh(const model::Model& model, const sm::mat4& mat);
+	static void DrawMesh(const model::Model& model, const RenderParams& params);
 
-	static void DrawMorphAnim(const model::Model& model, const sm::mat4& mat);
+	static void DrawMorphAnim(const model::Model& model, const RenderParams& params);
 
-	static void DrawSkeletalNode(const model::ModelInstance& model, int node_idx, const sm::mat4& mat);
-	static void DrawSkeletalNodeDebug(const model::ModelInstance& model, int node_idx, const sm::mat4& mat);
+	static void DrawSkeletalNode(const model::ModelInstance& model, int node_idx, const RenderParams& params);
+	static void DrawSkeletalNodeDebug(const model::ModelInstance& model, int node_idx, const RenderParams& params);
 
-	static void DrawBSP(const model::Model& model, const sm::mat4& mat);
+	static void DrawBSP(const model::Model& model, const RenderParams& params);
 
 }; // RenderSystem
 

@@ -43,22 +43,25 @@ void FlushBatch(ur::DRAW_MODE mode)
 namespace n3
 {
 
-void RenderSystem::Draw(const n0::SceneNodePtr& node, const sm::mat4& mt)
+void RenderSystem::Draw(const n0::SceneNodePtr& node, const RenderParams& params)
 {
 	sm::mat4 mt_child, mt_trans;
 	if (node->HasUniqueComp<CompTransform>())
 	{
 		auto& ctrans = node->GetUniqueComp<CompTransform>();
 		mt_trans = ctrans.GetTransformMat();
-		mt_child = mt_trans * mt;
+		mt_child = mt_trans * params.mt;
 	}
+
+	RenderParams c_params = params;
+	c_params.mt = mt_child;
 
 	if (node->HasSharedComp<CompModel>())
 	{
 		auto& cmodel = node->GetUniqueComp<CompModelInst>();
 		auto& model = cmodel.GetModel();
 		if (model) {
-			RenderSystem::DrawModel(*model, mt_child);
+			RenderSystem::DrawModel(*model, c_params);
 		}
 	}
 
@@ -80,7 +83,7 @@ void RenderSystem::Draw(const n0::SceneNodePtr& node, const sm::mat4& mt)
 	//}
 }
 
-void RenderSystem::DrawModel(const model::ModelInstance& model_inst, const sm::mat4& mat)
+void RenderSystem::DrawModel(const model::ModelInstance& model_inst, const RenderParams& params)
 {
 	auto& model = model_inst.GetModel();
 	auto& ext = model->ext;
@@ -89,29 +92,30 @@ void RenderSystem::DrawModel(const model::ModelInstance& model_inst, const sm::m
 		switch (ext->Type())
 		{
 		case model::EXT_MORPH_TARGET:
-			DrawMorphAnim(*model, mat);
+			DrawMorphAnim(*model, params);
 			break;
 		case model::EXT_SKELETAL:
-			DrawSkeletalNode(model_inst, 0, mat);
-			//DrawSkeletalNodeDebug(model, 0, mat);
+			DrawSkeletalNode(model_inst, 0, params);
+			//DrawSkeletalNodeDebug(model, 0, params.mt);
 			break;
 		case model::EXT_BSP:
-			DrawBSP(*model, mat);
+			DrawBSP(*model, params);
 			break;
 		}
 	}
 	else
 	{
-		DrawMesh(*model, mat);
+		DrawMesh(*model, params);
 	}
 }
 
-void RenderSystem::DrawMesh(const model::Model& model, const sm::mat4& mat)
+void RenderSystem::DrawMesh(const model::Model& model, const RenderParams& params)
 {
 	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
 
 	auto mgr = pt3::EffectsManager::Instance();
-	for (auto& mesh : model.meshes)
+	auto& meshes = params.type == RenderParams::DRAW_MESH ? model.meshes : model.border_meshes;
+	for (auto& mesh : meshes)
 	{
 		ur::TexturePtr tex = nullptr;
 
@@ -128,7 +132,7 @@ void RenderSystem::DrawMesh(const model::Model& model, const sm::mat4& mat)
 		effect->DrawBefore(tex);
 
 		mgr->SetProjMat(effect_type, pt3::Blackboard::Instance()->GetWindowContext()->GetProjMat().x);
-		mgr->SetModelViewMat(effect_type, mat.x);
+		mgr->SetModelViewMat(effect_type, params.mt.x);
 
 		mgr->SetMaterial(effect_type, material->ambient, material->diffuse,
 			material->specular, material->shininess);
@@ -136,7 +140,7 @@ void RenderSystem::DrawMesh(const model::Model& model, const sm::mat4& mat)
 		if (mesh->effect == pt3::EffectsManager::EFFECT_DEFAULT ||
 			mesh->effect == pt3::EffectsManager::EFFECT_DEFAULT_NO_TEX) {
 			mgr->SetLightPosition(effect_type, sm::vec3(0.25f, 0.25f, 1));
-			mgr->SetNormalMat(effect_type, mat);
+			mgr->SetNormalMat(effect_type, params.mt);
 		}
 
 		auto& geo = mesh->geometry;
@@ -169,7 +173,7 @@ void RenderSystem::DrawMesh(const model::Model& model, const sm::mat4& mat)
 	}
 }
 
-void RenderSystem::DrawMorphAnim(const model::Model& model, const sm::mat4& mat)
+void RenderSystem::DrawMorphAnim(const model::Model& model, const RenderParams& params)
 {
 	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
 
@@ -192,12 +196,12 @@ void RenderSystem::DrawMorphAnim(const model::Model& model, const sm::mat4& mat)
 
 		mgr->SetLightPosition(effect_type, sm::vec3(0.25f, 0.25f, 1));
 		mgr->SetProjMat(effect_type, pt3::Blackboard::Instance()->GetWindowContext()->GetProjMat().x);
-		mgr->SetNormalMat(effect_type, mat);
+		mgr->SetNormalMat(effect_type, params.mt);
 
 		mgr->SetMaterial(effect_type, material->ambient, material->diffuse,
 			material->specular, material->shininess);
 
-		mgr->SetModelViewMat(effect_type, mat.x);
+		mgr->SetModelViewMat(effect_type, params.mt.x);
 
 		auto& geo = mesh->geometry;
 //		assert(frame >= 0 && frame < geo.sub_geometries.size());
@@ -235,7 +239,7 @@ void RenderSystem::DrawMorphAnim(const model::Model& model, const sm::mat4& mat)
 	}
 }
 
-void RenderSystem::DrawSkeletalNode(const model::ModelInstance& model_inst, int node_idx, const sm::mat4& mat)
+void RenderSystem::DrawSkeletalNode(const model::ModelInstance& model_inst, int node_idx, const RenderParams& params)
 {
 	auto& model = *model_inst.GetModel();
 	auto& g_trans = model_inst.GetGlobalTrans();
@@ -245,13 +249,13 @@ void RenderSystem::DrawSkeletalNode(const model::ModelInstance& model_inst, int 
 	{
 		assert(node.meshes.empty());
 		for (auto& child : node.children) {
-			DrawSkeletalNode(model_inst, child, mat);
+			DrawSkeletalNode(model_inst, child, params);
 		}
 	}
 	else
 	{
 		auto mgr = pt3::EffectsManager::Instance();
-		auto child_mat = g_trans[node_idx] * mat;
+		auto child_mat = g_trans[node_idx] * params.mt;
 		assert(node.children.empty());
 		for (auto& mesh_idx : node.meshes)
 		{
@@ -299,7 +303,7 @@ void RenderSystem::DrawSkeletalNode(const model::ModelInstance& model_inst, int 
 	}
 }
 
-void RenderSystem::DrawSkeletalNodeDebug(const model::ModelInstance& model_inst, int node_idx, const sm::mat4& mat)
+void RenderSystem::DrawSkeletalNodeDebug(const model::ModelInstance& model_inst, int node_idx, const RenderParams& params)
 {
 	auto& model = *model_inst.GetModel();
 	auto& g_trans = model_inst.GetGlobalTrans();
@@ -310,16 +314,16 @@ void RenderSystem::DrawSkeletalNodeDebug(const model::ModelInstance& model_inst,
 	{
 		auto& ptrans = g_trans[node_idx];
 		auto& ctrans = g_trans[child];
-		pt3::PrimitiveDraw::Line(mat * ptrans.GetTranslate(), mat * ctrans.GetTranslate());
+		pt3::PrimitiveDraw::Line(params.mt * ptrans.GetTranslate(), params.mt * ctrans.GetTranslate());
 
 		assert(node.meshes.empty());
 		for (auto& child : node.children) {
-			DrawSkeletalNodeDebug(model_inst, child, mat);
+			DrawSkeletalNodeDebug(model_inst, child, params);
 		}
 	}
 }
 
-void RenderSystem::DrawBSP(const model::Model& model, const sm::mat4& mat)
+void RenderSystem::DrawBSP(const model::Model& model, const RenderParams& params)
 {
 	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
 	rc.SetCull(ur::CULL_DISABLE);
@@ -329,7 +333,7 @@ void RenderSystem::DrawBSP(const model::Model& model, const sm::mat4& mat)
 	auto effect = mgr->Use(effect_type);
 	auto mode = effect->GetDrawMode();
 	mgr->SetProjMat(effect_type, pt3::Blackboard::Instance()->GetWindowContext()->GetProjMat().x);
-	mgr->SetModelViewMat(effect_type, mat.x);
+	mgr->SetModelViewMat(effect_type, params.mt.x);
 
 	num_vbo_indices = 0;
 
