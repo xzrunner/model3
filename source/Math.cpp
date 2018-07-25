@@ -100,4 +100,62 @@ bool Math::RayOBBIntersection(const pt3::AABB& aabb, const sm::vec3& pos, const 
 	return RayAABBIntersection(aabb_scaled, ray_fix, coord);
 }
 
+// Code from glm/gtx/intersect.h intersectRayTriangle
+bool Math::RayTriangleIntersection(const sm::mat4& mat, const sm::vec3& v0, const sm::vec3& v1,
+	                               const sm::vec3& v2, const pt3::Ray& ray, sm::vec3* coord)
+{
+	auto _v0 = mat * v0;
+	// fixme
+	//auto _v1 = mat * v1;
+	//auto _v2 = mat * v2;
+	auto _v1 = mat * v2;
+	auto _v2 = mat * v1;
+
+	auto e1 = _v1 - _v0;
+	auto e2 = _v2 - _v0;
+
+	auto p = ray.Dir().Cross(e2);;
+	auto a = e1.Dot(p);
+
+	auto epsilon = std::numeric_limits<float>::epsilon();
+	if (a < epsilon) {
+		return false;
+	}
+
+	float f = 1.0f / a;
+
+	auto s = ray.Start() - _v0;
+	coord->x = f * s.Dot(p);
+	if (coord->x < 0.0f) {
+		return false;
+	}
+	if (coord->x > 1.0f) {
+		return false;
+	}
+
+	auto q = s.Cross(e1);
+	coord->y = f * ray.Dir().Dot(q);
+	if (coord->y < 0.0f) {
+		return false;
+	}
+	if (coord->y + coord->x > 1.0f) {
+		return false;
+	}
+
+	coord->z = f * e2.Dot(q);
+
+	return coord->z >= 0.0f;
+}
+
+bool Math::RayPolygonIntersection(const sm::mat4& mat, const std::vector<sm::vec3>& polygon,
+	                              const pt3::Ray& ray, sm::vec3* coord)
+{
+	for (int i = 1, n = polygon.size(); i < n - 1; ++i) {
+		if (RayTriangleIntersection(mat, polygon[0], polygon[i], polygon[i + 1], ray, coord)) {
+			return true;
+		}
+	}
+	return false;
+}
+
 }
