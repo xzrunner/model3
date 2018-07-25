@@ -14,7 +14,7 @@ namespace n3
 
 // This code from GraphicsGems's RayBox.c
 // https://github.com/erich666/GraphicsGems/blob/master/gems/RayBox.c
-bool Math::RayAABBIntersection(const pt3::AABB& aabb, const pt3::Ray& ray, sm::vec3* coord)
+bool Math::RayAABBIntersection(const sm::cube& aabb, const pt3::Ray& ray, sm::vec3* coord)
 {
 	sm::vec3 cross;
 
@@ -85,7 +85,7 @@ bool Math::RayAABBIntersection(const pt3::AABB& aabb, const pt3::Ray& ray, sm::v
 	return true;
 }
 
-bool Math::RayOBBIntersection(const pt3::AABB& aabb, const sm::vec3& pos, const sm::Quaternion& angle,
+bool Math::RayOBBIntersection(const sm::cube& aabb, const sm::vec3& pos, const sm::Quaternion& angle,
 	                          const sm::vec3& scale, const pt3::Ray& ray, sm::vec3* coord)
 {
 	sm::mat4 rot_mat(-angle);
