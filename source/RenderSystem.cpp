@@ -12,6 +12,7 @@
 #include <model/SkeletalAnim.h>
 #include <model/MorphTargetAnim.h>
 #include <model/BspModel.h>
+#include <model/HalfEdgeMesh.h>
 #include <node0/SceneNode.h>
 #include <painting3/Blackboard.h>
 #include <painting3/WindowContext.h>
@@ -54,7 +55,8 @@ void RenderSystem::Draw(const n0::SceneNodePtr& node, const RenderParams& params
 	}
 
 	RenderParams c_params = params;
-	c_params.mt = mt_child;
+	c_params.mt       = mt_child;
+	c_params.mt_trans = mt_trans;
 
 	if (node->HasSharedComp<CompModel>())
 	{
@@ -74,7 +76,7 @@ void RenderSystem::Draw(const n0::SceneNodePtr& node, const RenderParams& params
 	//	}
 	//}
 
-	//// debug draw
+	//// debug draw aabb
 	//if (node->HasUniqueComp<n3::CompAABB>())
 	//{
 	//	pt3::PrimitiveDraw::SetColor(0xffff0000);
@@ -100,6 +102,11 @@ void RenderSystem::DrawModel(const model::ModelInstance& model_inst, const Rende
 			break;
 		case model::EXT_BSP:
 			DrawBSP(*model, params);
+			break;
+		case model::EXT_HALFEDGE_MESH:
+			DrawMesh(*model, params);
+			//// debug draw, brush's border
+			//DrawHalfEdgeMesh(*static_cast<model::HalfEdgeMesh*>(model->ext.get()), params);
 			break;
 		}
 	}
@@ -377,6 +384,15 @@ void RenderSystem::DrawBSP(const model::Model& model, const RenderParams& params
 		}
 
 		FlushBatch(mode);
+	}
+}
+
+void RenderSystem::DrawHalfEdgeMesh(const model::HalfEdgeMesh& mesh,
+	                                const RenderParams& params)
+{
+	pt3::PrimitiveDraw::SetColor(0xff0000ff);
+	for (auto& poly : mesh.meshes) {
+		pt3::PrimitiveDraw::Cube(params.mt_trans, poly->GetAABB());
 	}
 }
 

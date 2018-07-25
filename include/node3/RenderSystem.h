@@ -4,7 +4,7 @@
 #include <node0/typedef.h>
 
 namespace ur { class Shader; }
-namespace model { struct Model; class ModelInstance; }
+namespace model { struct Model; class ModelInstance; class HalfEdgeMesh; }
 
 namespace n3
 {
@@ -20,6 +20,7 @@ public:
 
 public:
 	sm::mat4 mt;
+	sm::mat4 mt_trans;
 
 	DrawType type = DRAW_MESH;
 
@@ -44,6 +45,8 @@ private:
 	static void DrawSkeletalNodeDebug(const model::ModelInstance& model, int node_idx, const RenderParams& params);
 
 	static void DrawBSP(const model::Model& model, const RenderParams& params);
+
+	static void DrawHalfEdgeMesh(const model::HalfEdgeMesh& mesh, const RenderParams& params);
 
 }; // RenderSystem
 
