@@ -12,7 +12,7 @@
 #include <model/SkeletalAnim.h>
 #include <model/MorphTargetAnim.h>
 #include <model/BspModel.h>
-#include <model/HalfEdgeMesh.h>
+#include <model/QuakeMapEntity.h>
 #include <node0/SceneNode.h>
 #include <painting3/Blackboard.h>
 #include <painting3/WindowContext.h>
@@ -100,13 +100,13 @@ void RenderSystem::DrawModel(const model::ModelInstance& model_inst, const Rende
 			DrawSkeletalNode(model_inst, 0, params);
 			//DrawSkeletalNodeDebug(model, 0, params.mt);
 			break;
-		case model::EXT_BSP:
-			DrawBSP(*model, params);
+		case model::EXT_QUAKE_BSP:
+			DrawQuakeBSP(*model, params);
 			break;
-		case model::EXT_HALFEDGE_MESH:
+		case model::EXT_QUAKE_MAP:
 			DrawMesh(*model, params);
 			//// debug draw, brush's border
-			//DrawHalfEdgeMesh(*static_cast<model::HalfEdgeMesh*>(model->ext.get()), params);
+			//DrawHalfEdgeMesh(*static_cast<model::QuakeMapEntity*>(model->ext.get()), params);
 			break;
 		}
 	}
@@ -330,7 +330,7 @@ void RenderSystem::DrawSkeletalNodeDebug(const model::ModelInstance& model_inst,
 	}
 }
 
-void RenderSystem::DrawBSP(const model::Model& model, const RenderParams& params)
+void RenderSystem::DrawQuakeBSP(const model::Model& model, const RenderParams& params)
 {
 	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
 	rc.SetCull(ur::CULL_DISABLE);
@@ -387,12 +387,12 @@ void RenderSystem::DrawBSP(const model::Model& model, const RenderParams& params
 	}
 }
 
-void RenderSystem::DrawHalfEdgeMesh(const model::HalfEdgeMesh& mesh,
-	                                const RenderParams& params)
+void RenderSystem::DrawQuakeMapEntity(const model::QuakeMapEntity& entity,
+	                                  const RenderParams& params)
 {
 	pt3::PrimitiveDraw::SetColor(0xff0000ff);
-	for (auto& poly : mesh.meshes) {
-		pt3::PrimitiveDraw::Cube(params.mt_trans, poly->GetAABB());
+	for (auto& brush : entity.GetMapEntity()->brushes) {
+		pt3::PrimitiveDraw::Cube(params.mt_trans, brush.geometry->GetAABB());
 	}
 }
 

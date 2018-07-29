@@ -4,7 +4,7 @@
 #include <node0/typedef.h>
 
 namespace ur { class Shader; }
-namespace model { struct Model; class ModelInstance; class HalfEdgeMesh; }
+namespace model { struct Model; class ModelInstance; class QuakeMapEntity; }
 
 namespace n3
 {
@@ -44,9 +44,9 @@ private:
 	static void DrawSkeletalNode(const model::ModelInstance& model, int node_idx, const RenderParams& params);
 	static void DrawSkeletalNodeDebug(const model::ModelInstance& model, int node_idx, const RenderParams& params);
 
-	static void DrawBSP(const model::Model& model, const RenderParams& params);
+	static void DrawQuakeBSP(const model::Model& model, const RenderParams& params);
 
-	static void DrawHalfEdgeMesh(const model::HalfEdgeMesh& mesh, const RenderParams& params);
+	static void DrawQuakeMapEntity(const model::QuakeMapEntity& entity, const RenderParams& params);
 
 }; // RenderSystem
 
