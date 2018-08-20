@@ -146,7 +146,7 @@ void RenderSystem::DrawMesh(const model::Model& model, const RenderParams& param
 
 		if (mesh->effect == pt3::EffectsManager::EFFECT_DEFAULT ||
 			mesh->effect == pt3::EffectsManager::EFFECT_DEFAULT_NO_TEX) {
-			mgr->SetLightPosition(effect_type, sm::vec3(0.25f, 0.25f, 1));
+			mgr->SetLightPosition(effect_type, sm::vec3(0, 2, -4));
 			mgr->SetNormalMat(effect_type, params.mt);
 		}
 
@@ -201,7 +201,7 @@ void RenderSystem::DrawMorphAnim(const model::Model& model, const RenderParams& 
 		auto effect_type = pt3::EffectsManager::EffectType(mesh->effect);
 		auto effect = mgr->Use(effect_type);
 
-		mgr->SetLightPosition(effect_type, sm::vec3(0.25f, 0.25f, 1));
+		mgr->SetLightPosition(effect_type, sm::vec3(0, 2, -4));
 		mgr->SetProjMat(effect_type, pt3::Blackboard::Instance()->GetWindowContext()->GetProjMat().x);
 		mgr->SetNormalMat(effect_type, params.mt);
 
@@ -286,7 +286,7 @@ void RenderSystem::DrawSkeletalNode(const model::ModelInstance& model_inst, int 
 				mgr->SetBoneMatrixes(effect_type, &mat, 1);
 			}
 
-			mgr->SetLightPosition(effect_type, sm::vec3(0.25f, 0.25f, 1));
+			mgr->SetLightPosition(effect_type, sm::vec3(0, 2, -4));
 			mgr->SetProjMat(effect_type, pt3::Blackboard::Instance()->GetWindowContext()->GetProjMat().x);
 			mgr->SetNormalMat(effect_type, child_mat);
 
