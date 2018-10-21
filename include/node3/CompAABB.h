@@ -14,7 +14,7 @@ public:
 
 	virtual const char* Type() const override { return TYPE_NAME; }
 	virtual n0::CompID TypeID() const override {
-		return n0::GetCompTypeID<CompAABB>(); 
+		return n0::GetCompTypeID<CompAABB>();
 	}
 	virtual std::unique_ptr<n0::NodeComp> Clone(const n0::SceneNode& node) const override;
 
