@@ -38,7 +38,7 @@ void CompModelInst::SetAnim(const std::string& anim_name)
 	}
 
 	auto sk_anim = static_cast<model::SkeletalAnim*>(model->ext.get());
-	auto& anims = sk_anim->GetAllAnims();
+	auto& anims = sk_anim->GetAnims();
 	for (int i = 0, n = anims.size(); i < n; ++i) {
 		if (anims[i]->name == anim_name) {
 			m_inst->SetCurrAnimIndex(i);
