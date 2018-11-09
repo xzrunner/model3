@@ -39,6 +39,9 @@
     <ClCompile Include="..\..\..\source\CompModelInst.cpp">
       <Filter>components\asset\model</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\AABBSystem.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\c_wrap_n3.h" />
@@ -62,6 +65,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\CompModelInst.h">
       <Filter>components\asset\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\AABBSystem.h">
+      <Filter>system</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
