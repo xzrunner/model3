@@ -16,8 +16,11 @@ CompModelInst::CompModelInst(const std::shared_ptr<model::Model>& model, int ani
 
 std::unique_ptr<n0::NodeComp> CompModelInst::Clone(const n0::SceneNode& node) const
 {
-	auto comp = std::make_unique<CompModelInst>(m_inst->GetModel(), m_inst->GetCurrAnimIndex());
-	return comp;
+	if (m_inst) {
+		return std::make_unique<CompModelInst>(m_inst->GetModel(), m_inst->GetCurrAnimIndex());
+	} else {
+		return std::make_unique<CompModelInst>();
+	}
 }
 
 bool CompModelInst::Update()
