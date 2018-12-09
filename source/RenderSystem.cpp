@@ -2,7 +2,7 @@
 #include "node3/CompTransform.h"
 #include "node3/CompModel.h"
 #include "node3/CompModelInst.h"
-//#include "node3/CompAABB.h"
+#include "node3/CompImage3D.h"
 
 #include <SM_Matrix.h>
 #include <node0/SceneNode.h>
@@ -25,12 +25,26 @@ void RenderSystem::Draw(const n0::SceneNodePtr& node, const pt3::RenderParams& p
 	c_params.mt       = mt_child;
 	c_params.mt_trans = mt_trans;
 
-	if (node->HasSharedComp<CompModel>())
+	// asset
+	if (node->HasSharedComp<n0::CompAsset>())
 	{
-		auto& cmodel = node->GetUniqueComp<CompModelInst>();
-		auto& model = cmodel.GetModel();
-		if (model) {
-			pt3::RenderSystem::DrawModel(*model, c_params);
+		auto& casset = node->GetSharedComp<n0::CompAsset>();
+		auto asset_type = casset.AssetTypeID();
+		if (asset_type == n0::GetAssetUniqueTypeID<CompModel>())
+		{
+			auto& cmodel = node->GetUniqueComp<CompModelInst>();
+			auto& model = cmodel.GetModel();
+			if (model) {
+				pt3::RenderSystem::DrawModel(*model, c_params);
+			}
+		}
+		else if (asset_type == n0::GetAssetUniqueTypeID<CompImage3D>())
+		{
+			auto& cimg = static_cast<const CompImage3D&>(casset);
+			auto& tex = cimg.GetTexture();
+			if (tex) {
+				pt3::RenderSystem::DrawTex3D(*tex, c_params);
+			}
 		}
 	}
 

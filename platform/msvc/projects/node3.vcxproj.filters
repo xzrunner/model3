@@ -16,6 +16,9 @@
     <Filter Include="components\asset\model">
       <UniqueIdentifier>{f8252b3d-09a2-48e2-986d-ad2d4ebd1b98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="components\asset\image">
+      <UniqueIdentifier>{c7b6abe5-79fa-4729-82c6-86b6e3684cda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\CompAABB.cpp">
@@ -41,6 +44,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\AABBSystem.cpp">
       <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\CompImage3D.cpp">
+      <Filter>components\asset\image</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -68,6 +74,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\AABBSystem.h">
       <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\CompImage3D.h">
+      <Filter>components\asset\image</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
