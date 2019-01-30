@@ -1,8 +1,10 @@
 #pragma once
 
 #include <node0/CompAsset.h>
+#include <painting0/Material.h>
 
 #include <memory>
+#include <vector>
 
 namespace model { struct Model; }
 
@@ -23,15 +25,22 @@ public:
 	void SetFilepath(const std::string& filepath) { m_filepath = filepath; }
 	const std::string& GetFilepath() const { return m_filepath; }
 
-	void SetModel(const std::shared_ptr<model::Model>& model) { m_model = model; }
+    void SetModel(const std::shared_ptr<model::Model>& model);
 	const std::shared_ptr<model::Model>& GetModel() const { return m_model; }
 
+    auto& GetAllMaterials() const { return m_materials; }
+
 	static const char* const TYPE_NAME;
+
+private:
+    void InitMaterials();
 
 private:
 	std::string m_filepath;
 
 	std::shared_ptr<model::Model> m_model = nullptr;
+
+    std::vector<pt0::Material> m_materials;
 
 }; // CompModel
 

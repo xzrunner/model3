@@ -53,7 +53,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\sm\src\sm;..\..\..\..\cu\src;..\..\..\..\node0\include;..\..\..\..\guard\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\memmgr\include;..\..\..\..\unirender\include;..\..\..\..\model\include;..\..\..\..\quake\include;..\..\..\..\halfedge\include;..\..\..\..\external\boost\include;..\..\..\..\external\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\sm\src\sm;..\..\..\..\cu\src;..\..\..\..\node0\include;..\..\..\..\guard\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\memmgr\include;..\..\..\..\unirender\include;..\..\..\..\model\include;..\..\..\..\quake\include;..\..\..\..\halfedge\include;..\..\..\..\external\boost\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external\rttr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;__STDC_LIMIT_MACROS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -67,7 +67,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\sm\src\sm;..\..\..\..\cu\src;..\..\..\..\node0\include;..\..\..\..\guard\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\memmgr\include;..\..\..\..\unirender\include;..\..\..\..\model\include;..\..\..\..\quake\include;..\..\..\..\halfedge\include;..\..\..\..\external\boost\include;..\..\..\..\external\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\sm\src\sm;..\..\..\..\cu\src;..\..\..\..\node0\include;..\..\..\..\guard\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\memmgr\include;..\..\..\..\unirender\include;..\..\..\..\model\include;..\..\..\..\quake\include;..\..\..\..\halfedge\include;..\..\..\..\external\boost\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external\rttr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;__STDC_LIMIT_MACROS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -81,6 +81,7 @@
     <ClCompile Include="..\..\..\source\CompAABB.cpp" />
     <ClCompile Include="..\..\..\source\CompAnim.cpp" />
     <ClCompile Include="..\..\..\source\CompImage3D.cpp" />
+    <ClCompile Include="..\..\..\source\CompMeshRenderer.cpp" />
     <ClCompile Include="..\..\..\source\CompModel.cpp" />
     <ClCompile Include="..\..\..\source\CompModelInst.cpp" />
     <ClCompile Include="..\..\..\source\CompTransform.cpp" />

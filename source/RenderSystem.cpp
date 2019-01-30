@@ -32,10 +32,13 @@ void RenderSystem::Draw(const n0::SceneNodePtr& node, const pt3::RenderParams& p
 		auto asset_type = casset.AssetTypeID();
 		if (asset_type == n0::GetAssetUniqueTypeID<CompModel>())
 		{
-			auto& cmodel = node->GetUniqueComp<CompModelInst>();
-			auto& model = cmodel.GetModel();
-			if (model) {
-				pt3::RenderSystem::DrawModel(*model, c_params);
+			auto& cmodel_inst = node->GetUniqueComp<CompModelInst>();
+			auto& model_inst = cmodel_inst.GetModel();
+			if (model_inst)
+            {
+                auto& cmodel = node->GetSharedComp<CompModel>();
+                auto& mats = cmodel.GetAllMaterials();
+				pt3::RenderSystem::DrawModel(*model_inst, mats, c_params);
 			}
 		}
 		else if (asset_type == n0::GetAssetUniqueTypeID<CompImage3D>())
