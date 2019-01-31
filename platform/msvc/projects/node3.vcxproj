@@ -81,6 +81,7 @@
     <ClCompile Include="..\..\..\source\CompAABB.cpp" />
     <ClCompile Include="..\..\..\source\CompAnim.cpp" />
     <ClCompile Include="..\..\..\source\CompImage3D.cpp" />
+    <ClCompile Include="..\..\..\source\CompLight.cpp" />
     <ClCompile Include="..\..\..\source\CompModel.cpp" />
     <ClCompile Include="..\..\..\source\CompModelInst.cpp" />
     <ClCompile Include="..\..\..\source\CompTransform.cpp" />
@@ -93,6 +94,7 @@
     <ClInclude Include="..\..\..\include\node3\CompAABB.h" />
     <ClInclude Include="..\..\..\include\node3\CompAnim.h" />
     <ClInclude Include="..\..\..\include\node3\CompImage3D.h" />
+    <ClInclude Include="..\..\..\include\node3\CompLight.h" />
     <ClInclude Include="..\..\..\include\node3\CompModel.h" />
     <ClInclude Include="..\..\..\include\node3\CompModelInst.h" />
     <ClInclude Include="..\..\..\include\node3\CompTransform.h" />
