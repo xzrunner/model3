@@ -19,9 +19,6 @@
     <Filter Include="components\asset\image">
       <UniqueIdentifier>{c7b6abe5-79fa-4729-82c6-86b6e3684cda}</UniqueIdentifier>
     </Filter>
-    <Filter Include="components\renderer">
-      <UniqueIdentifier>{337512af-2404-43aa-b48a-6638b410a6ad}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\CompAABB.cpp">
@@ -50,9 +47,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\CompImage3D.cpp">
       <Filter>components\asset\image</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\CompMeshRenderer.cpp">
-      <Filter>components\renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -81,7 +81,6 @@
     <ClCompile Include="..\..\..\source\CompAABB.cpp" />
     <ClCompile Include="..\..\..\source\CompAnim.cpp" />
     <ClCompile Include="..\..\..\source\CompImage3D.cpp" />
-    <ClCompile Include="..\..\..\source\CompMeshRenderer.cpp" />
     <ClCompile Include="..\..\..\source\CompModel.cpp" />
     <ClCompile Include="..\..\..\source\CompModelInst.cpp" />
     <ClCompile Include="..\..\..\source\CompTransform.cpp" />
