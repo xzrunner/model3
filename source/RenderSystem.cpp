@@ -11,12 +11,12 @@
 namespace n3
 {
 
-void RenderSystem::Draw(const n0::SceneNodePtr& node, const pt3::RenderParams& params)
+void RenderSystem::Draw(const n0::SceneNode& node, const pt3::RenderParams& params)
 {
 	sm::mat4 mt_child, mt_trans;
-	if (node->HasUniqueComp<CompTransform>())
+	if (node.HasUniqueComp<CompTransform>())
 	{
-		auto& ctrans = node->GetUniqueComp<CompTransform>();
+		auto& ctrans = node.GetUniqueComp<CompTransform>();
 		mt_trans = ctrans.GetTransformMat();
 		mt_child = mt_trans * params.mt;
 	}
@@ -26,17 +26,17 @@ void RenderSystem::Draw(const n0::SceneNodePtr& node, const pt3::RenderParams& p
 	c_params.mt_trans = mt_trans;
 
 	// asset
-	if (node->HasSharedComp<n0::CompAsset>())
+	if (node.HasSharedComp<n0::CompAsset>())
 	{
-		auto& casset = node->GetSharedComp<n0::CompAsset>();
+		auto& casset = node.GetSharedComp<n0::CompAsset>();
 		auto asset_type = casset.AssetTypeID();
 		if (asset_type == n0::GetAssetUniqueTypeID<CompModel>())
 		{
-			auto& cmodel_inst = node->GetUniqueComp<CompModelInst>();
+			auto& cmodel_inst = node.GetUniqueComp<CompModelInst>();
 			auto& model_inst = cmodel_inst.GetModel();
 			if (model_inst)
             {
-                auto& cmodel = node->GetSharedComp<CompModel>();
+                auto& cmodel = node.GetSharedComp<CompModel>();
                 auto& mats = cmodel.GetAllMaterials();
 				pt3::RenderSystem::DrawModel(*model_inst, mats, c_params);
 			}
@@ -51,9 +51,9 @@ void RenderSystem::Draw(const n0::SceneNodePtr& node, const pt3::RenderParams& p
 		}
 	}
 
-	//if (node->HasSharedComp<n0::CompComplex>())
+	//if (node.HasSharedComp<n0::CompComplex>())
 	//{
-	//	auto& ccomplex = node->GetSharedComp<n0::CompComplex>();
+	//	auto& ccomplex = node.GetSharedComp<n0::CompComplex>();
 	//	auto& children = ccomplex.GetAllChildren();
 	//	for (auto& child : children) {
 	//		Draw(child, mt_child);
@@ -61,10 +61,10 @@ void RenderSystem::Draw(const n0::SceneNodePtr& node, const pt3::RenderParams& p
 	//}
 
 	//// debug draw aabb
-	//if (node->HasUniqueComp<n3::CompAABB>())
+	//if (node.HasUniqueComp<n3::CompAABB>())
 	//{
 	//	pt3::PrimitiveDraw::SetColor(0xffff0000);
-	//	auto& caabb = node->GetUniqueComp<n3::CompAABB>();
+	//	auto& caabb = node.GetUniqueComp<n3::CompAABB>();
 	//	pt3::PrimitiveDraw::Cube(mt_trans, caabb.GetAABB());
 	//}
 }
