@@ -9,7 +9,7 @@ namespace n3
 
 bool UpdateSystem::Update(const n0::SceneNodePtr& node)
 {
-	if (!node) {
+	if (!node || !node->HasSharedComp<n0::CompAsset>()) {
 		return false;
 	}
 
