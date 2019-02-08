@@ -19,6 +19,12 @@
     <Filter Include="components\asset\image">
       <UniqueIdentifier>{c7b6abe5-79fa-4729-82c6-86b6e3684cda}</UniqueIdentifier>
     </Filter>
+    <Filter Include="components\mesh">
+      <UniqueIdentifier>{c8879a31-aa12-4804-bcb9-cf29d9b10611}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="components\rendering">
+      <UniqueIdentifier>{520b1b57-d873-440d-bd30-125c3aa3204d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\CompAABB.cpp">
@@ -48,8 +54,14 @@
     <ClCompile Include="..\..\..\source\CompImage3D.cpp">
       <Filter>components\asset\image</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\CompMeshFilter.cpp">
+      <Filter>components\mesh</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\source\CompLight.cpp">
-      <Filter>components\asset</Filter>
+      <Filter>components\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\CompCamera.cpp">
+      <Filter>components\rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -81,8 +93,14 @@
     <ClInclude Include="..\..\..\include\node3\CompImage3D.h">
       <Filter>components\asset\image</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\CompMeshFilter.h">
+      <Filter>components\mesh</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\include\node3\CompLight.h">
-      <Filter>components\asset</Filter>
+      <Filter>components\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\CompCamera.h">
+      <Filter>components\rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

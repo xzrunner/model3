@@ -3,9 +3,11 @@
 #include "node3/CompModel.h"
 #include "node3/CompModelInst.h"
 #include "node3/CompImage3D.h"
+#include "node3/CompMeshFilter.h"
 
 #include <SM_Matrix.h>
 #include <node0/SceneNode.h>
+#include <node0/CompMaterial.h>
 #include <painting3/RenderSystem.h>
 
 namespace n3
@@ -50,6 +52,21 @@ void RenderSystem::Draw(const n0::SceneNode& node, const pt3::RenderParams& para
 			}
 		}
 	}
+
+    // mesh
+    if (node.HasUniqueComp<n3::CompMeshFilter>())
+    {
+        auto& cmesh = node.GetUniqueComp<n3::CompMeshFilter>();
+        auto& mesh = cmesh.GetMesh();
+        if (node.HasUniqueComp<n0::CompMaterial>())
+        {
+            auto& cmat = node.GetUniqueComp<n0::CompMaterial>();
+            auto& mat = cmat.GetMaterial();
+            if (mesh && mat) {
+                pt3::RenderSystem::DrawMesh(mesh->geometry, *mat, c_params);
+            }
+        }
+    }
 
 	//if (node.HasSharedComp<n0::CompComplex>())
 	//{
