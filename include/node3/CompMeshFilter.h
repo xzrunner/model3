@@ -20,6 +20,8 @@ public:
 
     auto& GetAABB() const { return m_aabb; }
 
+    auto& GetMeshName() const { return m_name; }
+
     static const char* const TYPE_NAME;
 
 private:
