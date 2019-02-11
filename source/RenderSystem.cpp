@@ -9,6 +9,7 @@
 #include <node0/SceneNode.h>
 #include <node0/CompMaterial.h>
 #include <painting3/RenderSystem.h>
+#include <painting3/MaterialMgr.h>
 
 namespace n3
 {
@@ -29,6 +30,17 @@ void RenderSystem::Draw(const n0::SceneNode& node,
 	c_params.model_world = child_world_model;
 	c_params.model_local = child_local_model;
 
+    pt3::RenderContext c_ctx = ctx;
+    c_ctx.uniforms.AddVar(
+        pt3::MaterialMgr::PosTransUniforms::model.name,
+        pt0::RenderVariant(c_params.model_world)
+    );
+    auto normal_mat = c_params.model_world.Inverted().Transposed();
+    c_ctx.uniforms.AddVar(
+        pt3::MaterialMgr::PositionUniforms::normal_mat.name,
+        pt0::RenderVariant(sm::mat3(normal_mat))
+    );
+
 	// asset
 	if (node.HasSharedComp<n0::CompAsset>())
 	{
@@ -42,7 +54,7 @@ void RenderSystem::Draw(const n0::SceneNode& node,
             {
                 auto& cmodel = node.GetSharedComp<CompModel>();
                 auto& mats = cmodel.GetAllMaterials();
-				pt3::RenderSystem::DrawModel(*model_inst, mats, c_params, ctx);
+				pt3::RenderSystem::DrawModel(*model_inst, mats, c_params, c_ctx);
 			}
 		}
 		else if (asset_type == n0::GetAssetUniqueTypeID<CompImage3D>())
@@ -65,7 +77,7 @@ void RenderSystem::Draw(const n0::SceneNode& node,
             auto& cmat = node.GetUniqueComp<n0::CompMaterial>();
             auto& mat = cmat.GetMaterial();
             if (mesh && mat) {
-                pt3::RenderSystem::DrawMesh(mesh->geometry, *mat, c_params, ctx);
+                pt3::RenderSystem::DrawMesh(mesh->geometry, *mat, c_params, c_ctx);
             }
         }
     }
