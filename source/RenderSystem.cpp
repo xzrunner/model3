@@ -17,17 +17,17 @@ void RenderSystem::Draw(const n0::SceneNode& node,
                         const pt3::RenderParams& params,
                         const pt3::RenderContext& ctx)
 {
-	sm::mat4 mt_child, mt_trans;
+	sm::mat4 child_world_model, child_local_model;
 	if (node.HasUniqueComp<CompTransform>())
 	{
 		auto& ctrans = node.GetUniqueComp<CompTransform>();
-		mt_trans = ctrans.GetTransformMat();
-		mt_child = mt_trans * params.mt;
+		child_local_model = ctrans.GetTransformMat();
+		child_world_model = child_local_model * params.model_world;
 	}
 
 	pt3::RenderParams c_params = params;
-	c_params.mt       = mt_child;
-	c_params.mt_trans = mt_trans;
+	c_params.model_world = child_world_model;
+	c_params.model_local = child_local_model;
 
 	// asset
 	if (node.HasSharedComp<n0::CompAsset>())
