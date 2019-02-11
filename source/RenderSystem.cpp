@@ -13,7 +13,9 @@
 namespace n3
 {
 
-void RenderSystem::Draw(const n0::SceneNode& node, const pt3::RenderParams& params)
+void RenderSystem::Draw(const n0::SceneNode& node,
+                        const pt3::RenderParams& params,
+                        const pt3::RenderContext& ctx)
 {
 	sm::mat4 mt_child, mt_trans;
 	if (node.HasUniqueComp<CompTransform>())
@@ -40,7 +42,7 @@ void RenderSystem::Draw(const n0::SceneNode& node, const pt3::RenderParams& para
             {
                 auto& cmodel = node.GetSharedComp<CompModel>();
                 auto& mats = cmodel.GetAllMaterials();
-				pt3::RenderSystem::DrawModel(*model_inst, mats, c_params);
+				pt3::RenderSystem::DrawModel(*model_inst, mats, c_params, ctx);
 			}
 		}
 		else if (asset_type == n0::GetAssetUniqueTypeID<CompImage3D>())
@@ -63,7 +65,7 @@ void RenderSystem::Draw(const n0::SceneNode& node, const pt3::RenderParams& para
             auto& cmat = node.GetUniqueComp<n0::CompMaterial>();
             auto& mat = cmat.GetMaterial();
             if (mesh && mat) {
-                pt3::RenderSystem::DrawMesh(mesh->geometry, *mat, c_params);
+                pt3::RenderSystem::DrawMesh(mesh->geometry, *mat, c_params, ctx);
             }
         }
     }
