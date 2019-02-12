@@ -16,7 +16,7 @@ namespace n3
 
 void RenderSystem::Draw(const n0::SceneNode& node,
                         const pt3::RenderParams& params,
-                        const pt3::RenderContext& ctx)
+                        const pt0::RenderContext& ctx)
 {
 	sm::mat4 child_world_model, child_local_model;
 	if (node.HasUniqueComp<CompTransform>())
@@ -30,13 +30,13 @@ void RenderSystem::Draw(const n0::SceneNode& node,
 	c_params.model_world = child_world_model;
 	c_params.model_local = child_local_model;
 
-    pt3::RenderContext c_ctx = ctx;
-    c_ctx.uniforms.AddVar(
+    pt0::RenderContext c_ctx = ctx;
+    c_ctx.AddVar(
         pt3::MaterialMgr::PosTransUniforms::model.name,
         pt0::RenderVariant(c_params.model_world)
     );
     auto normal_mat = c_params.model_world.Inverted().Transposed();
-    c_ctx.uniforms.AddVar(
+    c_ctx.AddVar(
         pt3::MaterialMgr::PositionUniforms::normal_mat.name,
         pt0::RenderVariant(sm::mat3(normal_mat))
     );
