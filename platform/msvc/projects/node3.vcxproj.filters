@@ -60,9 +60,6 @@
     <ClCompile Include="..\..\..\source\CompLight.cpp">
       <Filter>components\rendering</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\CompCamera.cpp">
-      <Filter>components\rendering</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\c_wrap_n3.h" />
@@ -97,9 +94,6 @@
       <Filter>components\mesh</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\CompLight.h">
-      <Filter>components\rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\node3\CompCamera.h">
       <Filter>components\rendering</Filter>
     </ClInclude>
   </ItemGroup>
