@@ -77,7 +77,7 @@ void RenderSystem::Draw(const n0::SceneNode& node,
             auto& cmat = node.GetUniqueComp<n0::CompMaterial>();
             auto& mat = cmat.GetMaterial();
             if (mesh && mat) {
-                pt3::RenderSystem::DrawMesh(mesh->geometry, *mat, c_params, c_ctx);
+                pt3::RenderSystem::DrawMesh(mesh->geometry, *mat, c_ctx);
             }
         }
     }
