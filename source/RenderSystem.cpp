@@ -25,6 +25,10 @@ void RenderSystem::Draw(const n0::SceneNode& node,
 		child_local_model = ctrans.GetTransformMat();
 		child_world_model = child_local_model * params.model_world;
 	}
+    else
+    {
+        child_world_model = params.model_world;
+    }
 
 	pt3::RenderParams c_params = params;
 	c_params.model_world = child_world_model;
