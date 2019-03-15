@@ -47,8 +47,10 @@ void CompModel::InitMaterials()
         ur::Texture* tex = nullptr;
         if (src->diffuse_tex >= 0) {
             tex = m_model->textures[src->diffuse_tex].second.get();
+            if (tex) {
+                dst.AddVar(UNIFORMS::diffuse_tex.name, pt0::RenderVariant(tex));
+            }
         }
-        dst.AddVar(UNIFORMS::diffuse_tex.name, pt0::RenderVariant(tex));
     }
 
     
