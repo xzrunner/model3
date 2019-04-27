@@ -4,6 +4,7 @@
 #include "node3/CompModelInst.h"
 #include "node3/CompImage3D.h"
 #include "node3/CompMeshFilter.h"
+#include "node3/CompCloth.h"
 
 #include <SM_Matrix.h>
 #include <node0/SceneNode.h>
@@ -83,6 +84,16 @@ void RenderSystem::Draw(const n0::SceneNode& node,
             if (mesh && mat) {
                 pt3::RenderSystem::DrawMesh(mesh->geometry, *mat, c_ctx);
             }
+        }
+    }
+
+    // cloth
+    if (node.HasUniqueComp<CompCloth>())
+    {
+        auto& ccloth = node.GetUniqueComp<CompCloth>();
+        auto& render_mesh = ccloth.GetRenderMesh();
+        if (render_mesh) {
+            pt3::RenderSystem::DrawMesh(render_mesh->geometry, pt0::Material(), c_ctx);
         }
     }
 

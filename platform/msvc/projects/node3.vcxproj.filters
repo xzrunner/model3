@@ -60,6 +60,9 @@
     <ClCompile Include="..\..\..\source\CompLight.cpp">
       <Filter>components\rendering</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\CompCloth.cpp">
+      <Filter>components\mesh</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\c_wrap_n3.h" />
@@ -95,6 +98,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\CompLight.h">
       <Filter>components\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\CompCloth.h">
+      <Filter>components\mesh</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
