@@ -25,7 +25,7 @@ std::unique_ptr<n0::NodeComp> CompModelInst::Clone(const n0::SceneNode& node) co
 
 bool CompModelInst::Update()
 {
-	return m_inst->Update();
+	return m_inst ? m_inst->Update() : false;
 }
 
 void CompModelInst::SetModel(const std::shared_ptr<model::Model>& model, int anim_idx)
