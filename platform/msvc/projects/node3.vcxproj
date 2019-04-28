@@ -85,6 +85,7 @@
     <ClCompile Include="..\..\..\source\CompLight.cpp" />
     <ClCompile Include="..\..\..\source\CompModel.cpp" />
     <ClCompile Include="..\..\..\source\CompModelInst.cpp" />
+    <ClCompile Include="..\..\..\source\CompRigid.cpp" />
     <ClCompile Include="..\..\..\source\CompTransform.cpp" />
     <ClCompile Include="..\..\..\source\CompMeshFilter.cpp" />
     <ClCompile Include="..\..\..\source\RenderSystem.cpp" />
@@ -100,6 +101,7 @@
     <ClInclude Include="..\..\..\include\node3\CompLight.h" />
     <ClInclude Include="..\..\..\include\node3\CompModel.h" />
     <ClInclude Include="..\..\..\include\node3\CompModelInst.h" />
+    <ClInclude Include="..\..\..\include\node3\CompRigid.h" />
     <ClInclude Include="..\..\..\include\node3\CompTransform.h" />
     <ClInclude Include="..\..\..\include\node3\CompMeshFilter.h" />
     <ClInclude Include="..\..\..\include\node3\RenderSystem.h" />
