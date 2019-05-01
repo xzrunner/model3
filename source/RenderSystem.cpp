@@ -75,9 +75,9 @@ void RenderSystem::Draw(const n0::SceneNode& node,
 	}
 
     // mesh
-    if (node.HasUniqueComp<n3::CompMeshFilter>())
+    if (node.HasUniqueComp<CompMeshFilter>())
     {
-        auto& cmesh = node.GetUniqueComp<n3::CompMeshFilter>();
+        auto& cmesh = node.GetUniqueComp<CompMeshFilter>();
         auto& mesh = cmesh.GetMesh();
         if (node.HasUniqueComp<n0::CompMaterial>())
         {
@@ -98,17 +98,17 @@ void RenderSystem::Draw(const n0::SceneNode& node,
             pt3::RenderSystem::DrawMesh(render_mesh->geometry, pt0::Material(), c_ctx);
         }
     }
-    if (node.HasUniqueComp<CompRigid>())
-    {
-        auto& crigid = node.GetUniqueComp<CompRigid>();
-        auto pos = crigid.GetBody()->GetPosition();
+    //if (node.HasUniqueComp<CompRigid>())
+    //{
+    //    auto& crigid = node.GetUniqueComp<CompRigid>();
+    //    auto pos = crigid.GetBody()->GetPosition();
 
-        sm::vec3 line[2];
-        line[0] = line[1] = pos;
-        line[0].x -= 10;
-        line[1].x += 10;
-        pt3::RenderSystem::DrawLines3D(2, line[0].xyz, 0xff0000ff);
-    }
+    //    sm::vec3 line[2];
+    //    line[0] = line[1] = pos;
+    //    line[0].x -= 10;
+    //    line[1].x += 10;
+    //    pt3::RenderSystem::DrawLines3D(2, line[0].xyz, 0xff0000ff);
+    //}
 
 	//if (node.HasSharedComp<n0::CompComplex>())
 	//{

@@ -1,8 +1,11 @@
 #include "node3/UpdateSystem.h"
 #include "node3/CompModel.h"
 #include "node3/CompModelInst.h"
+#include "node3/CompRigid.h"
 #include "node3/CompCloth.h"
+#include "node3/CompTransform.h"
 
+#include <uniphysics/rigid/Body.h>
 #include <node0/SceneNode.h>
 
 namespace n3
@@ -27,11 +30,21 @@ bool UpdateSystem::Update(const n0::SceneNodePtr& node)
 		}
 	}
 
+    // rigid
+    if (node->HasUniqueComp<CompRigid>())
+    {
+        auto& crigid = node->GetUniqueComp<CompRigid>();
+        auto pos = crigid.GetBody()->GetPosition();
+        auto& ctrans = node->GetUniqueComp<CompTransform>();
+        ctrans.SetPosition(pos);
+        dirty = true;
+    }
     // cloth
     if (node->HasUniqueComp<CompCloth>())
     {
         auto& ccloth = node->GetUniqueComp<CompCloth>();
         ccloth.UpdateRenderMesh();
+        dirty = true;
     }
 
 	return dirty;
