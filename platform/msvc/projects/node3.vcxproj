@@ -53,7 +53,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\sm\src\sm;..\..\..\..\cu\src;..\..\..\..\js\include;..\..\..\..\node0\include;..\..\..\..\guard\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\memmgr\include;..\..\..\..\unirender\include;..\..\..\..\model\include;..\..\..\..\quake\include;..\..\..\..\halfedge\include;..\..\..\..\uniphysics\include;..\..\..\..\external\boost\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external\rttr\include;..\..\..\..\external\nvcloth\include;..\..\..\..\external\nvcloth\extensions\include;..\..\..\..\external\pxshared\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\sm\src\sm;..\..\..\..\cu\src;..\..\..\..\js\include;..\..\..\..\node0\include;..\..\..\..\guard\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\memmgr\include;..\..\..\..\unirender\include;..\..\..\..\geoshape\include;..\..\..\..\model\include;..\..\..\..\quake\include;..\..\..\..\halfedge\include;..\..\..\..\uniphysics\include;..\..\..\..\external\boost\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external\rttr\include;..\..\..\..\external\nvcloth\include;..\..\..\..\external\nvcloth\extensions\include;..\..\..\..\external\pxshared\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;__STDC_LIMIT_MACROS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -67,7 +67,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\sm\src\sm;..\..\..\..\cu\src;..\..\..\..\js\include;..\..\..\..\node0\include;..\..\..\..\guard\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\memmgr\include;..\..\..\..\unirender\include;..\..\..\..\model\include;..\..\..\..\quake\include;..\..\..\..\halfedge\include;..\..\..\..\uniphysics\include;..\..\..\..\external\boost\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external\rttr\include;..\..\..\..\external\nvcloth\include;..\..\..\..\external\nvcloth\extensions\include;..\..\..\..\external\pxshared\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\sm\src\sm;..\..\..\..\cu\src;..\..\..\..\js\include;..\..\..\..\node0\include;..\..\..\..\guard\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\memmgr\include;..\..\..\..\unirender\include;..\..\..\..\geoshape\include;..\..\..\..\model\include;..\..\..\..\quake\include;..\..\..\..\halfedge\include;..\..\..\..\uniphysics\include;..\..\..\..\external\boost\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external\rttr\include;..\..\..\..\external\nvcloth\include;..\..\..\..\external\nvcloth\extensions\include;..\..\..\..\external\pxshared\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;__STDC_LIMIT_MACROS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -86,6 +86,7 @@
     <ClCompile Include="..\..\..\source\CompModel.cpp" />
     <ClCompile Include="..\..\..\source\CompModelInst.cpp" />
     <ClCompile Include="..\..\..\source\CompRigid.cpp" />
+    <ClCompile Include="..\..\..\source\CompShape.cpp" />
     <ClCompile Include="..\..\..\source\CompTransform.cpp" />
     <ClCompile Include="..\..\..\source\CompMeshFilter.cpp" />
     <ClCompile Include="..\..\..\source\RenderSystem.cpp" />
@@ -102,6 +103,7 @@
     <ClInclude Include="..\..\..\include\node3\CompModel.h" />
     <ClInclude Include="..\..\..\include\node3\CompModelInst.h" />
     <ClInclude Include="..\..\..\include\node3\CompRigid.h" />
+    <ClInclude Include="..\..\..\include\node3\CompShape.h" />
     <ClInclude Include="..\..\..\include\node3\CompTransform.h" />
     <ClInclude Include="..\..\..\include\node3\CompMeshFilter.h" />
     <ClInclude Include="..\..\..\include\node3\RenderSystem.h" />

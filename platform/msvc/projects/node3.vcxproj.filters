@@ -28,6 +28,9 @@
     <Filter Include="components\physics">
       <UniqueIdentifier>{62c8fe44-df37-4bc1-b64f-251ce1902665}</UniqueIdentifier>
     </Filter>
+    <Filter Include="components\asset\shape">
+      <UniqueIdentifier>{fb8ecd88-94cd-4304-adb9-6dc9e01ccf06}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\CompAABB.cpp">
@@ -68,6 +71,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\CompRigid.cpp">
       <Filter>components\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\CompShape.cpp">
+      <Filter>components\asset\shape</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +116,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\CompRigid.h">
       <Filter>components\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\CompShape.h">
+      <Filter>components\asset\shape</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
