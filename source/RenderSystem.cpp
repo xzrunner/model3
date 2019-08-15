@@ -6,9 +6,11 @@
 #include "node3/CompMeshFilter.h"
 #include "node3/CompCloth.h"
 #include "node3/CompRigid.h"
+#include "node3/CompShape.h"
 
 #include <SM_Matrix.h>
 #include <uniphysics/rigid/Body.h>
+#include <tessellation/Painter.h>
 #include <node0/SceneNode.h>
 #include <node0/CompMaterial.h>
 #include <painting3/RenderSystem.h>
@@ -72,6 +74,13 @@ void RenderSystem::Draw(const n0::SceneNode& node,
 				pt3::RenderSystem::DrawTex3D(*tex, c_params);
 			}
 		}
+        else if (asset_type == n0::GetAssetUniqueTypeID<n3::CompShape>())
+        {
+		    auto& cshape = node.GetSharedComp<n3::CompShape>();
+		    auto& shape = cshape.GetShape();
+		    assert(shape);
+		    pt3::RenderSystem::DrawShape(*shape, params);
+        }
 	}
 
     // mesh
