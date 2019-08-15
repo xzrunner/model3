@@ -33,7 +33,16 @@ bool CompModelInst::Update()
 
 void CompModelInst::SetModel(const std::shared_ptr<model::Model>& model, int anim_idx)
 {
-	m_inst = std::make_unique<model::ModelInstance>(model, anim_idx);
+    if (m_inst) 
+    {
+        auto ext = std::move(m_inst->GetModelExt());
+        m_inst = std::make_unique<model::ModelInstance>(model, anim_idx);
+        m_inst->SetModelExt(ext);
+    }
+    else
+    {
+        m_inst = std::make_unique<model::ModelInstance>(model, anim_idx);
+    }
 }
 
 void CompModelInst::SetAnim(const std::string& anim_name)
