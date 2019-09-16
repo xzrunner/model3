@@ -77,9 +77,11 @@ void RenderSystem::Draw(const n0::SceneNode& node,
         else if (asset_type == n0::GetAssetUniqueTypeID<n3::CompShape>())
         {
 		    auto& cshape = node.GetSharedComp<n3::CompShape>();
-		    auto& shape = cshape.GetShape();
-		    assert(shape);
-		    pt3::RenderSystem::DrawShape(*shape, params);
+		    auto& shapes = cshape.GetShapes();
+            for (auto& s : shapes) {
+                assert(s);
+                pt3::RenderSystem::DrawShape(*s, params);
+            }
         }
 	}
 
