@@ -28,7 +28,7 @@ void RenderSystem::Draw(const n0::SceneNode& node,
 	{
 		auto& ctrans = node.GetUniqueComp<CompTransform>();
 		child_local_model = ctrans.GetTransformMat();
-		child_world_model = child_local_model * params.model_world;
+		child_world_model = params.model_world * child_local_model;
 	}
     else
     {
