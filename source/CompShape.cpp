@@ -3,6 +3,12 @@
 namespace n3
 {
 
-const char* const CompShape::TYPE_NAME = "n3_shape";
+std::unique_ptr<n0::NodeComp>
+CompShape::Clone(const n0::SceneNode& node) const
+{
+    auto comp = std::make_unique<CompShape>();
+    comp->SetShapes(m_shapes);
+    return comp;
+}
 
 }

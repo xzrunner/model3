@@ -74,16 +74,18 @@ void RenderSystem::Draw(const n0::SceneNode& node,
 				pt3::RenderSystem::DrawTex3D(*tex, c_params);
 			}
 		}
-        else if (asset_type == n0::GetAssetUniqueTypeID<n3::CompShape>())
-        {
-		    auto& cshape = node.GetSharedComp<n3::CompShape>();
-		    auto& shapes = cshape.GetShapes();
-            for (auto& s : shapes) {
-                assert(s);
-                pt3::RenderSystem::DrawShape(*s, params);
-            }
-        }
 	}
+
+    // shape
+    if (node.HasUniqueComp<CompShape>())
+    {
+        auto& cshape = node.GetUniqueComp<CompShape>();
+        auto& shapes = cshape.GetShapes();
+        for (auto& s : shapes) {
+            assert(s);
+            pt3::RenderSystem::DrawShape(*s, params);
+        }
+    }
 
     // mesh
     if (node.HasUniqueComp<CompMeshFilter>())
