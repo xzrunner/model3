@@ -55,7 +55,8 @@ void RenderSystem::Draw(const n0::SceneNode& node,
 	{
 		auto& casset = node.GetSharedComp<n0::CompAsset>();
 		auto asset_type = casset.AssetTypeID();
-		if (asset_type == n0::GetAssetUniqueTypeID<CompModel>())
+		if (asset_type == n0::GetAssetUniqueTypeID<CompModel>() &&
+            !params.mask[pt3::RenderParams::NotDrawModel])
 		{
 			auto& cmodel_inst = node.GetUniqueComp<CompModelInst>();
 			auto& model_inst = cmodel_inst.GetModel();
@@ -66,7 +67,8 @@ void RenderSystem::Draw(const n0::SceneNode& node,
 				pt3::RenderSystem::DrawModel(*model_inst, mats, c_params, c_ctx);
 			}
 		}
-		else if (asset_type == n0::GetAssetUniqueTypeID<CompImage3D>())
+		else if (asset_type == n0::GetAssetUniqueTypeID<CompImage3D>() &&
+                 !params.mask[pt3::RenderParams::NotDrawImage])
 		{
 			auto& cimg = static_cast<const CompImage3D&>(casset);
 			auto& tex = cimg.GetTexture();
@@ -77,7 +79,8 @@ void RenderSystem::Draw(const n0::SceneNode& node,
 	}
 
     // shape
-    if (node.HasUniqueComp<CompShape>())
+    if (node.HasUniqueComp<CompShape>() &&
+        !params.mask[pt3::RenderParams::NotDrawShape])
     {
         auto& cshape = node.GetUniqueComp<CompShape>();
         auto& shapes = cshape.GetShapes();
@@ -103,7 +106,8 @@ void RenderSystem::Draw(const n0::SceneNode& node,
     }
 
     // physics
-    if (node.HasUniqueComp<CompCloth>())
+    if (node.HasUniqueComp<CompCloth>() &&
+        !params.mask[pt3::RenderParams::NotDrawCloth])
     {
         auto& ccloth = node.GetUniqueComp<CompCloth>();
         auto& render_mesh = ccloth.GetRenderMesh();
