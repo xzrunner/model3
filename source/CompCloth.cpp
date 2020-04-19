@@ -6,8 +6,6 @@
 #include <uniphysics/cloth/Solver.h>
 #include <uniphysics/cloth/nv/Cloth.h> // fixme
 #include <uniphysics/cloth/nv/Fabric.h> // fixme
-#include <unirender/RenderContext.h>
-#include <unirender/Blackboard.h>
 
 // fixme
 #include <NvCloth/Allocator.h>
@@ -17,6 +15,12 @@
 #include <NvClothExt/ClothMeshDesc.h>
 #include <foundation/PxStrideIterator.h>
 #include <foundation/PxVec4.h>
+#include <unirender2/VertexArray.h>
+#include <unirender2/IndexBuffer.h>
+#include <unirender2/VertexBuffer.h>
+#include <unirender2/Device.h>
+#include <unirender2/ComponentDataType.h>
+#include <unirender2/VertexBufferAttribute.h>
 
 namespace
 {
@@ -92,11 +96,11 @@ std::unique_ptr<n0::NodeComp> CompCloth::Clone(const n0::SceneNode& node) const
     return nullptr;
 }
 
-void CompCloth::BuildFromClothMesh(const sm::vec3& center, up::cloth::Factory& factory,
+void CompCloth::BuildFromClothMesh(const ur2::Device& dev, const sm::vec3& center, up::cloth::Factory& factory,
                                    up::cloth::ClothMeshData& cloth_mesh)
 {
     m_render_mesh = std::make_unique<model::Model::Mesh>();
-    BuildRenderMesh(*m_render_mesh, cloth_mesh);
+    BuildRenderMesh(dev, *m_render_mesh, cloth_mesh);
 
     nv::cloth::Vector<int32_t>::Type phase_type_info;
     m_fabric = factory.CreateFabric(cloth_mesh, sm::vec3(0.0f, -9.8f, 0.0f));
@@ -158,12 +162,11 @@ void CompCloth::UpdateRenderMesh()
     }
     calc_vertex_normal(vertices, m_indices);
 
-    ur::Blackboard::Instance()->GetRenderContext().UpdateBufferRaw(
-        ur::BUFFER_VERTEX, m_render_mesh->geometry.vbo, vertices.data(), sizeof(Vertex) * particles.size()
-    );
+    auto vb = m_render_mesh->geometry.vertex_array->GetVertexBuffer();
+    vb->ReadFromMemory(vertices.data(), sizeof(Vertex) * particles.size(), 0);
 }
 
-void CompCloth::BuildRenderMesh(model::Model::Mesh& dst, const up::cloth::ClothMeshData& src)
+void CompCloth::BuildRenderMesh(const ur2::Device& dev, model::Model::Mesh& dst, const up::cloth::ClothMeshData& src)
 {
     auto desc = src.GetClothMeshDesc();
 
@@ -194,21 +197,33 @@ void CompCloth::BuildRenderMesh(model::Model::Mesh& dst, const up::cloth::ClothM
 
     calc_vertex_normal(vertices, m_indices);
 
-    ur::RenderContext::VertexInfo vi;
+    auto va = dev.CreateVertexArray();
 
-    vi.vn       = vertices.size();
-    vi.vertices = vertices.data();
-    vi.stride   = sizeof(Vertex);
-    vi.in       = m_indices.size();
-    vi.indices  = &m_indices[0];
+    auto usage = ur2::BufferUsageHint::StaticDraw;
 
-    vi.va_list.push_back(ur::VertexAttrib("position", 3, 4, vi.stride, 0));
-    vi.va_list.push_back(ur::VertexAttrib("normal",   3, 4, vi.stride, 12));
+    auto ibuf_sz = sizeof(unsigned short) * m_indices.size();
+    auto ibuf = dev.CreateIndexBuffer(usage, ibuf_sz);
+    ibuf->ReadFromMemory(m_indices.data(), ibuf_sz, 0);
+    va->SetIndexBuffer(ibuf);
 
-    ur::Blackboard::Instance()->GetRenderContext().CreateVAO(
-        vi, dst.geometry.vao, dst.geometry.vbo, dst.geometry.ebo
+    auto vbuf_sz = sizeof(float) * vertices.size();
+    auto vbuf = dev.CreateVertexBuffer(ur2::BufferUsageHint::StaticDraw, vbuf_sz);
+    vbuf->ReadFromMemory(vertices.data(), vbuf_sz, 0);
+    va->SetVertexBuffer(vbuf);
+
+    std::vector<std::shared_ptr<ur2::VertexBufferAttribute>> vbuf_attrs(2);
+    // position
+    vbuf_attrs[0] = std::make_shared<ur2::VertexBufferAttribute>(
+        ur2::ComponentDataType::Float, 3, 0, 24
     );
-    dst.geometry.sub_geometries.push_back(model::SubmeshGeometry(true, vi.in, 0));
+    // normal
+    vbuf_attrs[1] = std::make_shared<ur2::VertexBufferAttribute>(
+        ur2::ComponentDataType::Float, 3, 12, 24
+    );
+    va->SetVertexBufferAttrs(vbuf_attrs);
+
+    dst.geometry.vertex_array = va;
+    dst.geometry.sub_geometries.push_back(model::SubmeshGeometry(true, m_indices.size(), 0));
     dst.geometry.sub_geometry_materials.push_back(0);
 }
 

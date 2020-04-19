@@ -15,7 +15,7 @@ public:
     }
     virtual std::unique_ptr<n0::NodeComp> Clone(const n0::SceneNode& node) const override;
 
-    void  SetMesh(const std::string& name);
+    void  SetMesh(const ur2::Device& dev, const std::string& name);
     auto& GetMesh() const { return m_mesh; }
 
     auto& GetAABB() const { return m_aabb; }

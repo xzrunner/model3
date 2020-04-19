@@ -10,18 +10,18 @@ const char* const CompMeshFilter::TYPE_NAME = "n3_mesh_filter";
 std::unique_ptr<n0::NodeComp> CompMeshFilter::Clone(const n0::SceneNode& node) const
 {
     auto comp = std::make_unique<CompMeshFilter>();
-    comp->SetMesh(m_name);
+    //comp->SetMesh(m_name);
     return comp;
 }
 
-void CompMeshFilter::SetMesh(const std::string& name)
+void CompMeshFilter::SetMesh(const ur2::Device& dev, const std::string& name)
 {
     if (m_name == name) {
         return;
     }
 
     m_aabb.MakeEmpty();
-    m_mesh = model::SurfaceLoader::CreateMesh(name, m_aabb);
+    m_mesh = model::SurfaceLoader::CreateMesh(dev, name, m_aabb);
 
     m_name = name;
 }

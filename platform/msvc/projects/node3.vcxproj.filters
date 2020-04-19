@@ -63,6 +63,9 @@
     <ClCompile Include="..\..\..\source\CompMeshFilter.cpp">
       <Filter>components\mesh</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\CompMeshRenderer.cpp">
+      <Filter>components\mesh</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\source\CompLight.cpp">
       <Filter>components\rendering</Filter>
     </ClCompile>
@@ -106,6 +109,9 @@
       <Filter>components\asset\image</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\CompMeshFilter.h">
+      <Filter>components\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\node3\CompMeshRenderer.h">
       <Filter>components\mesh</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\node3\CompLight.h">
