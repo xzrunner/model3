@@ -1,6 +1,6 @@
 #pragma once
 
-#include <unirender2/typedef.h>
+#include <unirender/typedef.h>
 #include <node0/CompAsset.h>
 
 namespace n3
@@ -20,15 +20,15 @@ public:
 	void SetFilepath(const std::string& filepath) { m_filepath = filepath; }
 	const std::string& GetFilepath() const { return m_filepath; }
 
-	void SetTexture(const ur2::TexturePtr& tex) { m_tex = tex; }
-	const ur2::TexturePtr& GetTexture() const { return m_tex; }
+	void SetTexture(const ur::TexturePtr& tex) { m_tex = tex; }
+	const ur::TexturePtr& GetTexture() const { return m_tex; }
 
 	static const char* const TYPE_NAME;
 
 private:
 	std::string m_filepath;
 
-    ur2::TexturePtr m_tex = nullptr;
+    ur::TexturePtr m_tex = nullptr;
 
 }; // CompImage3D
 

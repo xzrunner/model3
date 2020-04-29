@@ -15,12 +15,12 @@
 #include <NvClothExt/ClothMeshDesc.h>
 #include <foundation/PxStrideIterator.h>
 #include <foundation/PxVec4.h>
-#include <unirender2/VertexArray.h>
-#include <unirender2/IndexBuffer.h>
-#include <unirender2/VertexBuffer.h>
-#include <unirender2/Device.h>
-#include <unirender2/ComponentDataType.h>
-#include <unirender2/VertexBufferAttribute.h>
+#include <unirender/VertexArray.h>
+#include <unirender/IndexBuffer.h>
+#include <unirender/VertexBuffer.h>
+#include <unirender/Device.h>
+#include <unirender/ComponentDataType.h>
+#include <unirender/VertexBufferAttribute.h>
 
 namespace
 {
@@ -96,7 +96,7 @@ std::unique_ptr<n0::NodeComp> CompCloth::Clone(const n0::SceneNode& node) const
     return nullptr;
 }
 
-void CompCloth::BuildFromClothMesh(const ur2::Device& dev, const sm::vec3& center, up::cloth::Factory& factory,
+void CompCloth::BuildFromClothMesh(const ur::Device& dev, const sm::vec3& center, up::cloth::Factory& factory,
                                    up::cloth::ClothMeshData& cloth_mesh)
 {
     m_render_mesh = std::make_unique<model::Model::Mesh>();
@@ -166,7 +166,7 @@ void CompCloth::UpdateRenderMesh()
     vb->ReadFromMemory(vertices.data(), sizeof(Vertex) * particles.size(), 0);
 }
 
-void CompCloth::BuildRenderMesh(const ur2::Device& dev, model::Model::Mesh& dst, const up::cloth::ClothMeshData& src)
+void CompCloth::BuildRenderMesh(const ur::Device& dev, model::Model::Mesh& dst, const up::cloth::ClothMeshData& src)
 {
     auto desc = src.GetClothMeshDesc();
 
@@ -199,7 +199,7 @@ void CompCloth::BuildRenderMesh(const ur2::Device& dev, model::Model::Mesh& dst,
 
     auto va = dev.CreateVertexArray();
 
-    auto usage = ur2::BufferUsageHint::StaticDraw;
+    auto usage = ur::BufferUsageHint::StaticDraw;
 
     auto ibuf_sz = sizeof(unsigned short) * m_indices.size();
     auto ibuf = dev.CreateIndexBuffer(usage, ibuf_sz);
@@ -207,18 +207,18 @@ void CompCloth::BuildRenderMesh(const ur2::Device& dev, model::Model::Mesh& dst,
     va->SetIndexBuffer(ibuf);
 
     auto vbuf_sz = sizeof(float) * vertices.size();
-    auto vbuf = dev.CreateVertexBuffer(ur2::BufferUsageHint::StaticDraw, vbuf_sz);
+    auto vbuf = dev.CreateVertexBuffer(ur::BufferUsageHint::StaticDraw, vbuf_sz);
     vbuf->ReadFromMemory(vertices.data(), vbuf_sz, 0);
     va->SetVertexBuffer(vbuf);
 
-    std::vector<std::shared_ptr<ur2::VertexBufferAttribute>> vbuf_attrs(2);
+    std::vector<std::shared_ptr<ur::VertexBufferAttribute>> vbuf_attrs(2);
     // position
-    vbuf_attrs[0] = std::make_shared<ur2::VertexBufferAttribute>(
-        ur2::ComponentDataType::Float, 3, 0, 24
+    vbuf_attrs[0] = std::make_shared<ur::VertexBufferAttribute>(
+        ur::ComponentDataType::Float, 3, 0, 24
     );
     // normal
-    vbuf_attrs[1] = std::make_shared<ur2::VertexBufferAttribute>(
-        ur2::ComponentDataType::Float, 3, 12, 24
+    vbuf_attrs[1] = std::make_shared<ur::VertexBufferAttribute>(
+        ur::ComponentDataType::Float, 3, 12, 24
     );
     va->SetVertexBufferAttrs(vbuf_attrs);
 

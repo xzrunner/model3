@@ -14,7 +14,7 @@ std::unique_ptr<n0::NodeComp> CompMeshFilter::Clone(const n0::SceneNode& node) c
     return comp;
 }
 
-void CompMeshFilter::SetMesh(const ur2::Device& dev, const std::string& name)
+void CompMeshFilter::SetMesh(const ur::Device& dev, const std::string& name)
 {
     if (m_name == name) {
         return;

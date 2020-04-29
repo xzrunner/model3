@@ -19,7 +19,7 @@
 namespace n3
 {
 
-void RenderSystem::Draw(const ur2::Device& dev, ur2::Context& ur_ctx,
+void RenderSystem::Draw(const ur::Device& dev, ur::Context& ur_ctx,
                         const n0::SceneNode& node,
                         const pt3::RenderParams& params,
                         const pt0::RenderContext& ctx)

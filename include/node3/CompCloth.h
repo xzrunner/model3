@@ -27,7 +27,7 @@ public:
     }
     virtual std::unique_ptr<n0::NodeComp> Clone(const n0::SceneNode& node) const override;
 
-    void BuildFromClothMesh(const ur2::Device& dev, const sm::vec3& center,
+    void BuildFromClothMesh(const ur::Device& dev, const sm::vec3& center,
         up::cloth::Factory& factory, up::cloth::ClothMeshData& cloth_mesh);
 
     auto GetSolver() { return m_solver; }
@@ -40,7 +40,7 @@ public:
     static const char* const TYPE_NAME;
 
 private:
-    void BuildRenderMesh(const ur2::Device& dev,
+    void BuildRenderMesh(const ur::Device& dev,
         model::Model::Mesh& dst, const up::cloth::ClothMeshData& src);
 
 private:

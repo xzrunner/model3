@@ -44,7 +44,7 @@ void CompModel::InitMaterials()
         dst.AddVar(UNIFORMS::specular.name,    pt0::RenderVariant(src->specular));
         dst.AddVar(UNIFORMS::shininess.name,   pt0::RenderVariant(src->shininess));
 
-        ur2::Texture* tex = nullptr;
+        ur::Texture* tex = nullptr;
         if (src->diffuse_tex >= 0) {
             tex = m_model->textures[src->diffuse_tex].second.get();
             if (tex) {
