@@ -19,10 +19,8 @@
 namespace n3
 {
 
-void RenderSystem::Draw(const ur::Device& dev, ur::Context& ur_ctx,
-                        const n0::SceneNode& node,
-                        const pt3::RenderParams& params,
-                        const pt0::RenderContext& ctx)
+void RenderSystem::Draw(const ur::Device& dev, ur::Context& ur_ctx, const ur::DrawState& ds,
+                        const n0::SceneNode& node, const pt3::RenderParams& params, const pt0::RenderContext& ctx)
 {
 	sm::mat4 child_world_model, child_local_model;
 	if (node.HasUniqueComp<CompTransform>())
@@ -65,7 +63,7 @@ void RenderSystem::Draw(const ur::Device& dev, ur::Context& ur_ctx,
             {
                 auto& cmodel = node.GetSharedComp<CompModel>();
                 auto& mats = cmodel.GetAllMaterials();
-				pt3::RenderSystem::DrawModel(dev, ur_ctx, *model_inst, mats, c_params, c_ctx);
+				pt3::RenderSystem::DrawModel(dev, ur_ctx, ds, *model_inst, mats, c_params, c_ctx);
 			}
 		}
 		else if (asset_type == n0::GetAssetUniqueTypeID<CompImage3D>() &&
@@ -101,7 +99,7 @@ void RenderSystem::Draw(const ur::Device& dev, ur::Context& ur_ctx,
             auto& cmat = node.GetUniqueComp<n0::CompMaterial>();
             auto& mat = cmat.GetMaterial();
             if (mesh && mat) {
-                pt3::RenderSystem::DrawMesh(dev, ur_ctx, mesh->geometry, *mat, c_ctx);
+                pt3::RenderSystem::DrawMesh(dev, ur_ctx, ds, mesh->geometry, *mat, c_ctx);
             }
         }
     }
@@ -113,7 +111,7 @@ void RenderSystem::Draw(const ur::Device& dev, ur::Context& ur_ctx,
         auto& ccloth = node.GetUniqueComp<CompCloth>();
         auto& render_mesh = ccloth.GetRenderMesh();
         if (render_mesh) {
-            pt3::RenderSystem::DrawMesh(dev, ur_ctx, render_mesh->geometry, pt0::Material(), c_ctx);
+            pt3::RenderSystem::DrawMesh(dev, ur_ctx, ds, render_mesh->geometry, pt0::Material(), c_ctx);
         }
     }
     //if (node.HasUniqueComp<CompRigid>())
